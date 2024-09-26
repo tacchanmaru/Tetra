@@ -35,11 +35,10 @@ class SessionController {
     var players = [Participant: PlayerModel]() {
         didSet {
             if oldValue != players {
-                updateCurrentPlayer()
+//                updateCurrentPlayer()
             }
         }
     }
-    
     var localPlayer: PlayerModel {
         get {
             players[session.localParticipant]!
@@ -75,8 +74,6 @@ class SessionController {
     
     func updateSpatialTemplatePreference() {
         switch game.stage {
-        case .teamSelection:
-            systemCoordinator.configuration.spatialTemplatePreference = .none
         case .inGame:
             systemCoordinator.configuration.spatialTemplatePreference = .sideBySide
         }
@@ -91,16 +88,7 @@ class SessionController {
             }
         }
     }
-
-    func enterTeamSelection() {
-        game.stage = .teamSelection
-        game.currentRoundEndTime = nil
-        game.turnHistory.removeAll()
-    }
     
-    func joinTeam(_ team: PlayerModel.Team?) {
-        localPlayer.team = team
-    }
     
     func startGame() {
         game.stage = .inGame(.beforePlayersTurn)
@@ -129,22 +117,13 @@ class SessionController {
         game.currentRoundEndTime = nil
         game.stage = .inGame(.beforePlayersTurn)
         
-        if playerAfterLocalParticipant != localPlayer {
-            localPlayer.isPlaying = false
-        }
     }
     
-    func endGame() {
-        game.stage = .teamSelection
-    }
+//    func endGame() {
+//        game.stage = .none
+//    }
     
     func gameStateChanged() {
-        if game.stage == .teamSelection {
-            localPlayer.isPlaying = false
-            localPlayer.score = 0
-        }
-        
         updateSpatialTemplatePreference()
-        updateCurrentPlayer()
     }
 }

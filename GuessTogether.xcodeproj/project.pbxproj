@@ -16,9 +16,7 @@
 		F54255D02BD2DE30006B9A37 /* Phrases.json in Resources */ = {isa = PBXBuildFile; fileRef = F54255CF2BD2DE26006B9A37 /* Phrases.json */; };
 		F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */; };
 		F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */; };
-		F5643AE82BD7355800FFF716 /* SeatScoresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643AE72BD7355800FFF716 /* SeatScoresView.swift */; };
 		F5A044242BD44EA000EDAAD5 /* SessionController+PlayerOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A044232BD44EA000EDAAD5 /* SessionController+PlayerOrder.swift */; };
-		F5A0442A2BD57A3E00EDAAD5 /* TeamSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A044292BD579C600EDAAD5 /* TeamSelectionView.swift */; };
 		F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */; };
 		F5CF2A052BD1C07A00C66F78 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A042BD1C07A00C66F78 /* GameModel.swift */; };
 		F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */; };
@@ -46,9 +44,7 @@
 		F54255CF2BD2DE26006B9A37 /* Phrases.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phrases.json; sourceTree = "<group>"; };
 		F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckView.swift; sourceTree = "<group>"; };
 		F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckPodiumView.swift; sourceTree = "<group>"; };
-		F5643AE72BD7355800FFF716 /* SeatScoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatScoresView.swift; sourceTree = "<group>"; };
 		F5A044232BD44EA000EDAAD5 /* SessionController+PlayerOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionController+PlayerOrder.swift"; sourceTree = "<group>"; };
-		F5A044292BD579C600EDAAD5 /* TeamSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionView.swift; sourceTree = "<group>"; };
 		F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionController+RemoteParticipantSynchronization.swift"; sourceTree = "<group>"; };
 		F5CF2A042BD1C07A00C66F78 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
@@ -146,7 +142,6 @@
 				F50303DB2BD97752005EC512 /* GameSpace.swift */,
 				F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */,
 				F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */,
-				F5643AE72BD7355800FFF716 /* SeatScoresView.swift */,
 			);
 			path = ImmersiveSpace;
 			sourceTree = "<group>";
@@ -178,7 +173,6 @@
 				F5E971A22BE0492900A0BE6A /* ContentView.swift */,
 				F5CF2A122BD1EC6700C66F78 /* WelcomeView.swift */,
 				905B24D42CA5343C007D7551 /* GameScoreBoardView.swift */,
-				F5A044292BD579C600EDAAD5 /* TeamSelectionView.swift */,
 				F5ED05F12BD333D3007C6C60 /* Shared */,
 			);
 			path = WindowViews;
@@ -263,11 +257,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5A0442A2BD57A3E00EDAAD5 /* TeamSelectionView.swift in Sources */,
 				F5CF2A0B2BD1D1A900C66F78 /* PlayerModel.swift in Sources */,
 				F5A044242BD44EA000EDAAD5 /* SessionController+PlayerOrder.swift in Sources */,
 				F5CF2A052BD1C07A00C66F78 /* GameModel.swift in Sources */,
-				F5643AE82BD7355800FFF716 /* SeatScoresView.swift in Sources */,
 				F5E971A52BE04BC200A0BE6A /* GuessTogetherWindow.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,

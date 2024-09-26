@@ -29,14 +29,7 @@ struct ScoreBoardView: View {
     
     var body: some View {
         HStack {
-            List {
-                if teamHasPlayers(.blue) {
-                    TeamStatusView(team: .blue)
-                }
-                if teamHasPlayers(.red) {
-                    TeamStatusView(team: .red)
-                }
-            }
+            List {TeamStatusView()}
             .frame(maxWidth: .infinity)
             
             Group {
@@ -70,57 +63,37 @@ struct ScoreBoardView: View {
                 }
             }
         }
-        .confirmationDialog("End the game for everyone?", isPresented: $showEndGameConfirmation, titleVisibility: .visible) {
-            Button("End game", role: .destructive) {
-                appModel.sessionController?.endGame()
-            }
-        }
+//        .confirmationDialog("End the game for everyone?", isPresented: $showEndGameConfirmation, titleVisibility: .visible) {
+//            Button("End game", role: .destructive) {
+//                appModel.sessionController?.endGame()
+//            }
+//        }
     }
     
-    func teamHasPlayers(_ team: PlayerModel.Team) -> Bool {
-        if let sessionController = appModel.sessionController {
-            return sessionController.players.values.contains { player in
-                player.team == team
-            }
-        } else {
-            return false
-        }
-    }
 }
 
 struct TeamStatusView: View {
     @Environment(AppModel.self) var appModel
-    
-    let team: PlayerModel.Team
-    
-    var score: Int {
-        return players.map(\.score).reduce(0, +)
-    }
+
     
     var players: [PlayerModel] {
         guard let sessionController = appModel.sessionController else {
             return []
         }
         
-        return sessionController.players.values.filter { player in
-            player.team == team
-        }
+        return sessionController.players.values
         .sorted(using: KeyPathComparator(\.id))
     }
     
     var body: some View {
-        Section(team.name) {
-            ForEach(players) { player in
-                if player.isPlaying {
-                    LabeledContent(player.name, value: player.score.description)
-                        .foregroundStyle(.green)
-                        .bold()
-                } else {
-                    LabeledContent(player.name, value: player.score.description)
-                }
+        ForEach(players) { player in
+            if player.isPlaying {
+                Text(player.name)
+                    .foregroundStyle(.green)
+                    .bold()
+            } else {
+                Text(player.name)
             }
-            
-            LabeledContent("Total", value: score.description).bold()
         }
     }
 }

@@ -19,7 +19,6 @@ struct GameSpace: Scene {
         ImmersiveSpace(id: Self.spaceID) {
             ZStack {
 //                PhraseDeckPodiumView()
-                SeatScoresView()
             }
             .onAppear {
                 appModel.isImmersiveSpaceOpen = true

@@ -21,7 +21,7 @@ struct PhraseDeckView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             switch appModel.sessionController?.game.stage {
-            case .none, .teamSelection, .inGame(.beforePlayersTurn):
+            case .none, .inGame(.beforePlayersTurn):
                 Button("Begin Turn", systemImage: "play.circle") {
                     appModel.sessionController?.beginTurn()
                 }
