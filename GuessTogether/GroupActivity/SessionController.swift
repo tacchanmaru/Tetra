@@ -36,7 +36,6 @@ class SessionController {
         didSet {
             if oldValue != players {
                 updateCurrentPlayer()
-                updateLocalParticipantRole()
             }
         }
     }
@@ -76,38 +75,10 @@ class SessionController {
     
     func updateSpatialTemplatePreference() {
         switch game.stage {
-        case .categorySelection:
+        case .teamSelection:
+            systemCoordinator.configuration.spatialTemplatePreference = .none
+        case .inGame:
             systemCoordinator.configuration.spatialTemplatePreference = .sideBySide
-        case .teamSelection:
-            systemCoordinator.configuration.spatialTemplatePreference = .custom(TeamSelectionTemplate())
-        case .inGame:
-            systemCoordinator.configuration.spatialTemplatePreference = .custom(GameTemplate())
-        }
-    }
-    
-    func updateLocalParticipantRole() {
-        switch game.stage {
-        case .categorySelection:
-            systemCoordinator.resignRole()
-        case .teamSelection:
-            switch localPlayer.team {
-            case .none:
-                systemCoordinator.resignRole()
-            case .blue:
-                systemCoordinator.assignRole(TeamSelectionTemplate.Role.blueTeam)
-            case .red:
-                systemCoordinator.assignRole(TeamSelectionTemplate.Role.redTeam)
-            }
-        case .inGame:
-            if localPlayer.isPlaying {
-                systemCoordinator.assignRole(GameTemplate.Role.player)
-            } else if let currentPlayer {
-                if currentPlayer.team == localPlayer.team {
-                    systemCoordinator.assignRole(GameTemplate.Role.activeTeam)
-                } else {
-                    systemCoordinator.resignRole()
-                }
-            }
         }
     }
     
@@ -136,7 +107,6 @@ class SessionController {
     }
     
     func beginTurn() {
-        nextCard(successful: false)
         
         game.stage = .inGame(.duringPlayersTurn)
         game.currentRoundEndTime = .now.addingTimeInterval(30)
@@ -148,24 +118,6 @@ class SessionController {
                 game.stage = .inGame(.afterPlayersTurn)
             }
         }
-    }
-    
-    func nextCard(successful: Bool) {
-        guard localPlayer.isPlaying else {
-            return
-        }
-        
-        if successful {
-            localPlayer.score += 1
-        }
-        
-        let nextPhrase = PhraseManager.shared.randomPhrase(
-            excludedCategories: game.excludedCategories,
-            usedPhrases: game.usedPhrases
-        )
-        
-        game.usedPhrases.insert(nextPhrase)
-        game.currentPhrase = nextPhrase
     }
     
     func endTurn() {
@@ -183,17 +135,16 @@ class SessionController {
     }
     
     func endGame() {
-        game.stage = .categorySelection
+        game.stage = .teamSelection
     }
     
     func gameStateChanged() {
-        if game.stage == .categorySelection {
+        if game.stage == .teamSelection {
             localPlayer.isPlaying = false
             localPlayer.score = 0
         }
         
         updateSpatialTemplatePreference()
         updateCurrentPlayer()
-        updateLocalParticipantRole()
     }
 }

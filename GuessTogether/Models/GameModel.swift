@@ -10,16 +10,13 @@ import Foundation
 import GroupActivities
 
 struct GameModel: Codable, Hashable, Sendable {
-    var stage: ActivityStage = .categorySelection
+    var stage: ActivityStage = .teamSelection
     
     var excludedCategories = Set<String>()
     
     var turnHistory = [Participant.ID]()
     
     var currentRoundEndTime: Date?
-    var currentPhrase: PhraseManager.Phrase?
-    
-    var usedPhrases = Set<PhraseManager.Phrase>()
 }
 
 extension GameModel {
@@ -30,7 +27,6 @@ extension GameModel {
     }
     
     enum ActivityStage: Codable, Hashable, Sendable {
-        case categorySelection
         case teamSelection
         case inGame(GameStage)
         

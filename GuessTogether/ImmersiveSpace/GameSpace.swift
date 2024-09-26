@@ -18,7 +18,7 @@ struct GameSpace: Scene {
     var body: some Scene {
         ImmersiveSpace(id: Self.spaceID) {
             ZStack {
-                PhraseDeckPodiumView()
+//                PhraseDeckPodiumView()
                 SeatScoresView()
             }
             .onAppear {

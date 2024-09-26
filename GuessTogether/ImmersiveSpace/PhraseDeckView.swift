@@ -21,7 +21,7 @@ struct PhraseDeckView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             switch appModel.sessionController?.game.stage {
-            case .none, .categorySelection, .teamSelection, .inGame(.beforePlayersTurn):
+            case .none, .teamSelection, .inGame(.beforePlayersTurn):
                 Button("Begin Turn", systemImage: "play.circle") {
                     appModel.sessionController?.beginTurn()
                 }
@@ -29,9 +29,7 @@ struct PhraseDeckView: View {
                 .font(.largeTitle)
             case .inGame(.duringPlayersTurn):
                 ZStack {
-                    PhraseCardView(phrase: appModel.sessionController?.game.currentPhrase)
-                    PhraseDeckButton(kind: .skipCurrentCard)
-                    PhraseDeckButton(kind: .nextCard)
+                    PhraseCardView()
                 }
             case .inGame(.afterPlayersTurn):
                 Button("End Round", systemImage: "stop.circle") {
@@ -48,72 +46,18 @@ struct PhraseDeckView: View {
     }
 }
 
-struct PhraseDeckButton: View {
-    @Environment(AppModel.self) var appModel
-    @Environment(\.physicalMetrics) var converter
-    
-    var kind: Kind
-    
-    enum Kind {
-        case nextCard
-        case skipCurrentCard
-    }
-    
-    var body: some View {
-        Button {
-            appModel.sessionController?.nextCard(successful: kind == .nextCard)
-        } label: {
-            Group {
-                switch kind {
-                case .nextCard:
-                    Label("Got it!", systemImage: "checkmark.circle")
-                case .skipCurrentCard:
-                    Label("Skip", systemImage: "forward.circle")
-                }
-            }
-            .padding()
-        }
-        .tint(color)
-        .font(.system(size: 100))
-        .labelStyle(.iconOnly)
-        .rotation3DEffect(Rotation3D(angle: .degrees(-xOffsetDirection * 35), axis: .y))
-        .offset(x: xOffsetDirection * 435)
-        .offset(z: converter.convert(0.15, from: .meters))
-        .disabled(!localParticipantIsPlaying)
-    }
-    
-    var xOffsetDirection: CGFloat {
-        switch kind {
-        case .nextCard: 1
-        case .skipCurrentCard: -1
-        }
-    }
-    
-    var color: Color {
-        switch kind {
-        case .nextCard: .green
-        case .skipCurrentCard: .red
-        }
-    }
-    
-    var localParticipantIsPlaying: Bool {
-        appModel.sessionController?.localPlayer.isPlaying ?? false
-    }
-}
-
 struct PhraseCardView: View {
-    let phrase: PhraseManager.Phrase?
     
     var body: some View {
         VStack {
-            Text(phrase?.description ?? "")
+            Text("おはよう")
                 .font(.extraLargeTitle)
                 .multilineTextAlignment(.center)
                 .frame(maxHeight: .infinity)
             
             Divider()
             
-            Text(phrase?.category.description ?? "")
+            Text("おやすみ")
                 .font(.title)
                 .italic()
                 .padding()

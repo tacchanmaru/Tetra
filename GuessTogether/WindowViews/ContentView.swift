@@ -36,8 +36,6 @@ struct ContentView: View {
             switch appModel.sessionController?.game.stage {
             case .none:
                 WelcomeView()
-            case .categorySelection:
-                CategorySelectionView()
             case .teamSelection:
                 TeamSelectionView()
             case .inGame:
