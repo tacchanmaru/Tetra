@@ -91,19 +91,19 @@ class SessionController {
     
     
     func startGame() {
-        game.stage = .inGame(.beforePlayersTurn)
+        game.stage = .inGame(.connectMode)
     }
     
     func beginTurn() {
         
-        game.stage = .inGame(.duringPlayersTurn)
+        game.stage = .inGame(.broadcastMode)
         game.currentRoundEndTime = .now.addingTimeInterval(30)
         
         let sleepUntilTime = ContinuousClock.now.advanced(by: .seconds(30))
         Task {
             try await Task.sleep(until: sleepUntilTime)
-            if case .inGame(.duringPlayersTurn) = game.stage {
-                game.stage = .inGame(.afterPlayersTurn)
+            if case .inGame(.broadcastMode) = game.stage {
+                game.stage = .inGame(.breakoutMode)
             }
         }
     }
@@ -115,7 +115,7 @@ class SessionController {
         
         game.turnHistory.append(session.localParticipant.id)
         game.currentRoundEndTime = nil
-        game.stage = .inGame(.beforePlayersTurn)
+        game.stage = .inGame(.connectMode)
         
     }
     

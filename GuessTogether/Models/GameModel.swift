@@ -10,7 +10,7 @@ import Foundation
 import GroupActivities
 
 struct GameModel: Codable, Hashable, Sendable {
-    var stage: ActivityStage = .inGame(.beforePlayersTurn)
+    var stage: ActivityStage = .inGame(.connectMode)
     
     var excludedCategories = Set<String>()
     
@@ -21,9 +21,9 @@ struct GameModel: Codable, Hashable, Sendable {
 
 extension GameModel {
     enum GameStage: Codable, Hashable, Sendable {
-        case beforePlayersTurn
-        case duringPlayersTurn
-        case afterPlayersTurn
+        case connectMode
+        case broadcastMode
+        case breakoutMode
     }
     
     enum ActivityStage: Codable, Hashable, Sendable {

@@ -21,17 +21,17 @@ struct PhraseDeckView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             switch appModel.sessionController?.game.stage {
-            case .none, .inGame(.beforePlayersTurn):
+            case .none, .inGame(.connectMode):
                 Button("Begin Turn", systemImage: "play.circle") {
                     appModel.sessionController?.beginTurn()
                 }
                 .controlSize(.extraLarge)
                 .font(.largeTitle)
-            case .inGame(.duringPlayersTurn):
+            case .inGame(.broadcastMode):
                 ZStack {
                     PhraseCardView()
                 }
-            case .inGame(.afterPlayersTurn):
+            case .inGame(.breakoutMode):
                 Button("End Round", systemImage: "stop.circle") {
                     appModel.sessionController?.endTurn()
                 }
