@@ -20,24 +20,8 @@ struct PhraseDeckView: View {
                 .glassBackgroundEffect()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            switch appModel.sessionController?.game.stage {
-            case .none, .inGame(.connectMode):
-                Button("Begin Turn", systemImage: "play.circle") {
-                    appModel.sessionController?.beginTurn()
-                }
-                .controlSize(.extraLarge)
-                .font(.largeTitle)
-            case .inGame(.broadcastMode):
-                ZStack {
-                    PhraseCardView()
-                }
-            case .inGame(.breakoutMode):
-                Button("End Round", systemImage: "stop.circle") {
-                    appModel.sessionController?.endTurn()
-                }
-                .controlSize(.extraLarge)
-                .font(.largeTitle)
-            }
+            PhraseCardView()
+        
         }
         .frame(width: 650, height: 400)
         .rotation3DEffect(Rotation3D(angle: .degrees(20), axis: .x), anchor: .center)

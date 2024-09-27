@@ -12,10 +12,6 @@ import GroupActivities
 struct GameModel: Codable, Hashable, Sendable {
     var stage: ActivityStage = .inGame(.connectMode)
     
-    var excludedCategories = Set<String>()
-    
-    var turnHistory = [Participant.ID]()
-    
     var currentRoundEndTime: Date?
 }
 
@@ -24,6 +20,14 @@ extension GameModel {
         case connectMode
         case broadcastMode
         case breakoutMode
+
+        var isActive: Bool {
+            switch self {
+            case .connectMode: return true
+            case .broadcastMode: return false
+            case .breakoutMode: return false
+            }
+        }
     }
     
     enum ActivityStage: Codable, Hashable, Sendable {
