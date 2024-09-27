@@ -77,9 +77,16 @@ struct TeamStatusView: View {
     
     var body: some View {
         if let gameStage = appModel.sessionController?.game.stage {
-            switch gameStage {
-            case .inGame(let stage):
-                Text(stageText(for: stage))
+            ForEach(GameModel.GameStage.allCases, id: \.self) { stage in
+                HStack {
+                    Text(stageText(for: stage))
+                        .foregroundStyle(stage.isActive ? .green : .primary)
+                        .bold(stage.isActive)
+                    Spacer()
+                    if stage.isActive {
+                        Image(systemName: "chackmark")
+                    }
+                }
             }
         } else {
             Text("スペースに入ってないです")
