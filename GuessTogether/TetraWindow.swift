@@ -7,7 +7,7 @@ The main window that presents the app's user interface.
 
 import SwiftUI
 
-struct GuessTogetherWindow: Scene {
+struct TetraWindow: Scene {
     @Environment(AppModel.self) var appModel
     
     var body: some Scene {

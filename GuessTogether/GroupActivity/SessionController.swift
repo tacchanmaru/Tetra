@@ -11,7 +11,7 @@ import Observation
 
 @Observable @MainActor
 class SessionController {
-    let session: GroupSession<GuessTogetherActivity>
+    let session: GroupSession<TetraActivity>
     let messenger: GroupSessionMessenger
     let systemCoordinator: SystemCoordinator
     
@@ -51,7 +51,7 @@ class SessionController {
         }
     }
     
-    init?(_ session: GroupSession<GuessTogetherActivity>, appModel: AppModel) async {
+    init?(_ session: GroupSession<TetraActivity>, appModel: AppModel) async {
         guard let systemCoordinator = await session.systemCoordinator else {
             return nil
         }

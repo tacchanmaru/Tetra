@@ -46,7 +46,7 @@ struct ContentView: View {
     /// Monitors for new Guess Together group activity sessions.
     @Sendable
     func observeGroupSessions() async {
-        for await session in GuessTogetherActivity.sessions() {
+        for await session in TetraActivity.sessions() {
             let sessionController = await SessionController(session, appModel: appModel)
             guard let sessionController else {
                 continue

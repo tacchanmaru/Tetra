@@ -8,10 +8,10 @@ The Guess Together group activity definition.
 import CoreTransferable
 import GroupActivities
 
-struct GuessTogetherActivity: GroupActivity, Transferable {
+struct TetraActivity: GroupActivity, Transferable {
     var metadata: GroupActivityMetadata = {
         var metadata = GroupActivityMetadata()
-        metadata.title = "Guess Together"
+        metadata.title = "Tetra"
         return metadata
     }()
 }

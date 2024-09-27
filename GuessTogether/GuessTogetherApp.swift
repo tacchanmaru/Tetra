@@ -13,7 +13,7 @@ struct GuessTogetherApp: App {
     
     var body: some Scene {
         Group {
-            GuessTogetherWindow()
+            TetraWindow()
             GameSpace()
         }
         .environment(appModel)

@@ -23,7 +23,7 @@
 		F5CF2A0B2BD1D1A900C66F78 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A0A2BD1D1A900C66F78 /* PlayerModel.swift */; };
 		F5CF2A152BD1F42D00C66F78 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A122BD1EC6700C66F78 /* WelcomeView.swift */; };
 		F5E971A32BE0492900A0BE6A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A22BE0492900A0BE6A /* ContentView.swift */; };
-		F5E971A52BE04BC200A0BE6A /* GuessTogetherWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A42BE04BC200A0BE6A /* GuessTogetherWindow.swift */; };
+		F5E971A52BE04BC200A0BE6A /* TetraWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */; };
 		F5ED05F32BD33974007C6C60 /* GuessTogetherToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ED05F22BD333E0007C6C60 /* GuessTogetherToolbar.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +50,7 @@
 		F5CF2A0A2BD1D1A900C66F78 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		F5CF2A122BD1EC6700C66F78 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		F5E971A22BE0492900A0BE6A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		F5E971A42BE04BC200A0BE6A /* GuessTogetherWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTogetherWindow.swift; sourceTree = "<group>"; };
+		F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraWindow.swift; sourceTree = "<group>"; };
 		F5ED05F22BD333E0007C6C60 /* GuessTogetherToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTogetherToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				F5155FD32BD09B5D004F1CA1 /* GuessTogetherApp.swift */,
-				F5E971A42BE04BC200A0BE6A /* GuessTogetherWindow.swift */,
+				F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */,
 				F5CF2A0C2BD1EBF700C66F78 /* WindowViews */,
 				F5643ADE2BD70B0E00FFF716 /* ImmersiveSpace */,
 				F5A044252BD5788500EDAAD5 /* Models */,
@@ -256,7 +256,7 @@
 			files = (
 				F5CF2A0B2BD1D1A900C66F78 /* PlayerModel.swift in Sources */,
 				F5CF2A052BD1C07A00C66F78 /* GameModel.swift in Sources */,
-				F5E971A52BE04BC200A0BE6A /* GuessTogetherWindow.swift in Sources */,
+				F5E971A52BE04BC200A0BE6A /* TetraWindow.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,
 				F5CF2A092BD1CF9600C66F78 /* GuessTogetherActivity.swift in Sources */,
