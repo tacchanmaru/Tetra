@@ -24,6 +24,14 @@ extension GameModel {
         case connectMode
         case broadcastMode
         case breakoutMode
+
+        var isActive: Bool {
+            switch self {
+            case .connectMode: return true
+            case .broadcastMode: return false
+            case .breakoutMode: return false
+            }
+        }
     }
     
     enum ActivityStage: Codable, Hashable, Sendable {
