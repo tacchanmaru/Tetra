@@ -93,31 +93,7 @@ class SessionController {
     func startGame() {
         game.stage = .inGame(.connectMode)
     }
-    
-    func beginTurn() {
-        
-        game.stage = .inGame(.broadcastMode)
-        game.currentRoundEndTime = .now.addingTimeInterval(30)
-        
-        let sleepUntilTime = ContinuousClock.now.advanced(by: .seconds(30))
-        Task {
-            try await Task.sleep(until: sleepUntilTime)
-            if case .inGame(.broadcastMode) = game.stage {
-                game.stage = .inGame(.breakoutMode)
-            }
-        }
-    }
-    
-    func endTurn() {
-        guard game.stage.isInGame, localPlayer.isPlaying else {
-            return
-        }
-        
-        game.turnHistory.append(session.localParticipant.id)
-        game.currentRoundEndTime = nil
-        game.stage = .inGame(.connectMode)
-        
-    }
+
     
 //    func endGame() {
 //        game.stage = .none

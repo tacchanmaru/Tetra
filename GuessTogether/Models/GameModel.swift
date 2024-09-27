@@ -12,10 +12,6 @@ import GroupActivities
 struct GameModel: Codable, Hashable, Sendable {
     var stage: ActivityStage = .inGame(.connectMode)
     
-    var excludedCategories = Set<String>()
-    
-    var turnHistory = [Participant.ID]()
-    
     var currentRoundEndTime: Date?
 }
 
