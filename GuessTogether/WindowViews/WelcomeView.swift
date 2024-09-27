@@ -89,10 +89,10 @@ struct SharePlayButton: View {
         ZStack {
             ShareLink(
                 item: TetraActivity(),
-                preview: SharePreview("Guess Together!")
+                preview: SharePreview("Tetra!")
             ).hidden()
             
-            Button("Play Guess Together", systemImage: "shareplay") {
+            Button("Tetra", systemImage: "shareplay") {
                 Task.detached {
                     try await TetraActivity().activate()
                 }

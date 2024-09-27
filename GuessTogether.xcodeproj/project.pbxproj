@@ -10,10 +10,9 @@
 		905B24D52CA5343C007D7551 /* GameScoreBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B24D42CA5343C007D7551 /* GameScoreBoardView.swift */; };
 		C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = C310AA562BD1F2970098D2B8 /* Publisher+withPrevious.swift */; };
 		F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50303DB2BD97752005EC512 /* GameSpace.swift */; };
-		F5155FD42BD09B5D004F1CA1 /* GuessTogetherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5155FD32BD09B5D004F1CA1 /* GuessTogetherApp.swift */; };
+		F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */; };
 		F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5155FD72BD09B5D004F1CA1 /* AppModel.swift */; };
 		F518FDCF2BD875A7001D1F19 /* NameAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F518FDCE2BD875A7001D1F19 /* NameAlert.swift */; };
-		F54255D02BD2DE30006B9A37 /* Phrases.json in Resources */ = {isa = PBXBuildFile; fileRef = F54255CF2BD2DE26006B9A37 /* Phrases.json */; };
 		F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */; };
 		F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */; };
 		F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */; };
@@ -35,12 +34,11 @@
 		F1D93E542B451142BE1E50AB /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		F50303DB2BD97752005EC512 /* GameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSpace.swift; sourceTree = "<group>"; };
 		F5155FCC2BD09B5D004F1CA1 /* GuessTogether.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuessTogether.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5155FD32BD09B5D004F1CA1 /* GuessTogetherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTogetherApp.swift; sourceTree = "<group>"; };
+		F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraApp.swift; sourceTree = "<group>"; };
 		F5155FD72BD09B5D004F1CA1 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		F5155FE02BD09B5F004F1CA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5155FE62BD09BEB004F1CA1 /* GuessTogether.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GuessTogether.entitlements; sourceTree = "<group>"; };
 		F518FDCE2BD875A7001D1F19 /* NameAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameAlert.swift; sourceTree = "<group>"; };
-		F54255CF2BD2DE26006B9A37 /* Phrases.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phrases.json; sourceTree = "<group>"; };
 		F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckView.swift; sourceTree = "<group>"; };
 		F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckPodiumView.swift; sourceTree = "<group>"; };
 		F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionController+RemoteParticipantSynchronization.swift"; sourceTree = "<group>"; };
@@ -112,7 +110,7 @@
 		F5155FCE2BD09B5D004F1CA1 /* GuessTogether */ = {
 			isa = PBXGroup;
 			children = (
-				F5155FD32BD09B5D004F1CA1 /* GuessTogetherApp.swift */,
+				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
 				F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */,
 				F5CF2A0C2BD1EBF700C66F78 /* WindowViews */,
 				F5643ADE2BD70B0E00FFF716 /* ImmersiveSpace */,
@@ -127,7 +125,6 @@
 		F54255CE2BD2DE07006B9A37 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F54255CF2BD2DE26006B9A37 /* Phrases.json */,
 				F5155FE62BD09BEB004F1CA1 /* GuessTogether.entitlements */,
 				F5155FE02BD09B5F004F1CA1 /* Info.plist */,
 			);
@@ -243,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F54255D02BD2DE30006B9A37 /* Phrases.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +266,7 @@
 				F5E971A32BE0492900A0BE6A /* ContentView.swift in Sources */,
 				F5ED05F32BD33974007C6C60 /* GuessTogetherToolbar.swift in Sources */,
 				F518FDCF2BD875A7001D1F19 /* NameAlert.swift in Sources */,
-				F5155FD42BD09B5D004F1CA1 /* GuessTogetherApp.swift in Sources */,
+				F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The Guess Together group activity definition.
+The Tetra group activity definition.
 */
 
 import CoreTransferable

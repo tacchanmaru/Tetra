@@ -2,7 +2,7 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The immersive space presented during the game stage of Guess Together.
+The immersive space presented during the game stage of Tetra.
 */
 
 import SwiftUI

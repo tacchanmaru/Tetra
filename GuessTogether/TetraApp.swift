@@ -8,7 +8,7 @@ The main app structure.
 import SwiftUI
 
 @main
-struct GuessTogetherApp: App {
+struct TetraApp: App {
     @State var appModel = AppModel()
     
     var body: some Scene {
