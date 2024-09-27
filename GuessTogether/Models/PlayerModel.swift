@@ -12,8 +12,6 @@ struct PlayerModel: Codable, Hashable, Sendable, Identifiable {
     let id: UUID
     var name: String
     
-    var isPlaying: Bool = false
-    
     var seatPose: Pose3D?
     
 }
