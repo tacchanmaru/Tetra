@@ -14,7 +14,7 @@ import SwiftUI
 /// │                                       │
 /// │               {   *   }               │
 /// │                                       │
-/// │            Guess Together!            │
+/// │                 Tetra!                │
 /// │                                       │
 /// │                                       │
 /// │   Welcome! To play, join a FaceTime   │
@@ -31,15 +31,15 @@ struct WelcomeView: View {
         VStack {
             WelcomeBanner().offset(y: 20)
             
-            Text("Guess Together!").italic().font(.extraLargeTitle)
+            Text("Tetra!").italic().font(.extraLargeTitle)
             
             Text("""
-                Welcome to Guess Together! \
-                To play, join a FaceTime call with a handful of friends. \
-                You'll join a team and take turns trying to get your teammates \
-                to guess your secret phrase.
+                Welcome to Tetra! \
+                This is a space designed for learning, sharing, and focused collaboration. \
+                Have fun, exchange ideas, and concentrate on your projects.
                 """
             )
+
             .multilineTextAlignment(.center)
             .padding()
             
@@ -88,13 +88,13 @@ struct SharePlayButton: View {
     var body: some View {
         ZStack {
             ShareLink(
-                item: GuessTogetherActivity(),
-                preview: SharePreview("Guess Together!")
+                item: TetraActivity(),
+                preview: SharePreview("Tetra!")
             ).hidden()
             
-            Button("Play Guess Together", systemImage: "shareplay") {
+            Button("Tetra", systemImage: "shareplay") {
                 Task.detached {
-                    try await GuessTogetherActivity().activate()
+                    try await TetraActivity().activate()
                 }
             }
             .disabled(!groupStateObserver.isEligibleForGroupSession)

@@ -1,6 +1,6 @@
 # Customizing spatial Persona templates
 
-Arrange spatial Personas in a team-based guessing game.
+Arrange spatial Personas for coworking space.
 
 ## Overview
 

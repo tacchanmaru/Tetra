@@ -7,7 +7,7 @@ The toolbar used in every top-level Guess Together view.
 
 import SwiftUI
 
-struct GuessTogetherToolbarModifier: ViewModifier {
+struct TetraToolbarModifier: ViewModifier {
     @Environment(AppModel.self) var appModel
     
     func body(content: Content) -> some View {
@@ -17,7 +17,7 @@ struct GuessTogetherToolbarModifier: ViewModifier {
                     HStack {
                         Image(systemName: "figure.run.square.stack.fill")
                             .foregroundStyle(.purple.gradient)
-                        Text("Guess Together!")
+                        Text("Tetra!")
                     }
                     .font(.largeTitle)
                     .italic()
@@ -29,7 +29,7 @@ struct GuessTogetherToolbarModifier: ViewModifier {
 }
 
 extension View {
-    func guessTogetherToolbar() -> some View {
-        return modifier(GuessTogetherToolbarModifier())
+    func tetraToolbar() -> some View {
+        return modifier(TetraToolbarModifier())
     }
 }

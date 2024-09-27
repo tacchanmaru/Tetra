@@ -47,7 +47,7 @@ struct ScoreBoardView: View {
             .frame(maxWidth: .infinity)
         }
         .padding()
-        .guessTogetherToolbar()
+        .tetraToolbar()
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 if !appModel.isImmersiveSpaceOpen {
