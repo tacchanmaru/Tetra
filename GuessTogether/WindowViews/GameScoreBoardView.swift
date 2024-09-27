@@ -74,33 +74,47 @@ struct ScoreBoardView: View {
 
 struct TeamStatusView: View {
     @Environment(AppModel.self) var appModel
+    @State private var selectedStage: GameModel.GameStage?
     
     var body: some View {
         if (appModel.sessionController?.game.stage) != nil {
             ForEach(GameModel.GameStage.allCases, id: \.self) { stage in
-                HStack {
-                    Text(stageText(for: stage))
-                        .foregroundStyle(stage.isActive ? .green : .primary)
-                        .bold(stage.isActive)
-                    Spacer()
-                    if stage.isActive {
-                        Image(systemName: "checkmark")
+                Button(action: {
+                    selectStage(stage)
+                }) {
+                    HStack {
+                        Text(stageText(for: stage))
+                            .foregroundStyle(stage.isActive ? .green : .primary)
+                            .bold(stage.isActive)
+                        Spacer()
+                        if stage.isActive {
+                            Image(systemName: "checkmark")
+                        }
                     }
                 }
+                .buttonStyle(.borderless)
             }
         } else {
-            Text("スペースに入ってないです")
+            Text("You need to enter the space")
         }
+    }
+
+    private func selectStage(_ stage: GameModel.GameStage) {
+        for case var gameStage in GameModel.GameStage.allCases {
+            gameStage.isActive = (gameStage == stage)
+        }
+        selectedStage = stage
+        appModel.sessionController?.game.stage = .inGame(stage)
     }
 
     private func stageText(for stage: GameModel.GameStage) -> String {
         switch stage {
             case .connectMode:
-                return "connectMode"
+                return "Connect Mode"
             case .broadcastMode:
-                return "broadcastMode"
+                return "Broadcast Mode"
             case .breakoutMode:
-                return "breakoutMode"
+                return "Breakout Mode"
         }
     }
 }
