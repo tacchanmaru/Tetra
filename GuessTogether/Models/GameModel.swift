@@ -16,7 +16,7 @@ struct GameModel: Codable, Hashable, Sendable {
 }
 
 extension GameModel {
-    enum GameStage: Codable, Hashable, Sendable {
+    enum GameStage: Codable, Hashable, Sendable, CaseIterable {
         case connectMode
         case broadcastMode
         case breakoutMode
