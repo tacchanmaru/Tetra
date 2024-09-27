@@ -18,12 +18,12 @@
 		F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */; };
 		F5CF2A052BD1C07A00C66F78 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A042BD1C07A00C66F78 /* GameModel.swift */; };
 		F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */; };
-		F5CF2A092BD1CF9600C66F78 /* GuessTogetherActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A082BD1CF9600C66F78 /* GuessTogetherActivity.swift */; };
+		F5CF2A092BD1CF9600C66F78 /* TetraActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A082BD1CF9600C66F78 /* TetraActivity.swift */; };
 		F5CF2A0B2BD1D1A900C66F78 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A0A2BD1D1A900C66F78 /* PlayerModel.swift */; };
 		F5CF2A152BD1F42D00C66F78 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A122BD1EC6700C66F78 /* WelcomeView.swift */; };
 		F5E971A32BE0492900A0BE6A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A22BE0492900A0BE6A /* ContentView.swift */; };
 		F5E971A52BE04BC200A0BE6A /* TetraWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */; };
-		F5ED05F32BD33974007C6C60 /* GuessTogetherToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ED05F22BD333E0007C6C60 /* GuessTogetherToolbar.swift */; };
+		F5ED05F32BD33974007C6C60 /* TetraToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ED05F22BD333E0007C6C60 /* TetraToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,12 +44,12 @@
 		F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionController+RemoteParticipantSynchronization.swift"; sourceTree = "<group>"; };
 		F5CF2A042BD1C07A00C66F78 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
-		F5CF2A082BD1CF9600C66F78 /* GuessTogetherActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTogetherActivity.swift; sourceTree = "<group>"; };
+		F5CF2A082BD1CF9600C66F78 /* TetraActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraActivity.swift; sourceTree = "<group>"; };
 		F5CF2A0A2BD1D1A900C66F78 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		F5CF2A122BD1EC6700C66F78 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		F5E971A22BE0492900A0BE6A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraWindow.swift; sourceTree = "<group>"; };
-		F5ED05F22BD333E0007C6C60 /* GuessTogetherToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTogetherToolbar.swift; sourceTree = "<group>"; };
+		F5ED05F22BD333E0007C6C60 /* TetraToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,7 +156,7 @@
 			children = (
 				F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */,
 				F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */,
-				F5CF2A082BD1CF9600C66F78 /* GuessTogetherActivity.swift */,
+				F5CF2A082BD1CF9600C66F78 /* TetraActivity.swift */,
 			);
 			path = GroupActivity;
 			sourceTree = "<group>";
@@ -176,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				F518FDCE2BD875A7001D1F19 /* NameAlert.swift */,
-				F5ED05F22BD333E0007C6C60 /* GuessTogetherToolbar.swift */,
+				F5ED05F22BD333E0007C6C60 /* TetraToolbar.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 				F5E971A52BE04BC200A0BE6A /* TetraWindow.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,
-				F5CF2A092BD1CF9600C66F78 /* GuessTogetherActivity.swift in Sources */,
+				F5CF2A092BD1CF9600C66F78 /* TetraActivity.swift in Sources */,
 				F5CF2A152BD1F42D00C66F78 /* WelcomeView.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				905B24D52CA5343C007D7551 /* GameScoreBoardView.swift in Sources */,
@@ -264,7 +264,7 @@
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
 				F5E971A32BE0492900A0BE6A /* ContentView.swift in Sources */,
-				F5ED05F32BD33974007C6C60 /* GuessTogetherToolbar.swift in Sources */,
+				F5ED05F32BD33974007C6C60 /* TetraToolbar.swift in Sources */,
 				F518FDCF2BD875A7001D1F19 /* NameAlert.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */,
 			);
