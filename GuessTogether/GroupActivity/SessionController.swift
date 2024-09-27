@@ -74,7 +74,11 @@ class SessionController {
     
     func updateSpatialTemplatePreference() {
         switch game.stage {
-        case .inGame:
+        case .inGame(.connectMode):
+            systemCoordinator.configuration.spatialTemplatePreference = .conversational
+        case .inGame(.breakoutMode):
+            systemCoordinator.configuration.spatialTemplatePreference = .surround
+        case .inGame(.broadcastMode):
             systemCoordinator.configuration.spatialTemplatePreference = .sideBySide
         }
     }

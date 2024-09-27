@@ -34,36 +34,6 @@
             endingLineNumber = "15"
             landmarkName = "body"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "2C539133-C237-46BA-A7E4-A2A714D63D02 - d5258056f674f83c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GuessTogether.GuessTogetherApp.body.getter : some"
-                  moduleName = "GuessTogether.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tatsuyamaseki/app_home/visionOS/Tetra/GuessTogether/GuessTogetherApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "15"
-                  endingLineNumber = "15">
-               </Location>
-               <Location
-                  uuid = "2C539133-C237-46BA-A7E4-A2A714D63D02 - d7bc979eaed70c1c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of static SwiftUI.SceneBuilder.buildBlock&lt;each &#x3c4;_0_0 where &#x3c4;_0_0: SwiftUI.Scene&gt;(repeat &#x3c4;_0_0) -&gt; some&gt;&gt;.0 in GuessTogether.GuessTogetherApp.body.getter : some"
-                  moduleName = "GuessTogether.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tatsuyamaseki/app_home/visionOS/Tetra/GuessTogether/GuessTogetherApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
