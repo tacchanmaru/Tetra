@@ -13,6 +13,7 @@ struct GameModel: Codable, Hashable, Sendable {
     var stage: ActivityStage = .inGame(.connectMode)
     
     var currentRoundEndTime: Date?
+    var activeStage: GameStage = .connectMode
 }
 
 extension GameModel {
@@ -20,8 +21,6 @@ extension GameModel {
         case connectMode
         case broadcastMode
         case breakoutMode
-
-        var isActive: Bool = false
     }
     
     enum ActivityStage: Codable, Hashable, Sendable {

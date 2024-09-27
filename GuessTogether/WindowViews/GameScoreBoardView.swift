@@ -74,20 +74,19 @@ struct ScoreBoardView: View {
 
 struct TeamStatusView: View {
     @Environment(AppModel.self) var appModel
-    @State private var selectedStage: GameModel.GameStage?
     
     var body: some View {
-        if (appModel.sessionController?.game.stage) != nil {
+        if let game = appModel.sessionController?.game {
             ForEach(GameModel.GameStage.allCases, id: \.self) { stage in
                 Button(action: {
                     selectStage(stage)
                 }) {
                     HStack {
                         Text(stageText(for: stage))
-                            .foregroundStyle(stage.isActive ? .green : .primary)
-                            .bold(stage.isActive)
+                            .foregroundStyle(stage == game.activeStage ? .green : .primary)
+                            .bold(stage == game.activeStage)
                         Spacer()
-                        if stage.isActive {
+                        if stage == game.activeStage {
                             Image(systemName: "checkmark")
                         }
                     }
@@ -100,10 +99,7 @@ struct TeamStatusView: View {
     }
 
     private func selectStage(_ stage: GameModel.GameStage) {
-        for case var gameStage in GameModel.GameStage.allCases {
-            gameStage.isActive = (gameStage == stage)
-        }
-        selectedStage = stage
+        appModel.sessionController?.game.activeStage = stage
         appModel.sessionController?.game.stage = .inGame(stage)
     }
 
