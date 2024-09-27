@@ -74,26 +74,26 @@ struct ScoreBoardView: View {
 
 struct TeamStatusView: View {
     @Environment(AppModel.self) var appModel
-
-    
-    var players: [PlayerModel] {
-        guard let sessionController = appModel.sessionController else {
-            return []
-        }
-        
-        return sessionController.players.values
-        .sorted(using: KeyPathComparator(\.id))
-    }
     
     var body: some View {
-        ForEach(players) { player in
-            if player.isPlaying {
-                Text(player.name)
-                    .foregroundStyle(.green)
-                    .bold()
-            } else {
-                Text(player.name)
+        if let gameStage = appModel.sessionController?.game.stage {
+            switch gameStage {
+            case .inGame(let stage):
+                Text(stageText(for: stage))
             }
+        } else {
+            Text("スペースに入ってないです")
+        }
+    }
+
+    private func stageText(for stage: GameModel.GameStage) -> String {
+        switch stage {
+            case .connectMode:
+                return "connectMode"
+            case .broadcastMode:
+                return "broadcastMode"
+            case .breakoutMode:
+                return "breakoutMode"
         }
     }
 }
