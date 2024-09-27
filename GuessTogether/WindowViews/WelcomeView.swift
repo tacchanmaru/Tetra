@@ -92,7 +92,7 @@ struct SharePlayButton: View {
                 preview: SharePreview("Tetra!")
             ).hidden()
             
-            Button("Tetra", systemImage: "shareplay") {
+            Button("Start SharePlay", systemImage: "shareplay") {
                 Task.detached {
                     try await TetraActivity().activate()
                 }
