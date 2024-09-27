@@ -76,7 +76,7 @@ struct TeamStatusView: View {
     @Environment(AppModel.self) var appModel
     
     var body: some View {
-        if let gameStage = appModel.sessionController?.game.stage {
+        if (appModel.sessionController?.game.stage) != nil {
             ForEach(GameModel.GameStage.allCases, id: \.self) { stage in
                 HStack {
                     Text(stageText(for: stage))
@@ -84,7 +84,7 @@ struct TeamStatusView: View {
                         .bold(stage.isActive)
                     Spacer()
                     if stage.isActive {
-                        Image(systemName: "chackmark")
+                        Image(systemName: "checkmark")
                     }
                 }
             }
