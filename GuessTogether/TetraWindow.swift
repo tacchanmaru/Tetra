@@ -15,7 +15,6 @@ struct TetraWindow: Scene {
             NavigationStack {
                 ContentView()
             }
-            .frame(width: 900, height: 600)
             .nameAlert()
         }
         .windowResizability(.contentSize)
