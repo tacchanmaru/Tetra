@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88E7CBEA2CBE18F600120564 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E7CBE92CBE18F200120564 /* HomeView.swift */; };
 		905B24D52CA5343C007D7551 /* GameScoreBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B24D42CA5343C007D7551 /* GameScoreBoardView.swift */; };
 		C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = C310AA562BD1F2970098D2B8 /* Publisher+withPrevious.swift */; };
 		F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50303DB2BD97752005EC512 /* GameSpace.swift */; };
@@ -29,11 +30,12 @@
 /* Begin PBXFileReference section */
 		475409EE5B8057AEF1677487 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		88E7CBE92CBE18F200120564 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		905B24D42CA5343C007D7551 /* GameScoreBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScoreBoardView.swift; sourceTree = "<group>"; };
 		C310AA562BD1F2970098D2B8 /* Publisher+withPrevious.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+withPrevious.swift"; sourceTree = "<group>"; };
 		F1D93E542B451142BE1E50AB /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		F50303DB2BD97752005EC512 /* GameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSpace.swift; sourceTree = "<group>"; };
-		F5155FCC2BD09B5D004F1CA1 /* Tetra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tetra.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5155FCC2BD09B5D004F1CA1 /* GuessTogether.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuessTogether.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraApp.swift; sourceTree = "<group>"; };
 		F5155FD72BD09B5D004F1CA1 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		F5155FE02BD09B5F004F1CA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				475409EE5B8057AEF1677487 /* README.md */,
-				F5155FCE2BD09B5D004F1CA1 /* Tetra */,
+				F5155FCE2BD09B5D004F1CA1 /* GuessTogether */,
 				F5155FCD2BD09B5D004F1CA1 /* Products */,
 				85B3F5EE87134CA42ACB3A8E /* Configuration */,
 				E729392C6332EF7AEF86125F /* LICENSE */,
@@ -102,12 +104,12 @@
 		F5155FCD2BD09B5D004F1CA1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F5155FCC2BD09B5D004F1CA1 /* Tetra.app */,
+				F5155FCC2BD09B5D004F1CA1 /* GuessTogether.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F5155FCE2BD09B5D004F1CA1 /* Tetra */ = {
+		F5155FCE2BD09B5D004F1CA1 /* GuessTogether */ = {
 			isa = PBXGroup;
 			children = (
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
@@ -119,7 +121,7 @@
 				C310AA552BD1F2750098D2B8 /* Utilities */,
 				F54255CE2BD2DE07006B9A37 /* Resources */,
 			);
-			path = Tetra;
+			path = GuessTogether;
 			sourceTree = "<group>";
 		};
 		F54255CE2BD2DE07006B9A37 /* Resources */ = {
@@ -164,6 +166,7 @@
 		F5CF2A0C2BD1EBF700C66F78 /* WindowViews */ = {
 			isa = PBXGroup;
 			children = (
+				88E7CBE92CBE18F200120564 /* HomeView.swift */,
 				F5E971A22BE0492900A0BE6A /* ContentView.swift */,
 				F5CF2A122BD1EC6700C66F78 /* WelcomeView.swift */,
 				905B24D42CA5343C007D7551 /* GameScoreBoardView.swift */,
@@ -184,9 +187,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F5155FCB2BD09B5D004F1CA1 /* Tetra */ = {
+		F5155FCB2BD09B5D004F1CA1 /* GuessTogether */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "Tetra" */;
+			buildConfigurationList = F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "GuessTogether" */;
 			buildPhases = (
 				F5155FC82BD09B5D004F1CA1 /* Sources */,
 				F5155FC92BD09B5D004F1CA1 /* Frameworks */,
@@ -196,9 +199,9 @@
 			);
 			dependencies = (
 			);
-			name = Tetra;
+			name = GuessTogether;
 			productName = GuessTogether;
-			productReference = F5155FCC2BD09B5D004F1CA1 /* Tetra.app */;
+			productReference = F5155FCC2BD09B5D004F1CA1 /* GuessTogether.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -217,7 +220,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "Tetra" */;
+			buildConfigurationList = F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "GuessTogether" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -230,7 +233,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F5155FCB2BD09B5D004F1CA1 /* Tetra */,
+				F5155FCB2BD09B5D004F1CA1 /* GuessTogether */,
 			);
 		};
 /* End PBXProject section */
@@ -259,6 +262,7 @@
 				F5CF2A152BD1F42D00C66F78 /* WelcomeView.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				905B24D52CA5343C007D7551 /* GameScoreBoardView.swift in Sources */,
+				88E7CBEA2CBE18F600120564 /* HomeView.swift in Sources */,
 				F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */,
 				F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */,
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
@@ -403,7 +407,7 @@
 				CODE_SIGN_ENTITLEMENTS = GuessTogether/Resources/GuessTogether.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = F53VTJ7REG;
+				DEVELOPMENT_TEAM = U5C32BLC73;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -414,7 +418,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yugoatobe.visionOSapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seinosuke.tetra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = xros;
@@ -435,7 +439,7 @@
 				CODE_SIGN_ENTITLEMENTS = GuessTogether/Resources/GuessTogether.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = F53VTJ7REG;
+				DEVELOPMENT_TEAM = U5C32BLC73;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -446,7 +450,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yugoatobe.visionOSapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seinosuke.tetra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = xros;
@@ -461,7 +465,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "Tetra" */ = {
+		F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "GuessTogether" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5155FE12BD09B5F004F1CA1 /* Debug */,
@@ -470,7 +474,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "Tetra" */ = {
+		F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "GuessTogether" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5155FE42BD09B5F004F1CA1 /* Debug */,

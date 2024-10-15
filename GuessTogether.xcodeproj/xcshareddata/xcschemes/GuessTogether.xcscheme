@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5155FCB2BD09B5D004F1CA1"
-               BuildableName = "Tetra.app"
-               BlueprintName = "Tetra"
-               ReferencedContainer = "container:Tetra.xcodeproj">
+               BuildableName = "GuessTogether.app"
+               BlueprintName = "GuessTogether"
+               ReferencedContainer = "container:GuessTogether.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5155FCB2BD09B5D004F1CA1"
-            BuildableName = "Tetra.app"
-            BlueprintName = "Tetra"
-            ReferencedContainer = "container:Tetra.xcodeproj">
+            BuildableName = "GuessTogether.app"
+            BlueprintName = "GuessTogether"
+            ReferencedContainer = "container:GuessTogether.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5155FCB2BD09B5D004F1CA1"
-            BuildableName = "Tetra.app"
-            BlueprintName = "Tetra"
-            ReferencedContainer = "container:Tetra.xcodeproj">
+            BuildableName = "GuessTogether.app"
+            BlueprintName = "GuessTogether"
+            ReferencedContainer = "container:GuessTogether.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
