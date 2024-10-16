@@ -41,11 +41,11 @@
 		C310AA562BD1F2970098D2B8 /* Publisher+withPrevious.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+withPrevious.swift"; sourceTree = "<group>"; };
 		F1D93E542B451142BE1E50AB /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		F50303DB2BD97752005EC512 /* GameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSpace.swift; sourceTree = "<group>"; };
-		F5155FCC2BD09B5D004F1CA1 /* GuessTogether.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuessTogether.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5155FCC2BD09B5D004F1CA1 /* Tetra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tetra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraApp.swift; sourceTree = "<group>"; };
 		F5155FD72BD09B5D004F1CA1 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		F5155FE02BD09B5F004F1CA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F5155FE62BD09BEB004F1CA1 /* GuessTogether.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GuessTogether.entitlements; sourceTree = "<group>"; };
+		F5155FE62BD09BEB004F1CA1 /* Tetra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tetra.entitlements; sourceTree = "<group>"; };
 		F518FDCE2BD875A7001D1F19 /* NameAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameAlert.swift; sourceTree = "<group>"; };
 		F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckView.swift; sourceTree = "<group>"; };
 		F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckPodiumView.swift; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				475409EE5B8057AEF1677487 /* README.md */,
-				F5155FCE2BD09B5D004F1CA1 /* GuessTogether */,
+				F5155FCE2BD09B5D004F1CA1 /* Tetra */,
 				F5155FCD2BD09B5D004F1CA1 /* Products */,
 				85B3F5EE87134CA42ACB3A8E /* Configuration */,
 				E729392C6332EF7AEF86125F /* LICENSE */,
@@ -110,12 +110,12 @@
 		F5155FCD2BD09B5D004F1CA1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F5155FCC2BD09B5D004F1CA1 /* GuessTogether.app */,
+				F5155FCC2BD09B5D004F1CA1 /* Tetra.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F5155FCE2BD09B5D004F1CA1 /* GuessTogether */ = {
+		F5155FCE2BD09B5D004F1CA1 /* Tetra */ = {
 			isa = PBXGroup;
 			children = (
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
@@ -127,13 +127,13 @@
 				C310AA552BD1F2750098D2B8 /* Utilities */,
 				F54255CE2BD2DE07006B9A37 /* Resources */,
 			);
-			path = GuessTogether;
+			path = Tetra;
 			sourceTree = "<group>";
 		};
 		F54255CE2BD2DE07006B9A37 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F5155FE62BD09BEB004F1CA1 /* GuessTogether.entitlements */,
+				F5155FE62BD09BEB004F1CA1 /* Tetra.entitlements */,
 				F5155FE02BD09B5F004F1CA1 /* Info.plist */,
 				88F92F622CBE3D0D00F9A089 /* Assets.xcassets */,
 			);
@@ -196,9 +196,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F5155FCB2BD09B5D004F1CA1 /* GuessTogether */ = {
+		F5155FCB2BD09B5D004F1CA1 /* Tetra */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "GuessTogether" */;
+			buildConfigurationList = F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "Tetra" */;
 			buildPhases = (
 				F5155FC82BD09B5D004F1CA1 /* Sources */,
 				F5155FC92BD09B5D004F1CA1 /* Frameworks */,
@@ -208,9 +208,9 @@
 			);
 			dependencies = (
 			);
-			name = GuessTogether;
-			productName = GuessTogether;
-			productReference = F5155FCC2BD09B5D004F1CA1 /* GuessTogether.app */;
+			name = Tetra;
+			productName = Tetra;
+			productReference = F5155FCC2BD09B5D004F1CA1 /* Tetra.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -229,7 +229,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "GuessTogether" */;
+			buildConfigurationList = F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "Tetra" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -242,7 +242,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F5155FCB2BD09B5D004F1CA1 /* GuessTogether */,
+				F5155FCB2BD09B5D004F1CA1 /* Tetra */,
 			);
 		};
 /* End PBXProject section */
@@ -416,7 +416,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = GuessTogether/Resources/GuessTogether.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Tetra/Resources/Tetra.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = U5C32BLC73;
@@ -424,7 +424,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = GuessTogether;
+				INFOPLIST_KEY_CFBundleDisplayName = Tetra;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -448,7 +448,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = GuessTogether/Resources/GuessTogether.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Tetra/Resources/Tetra.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = U5C32BLC73;
@@ -456,7 +456,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = GuessTogether;
+				INFOPLIST_KEY_CFBundleDisplayName = Tetra;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -477,7 +477,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "GuessTogether" */ = {
+		F5155FC72BD09B5D004F1CA1 /* Build configuration list for PBXProject "Tetra" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5155FE12BD09B5F004F1CA1 /* Debug */,
@@ -486,7 +486,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "GuessTogether" */ = {
+		F5155FE32BD09B5F004F1CA1 /* Build configuration list for PBXNativeTarget "Tetra" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5155FE42BD09B5F004F1CA1 /* Debug */,
