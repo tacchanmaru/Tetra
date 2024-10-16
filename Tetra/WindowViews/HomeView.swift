@@ -55,10 +55,13 @@ struct HomeView: View {
                             .cornerRadius(12)
                     }
                     
-                    Image(systemName: "person.crop.circle")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
+                    NavigationLink(destination: SettingView()) {
+                        Image(systemName: "person.crop.circle")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                    }
+                    
                 }
                 .padding()
             
