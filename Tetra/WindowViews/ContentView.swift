@@ -35,7 +35,8 @@ struct ContentView: View {
         Group {
             switch appModel.sessionController?.game.stage {
             case .none:
-                HomeView()
+//                HomeView()
+                DetailView()
             case .inGame:
                 ScoreBoardView()
             }

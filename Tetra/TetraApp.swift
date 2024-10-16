@@ -1,16 +1,20 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The main app structure.
-*/
-
 import SwiftUI
+import FirebaseCore
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
+}
+
 
 @main
 struct TetraApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State var appModel = AppModel()
-    
     var body: some Scene {
         Group {
             TetraWindow()
