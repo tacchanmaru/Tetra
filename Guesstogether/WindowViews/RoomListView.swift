@@ -32,7 +32,6 @@ struct RoomCard: View {
                         .padding(.horizontal, 8)
                         .padding(.vertical, 6)
                         .background(Color.black.opacity(0.3))
-                        
                     }
                 )
             // テキスト部分
