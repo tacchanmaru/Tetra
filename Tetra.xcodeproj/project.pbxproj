@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8898BDAB2CBF8EB100808FA9 /* SettingVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898BDAA2CBF8EAA00808FA9 /* SettingVIew.swift */; };
+		8898BDAB2CBF8EB100808FA9 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898BDAA2CBF8EAA00808FA9 /* SettingView.swift */; };
+		8898BDAE2CBFA07600808FA9 /* AddSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8898BDAD2CBFA07100808FA9 /* AddSpaceView.swift */; };
 		88F92F5D2CBE205900F9A089 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F92F5C2CBE205500F9A089 /* HomeView.swift */; };
 		88F92F5F2CBE2CF500F9A089 /* RoomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F92F5E2CBE2CE800F9A089 /* RoomListView.swift */; };
 		88F92F632CBE3D0D00F9A089 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F92F622CBE3D0D00F9A089 /* Assets.xcassets */; };
@@ -34,7 +35,8 @@
 /* Begin PBXFileReference section */
 		475409EE5B8057AEF1677487 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		8898BDAA2CBF8EAA00808FA9 /* SettingVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVIew.swift; sourceTree = "<group>"; };
+		8898BDAA2CBF8EAA00808FA9 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		8898BDAD2CBFA07100808FA9 /* AddSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceView.swift; sourceTree = "<group>"; };
 		88F92F5C2CBE205500F9A089 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		88F92F5E2CBE2CE800F9A089 /* RoomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListView.swift; sourceTree = "<group>"; };
 		88F92F622CBE3D0D00F9A089 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -175,7 +177,8 @@
 		F5CF2A0C2BD1EBF700C66F78 /* WindowViews */ = {
 			isa = PBXGroup;
 			children = (
-				8898BDAA2CBF8EAA00808FA9 /* SettingVIew.swift */,
+				8898BDAD2CBFA07100808FA9 /* AddSpaceView.swift */,
+				8898BDAA2CBF8EAA00808FA9 /* SettingView.swift */,
 				88F92F5E2CBE2CE800F9A089 /* RoomListView.swift */,
 				88F92F5C2CBE205500F9A089 /* HomeView.swift */,
 				F5E971A22BE0492900A0BE6A /* ContentView.swift */,
@@ -271,6 +274,7 @@
 				F5E971A52BE04BC200A0BE6A /* TetraWindow.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,
+				8898BDAE2CBFA07600808FA9 /* AddSpaceView.swift in Sources */,
 				88F92F5F2CBE2CF500F9A089 /* RoomListView.swift in Sources */,
 				F5CF2A092BD1CF9600C66F78 /* TetraActivity.swift in Sources */,
 				F5CF2A152BD1F42D00C66F78 /* WelcomeView.swift in Sources */,
@@ -285,7 +289,7 @@
 				88F92F5D2CBE205900F9A089 /* HomeView.swift in Sources */,
 				F5ED05F32BD33974007C6C60 /* TetraToolbar.swift in Sources */,
 				F518FDCF2BD875A7001D1F19 /* NameAlert.swift in Sources */,
-				8898BDAB2CBF8EB100808FA9 /* SettingVIew.swift in Sources */,
+				8898BDAB2CBF8EB100808FA9 /* SettingView.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
