@@ -570,6 +570,7 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 88F92FDF2CBF818500F9A089 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
 		91FBE5552CC3762A00E5C709 /* NostrClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 91FBE5542CC3762A00E5C709 /* XCRemoteSwiftPackageReference "NostrClient" */;
