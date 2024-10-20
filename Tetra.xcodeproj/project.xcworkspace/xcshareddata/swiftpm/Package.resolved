@@ -1,0 +1,33 @@
+{
+  "originHash" : "d3f09574bb353b2a4624d3e4d1ebdc7c279d53757e814775da76819e68dd79d9",
+  "pins" : [
+    {
+      "identity" : "nostr",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Galaxoid-Labs/Nostr.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a3f8aa04fc5bd492db126edc721ac9cd3f6fb2f7"
+      }
+    },
+    {
+      "identity" : "nostrclient",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Galaxoid-Labs/NostrClient.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0e0c4fe1339aeae806c9b8eff208386796fb71aa"
+      }
+    },
+    {
+      "identity" : "swift-secp256k1",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/21-DOT-DEV/swift-secp256k1.git",
+      "state" : {
+        "revision" : "9683e8e311c76d8114cd308b697dad2f9fc58fed",
+        "version" : "0.17.0"
+      }
+    }
+  ],
+  "version" : 3
+}

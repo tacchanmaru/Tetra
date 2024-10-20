@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		88F92F632CBE3D0D00F9A089 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F92F622CBE3D0D00F9A089 /* Assets.xcassets */; };
 		9035A4462CBE53DE0007B00E /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035A4452CBE53D90007B00E /* DetailView.swift */; };
 		905B24D52CA5343C007D7551 /* GameScoreBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905B24D42CA5343C007D7551 /* GameScoreBoardView.swift */; };
+		91FBE5562CC3762A00E5C709 /* NostrClient in Frameworks */ = {isa = PBXBuildFile; productRef = 91FBE5552CC3762A00E5C709 /* NostrClient */; };
 		C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = C310AA562BD1F2970098D2B8 /* Publisher+withPrevious.swift */; };
 		F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50303DB2BD97752005EC512 /* GameSpace.swift */; };
 		F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */; };
@@ -64,11 +65,16 @@
 		F5ED05F22BD333E0007C6C60 /* TetraToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		91FBE5592CC3A72D00E5C709 /* Nostr */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Nostr; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		F5155FC92BD09B5D004F1CA1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91FBE5562CC3762A00E5C709 /* NostrClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +128,7 @@
 		F5155FCE2BD09B5D004F1CA1 /* Tetra */ = {
 			isa = PBXGroup;
 			children = (
+				91FBE5592CC3A72D00E5C709 /* Nostr */,
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
 				F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */,
 				F5CF2A0C2BD1EBF700C66F78 /* WindowViews */,
@@ -214,6 +221,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				91FBE5592CC3A72D00E5C709 /* Nostr */,
+			);
 			name = Tetra;
 			productName = Tetra;
 			productReference = F5155FCC2BD09B5D004F1CA1 /* Tetra.app */;
@@ -244,6 +254,9 @@
 				Base,
 			);
 			mainGroup = F5155FC32BD09B5D004F1CA1;
+			packageReferences = (
+				91FBE5542CC3762A00E5C709 /* XCRemoteSwiftPackageReference "NostrClient" */,
+			);
 			productRefGroup = F5155FCD2BD09B5D004F1CA1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -504,6 +517,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		91FBE5542CC3762A00E5C709 /* XCRemoteSwiftPackageReference "NostrClient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Galaxoid-Labs/NostrClient.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		91FBE5552CC3762A00E5C709 /* NostrClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 91FBE5542CC3762A00E5C709 /* XCRemoteSwiftPackageReference "NostrClient" */;
+			productName = NostrClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5155FC42BD09B5D004F1CA1 /* Project object */;
 }
