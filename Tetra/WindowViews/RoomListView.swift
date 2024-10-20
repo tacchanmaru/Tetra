@@ -68,10 +68,11 @@ struct RoundedCorner: Shape {
 
 struct RoomListView: View{
     let rooms = [
-        ("LT room", 98, "VisionDevCamp Tokyo", "VisionPro"),
-        ("Group1", 12, "VisionDevCamp Tokyo", "VisionPro"),
-        ("Group2", 3, "VisionDevCamp Tokyo", "VisionPro"),
-        ("Group3", 43, "VisionDevCamp Tokyo", "VisionPro")
+        ("LT room", 98, "VisionDevCamp Tokyo", "Tokyo"),
+        ("Group1", 12, "VisionDevCamp Osaka", "Osaka"),
+        ("Group2", 3, "VisionDevCamp Hokkaido", "北海道"),
+        ("Group3", 43, "VisionDevCamp Mt.Fuji", "富士山"),
+        ("Group4", 32, "USA", "VisionPro"),
     ]
     
     var body: some View {
