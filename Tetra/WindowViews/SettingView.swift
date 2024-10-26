@@ -78,7 +78,7 @@ struct SettingView: View {
     }
 }
 
-#Preview{
-    SettingView()
-        .environment(AppModel())
-}
+//#Preview{
+//    SettingView()
+//        .environment(AppModel())
+//}
