@@ -4,10 +4,10 @@ import SwiftData
 /// A view that presents the app's content library.
 struct SettingView: View {
     @Environment(AppModel.self) var appModel
+    @ObservedObject var nostrClientManager = NostrClientManager()
     @State private var accountName: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var selfIntroduction: String = ""
+    @State private var displayName: String = ""
+    @State private var about: String = ""
     
     var body: some View {
         ScrollView{
@@ -17,34 +17,33 @@ struct SettingView: View {
                     .padding(.bottom, 20)
                 
                 Group{
-                    Text("Account Name")
+                    AsyncImage(url: URL(string: nostrClientManager.pictureUrl)) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    Text("Name")
                         .font(.headline)
-                    TextField("Enter account name", text: $accountName)
+                    TextField("Enter account name", text: $nostrClientManager.accountName)
                         .padding()
                         .frame(width:500)
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(8)
                     
-                    Text("Email Address")
+                    Text("Display Name")
                         .font(.headline)
-                    TextField("Enter email", text: $email)
-                        .keyboardType(.emailAddress)
+                    TextField("Enter display name", text: $nostrClientManager.displayName)
                         .padding()
                         .frame(width:500)
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(8)
                     
-                    Text("Password")
+                    Text("About")
                         .font(.headline)
-                    SecureField("Enter password", text: $password)
-                        .padding()
-                        .frame(width:500)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
-                    
-                    Text("Self Introduction")
-                        .font(.headline)
-                    TextField("Write something about yourself", text: $selfIntroduction)
+                    TextField("Write something about yourself", text: $nostrClientManager.about)
                         .lineLimit(5, reservesSpace: true)
                         .padding()
                         .background(Color.gray.opacity(0.2))
