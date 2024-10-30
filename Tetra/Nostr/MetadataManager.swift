@@ -10,7 +10,7 @@ import Foundation
 import NostrClient
 import Nostr
 
-class NostrClientManager: ObservableObject {
+class NostrMetadataManager: ObservableObject {
     private var client: NostrClient
     private lazy var delegate: NostrDelegate = NostrDelegate(manager: self)
     
@@ -24,7 +24,7 @@ class NostrClientManager: ObservableObject {
         client.delegate = delegate
         client.add(relayWithUrl: "wss://relay.damus.io", autoConnect: true)
         
-        let subscription = Subscription(filters: [.init(authors: ["6bcc27d284f7b10c0ec4252ac90d37b3aaeb30a53fadf2ce798d7d47b67d296e"], kinds: [Kind(id: 0)])])
+        let subscription = Subscription(filters: [.init(authors: ["670874fa6dd544edc5867763ce793552396aedda1a5fda3a97949f66ab0acfb3"], kinds: [Kind(id: 0)])])
         client.add(subscriptions: [subscription])
     }
     
@@ -39,16 +39,23 @@ class NostrClientManager: ObservableObject {
 }
 
 class NostrDelegate: NostrClientDelegate {
-    weak var manager: NostrClientManager?
+    weak var manager: NostrMetadataManager?
     
-    init(manager: NostrClientManager) {
+    init(manager: NostrMetadataManager) {
         self.manager = manager
     }
     
     func didReceive(message: Nostr.RelayMessage, relayUrl: String) {
+        
         if case .event(_, let event) = message, event.kind == .setMetadata {
+            
+            
             if let metadata = try? JSONDecoder().decode([String: String].self, from: event.content.data(using: .utf8)!) {
+                print("Decoded metadata: \(metadata)")
                 manager?.updateMetadata(metadata)
+            }
+            else {
+                print("Failed to decode metadata")
             }
         }
     }
