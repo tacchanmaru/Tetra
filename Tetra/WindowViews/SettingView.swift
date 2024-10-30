@@ -4,7 +4,7 @@ import SwiftData
 /// A view that presents the app's content library.
 struct SettingView: View {
     @Environment(AppModel.self) var appModel
-    @ObservedObject var nostrClientManager = NostrClientManager()
+    @ObservedObject var nostrClientManager = NostrMetadataManager()
     @State private var accountName: String = ""
     @State private var displayName: String = ""
     @State private var about: String = ""
