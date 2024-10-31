@@ -9,59 +9,31 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack {
+                Spacer().frame(height: 10)
+                
                 HStack {
-                    Button(action: {
-                        //アクションを追加
-                    }) {
-                        Image(systemName: "line.horizontal.3.decrease.circle")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    }
-
-                    Button(action: {
-                        //アクションを追加
-                    }) {
-                        Image(systemName: "arrow.left")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    }
-
                     Spacer()
-
                     HStack {
-                        Image(systemName: "mic")
-
                         TextField("Search", text: $searchText)
                             .padding()
                             .background(Color.gray.opacity(0.4))
                             .cornerRadius(32)
+                            .frame(width: 600)
                             .frame(height: 40)
                         Spacer()
                     }
                     .padding()
                     .foregroundColor(Color.gray.opacity(0.4))
                     .cornerRadius(12)
-                    .frame(maxWidth: 500)
                     .frame(height: 40)
 
                     Spacer()
 
-                    Button(action: {
-                        //アクションを追加
-                    }) {
-                        NavigationLink(destination: AddSpaceView()) {
-                            Text("+ Add Space")
-                                .padding(.horizontal)
-                                .padding(.vertical, 8)
-                                .cornerRadius(12)
-                        }
-                    }
-
-                    NavigationLink(destination: SettingView()) {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
+                    NavigationLink(destination: AddSpaceView()) {
+                        Text("+ Add Space")
+                            .padding(.horizontal)
+                            .padding(.vertical, 8)
+                            .cornerRadius(12)
                     }
 
                 }
