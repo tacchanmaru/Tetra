@@ -1,56 +1,60 @@
 import SwiftUI
 
 struct RoomCard: View {
-    let roomName: String
-    let participantCount: Int
+    let title: String
+    let memberNum: Int
     let location: String
-    let imageName: String
+    let image: String
+    let description: String
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // 画像部分
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 250, height: 250)
-                .cornerRadius(10) // 画像の上部分だけ角を丸める
-                .overlay(
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Text(roomName)
-                                .font(.headline)
-                                .foregroundColor(.white)
+        NavigationLink(destination: DetailView(room: (title, memberNum, location, image, description))){
+            VStack(alignment: .leading, spacing: 0) {
+                // 画像部分
+                Image(image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 250, height: 250)
+                    .cornerRadius(10) // 画像の上部分だけ角を丸める
+                    .overlay(
+                        VStack {
                             Spacer()
                             HStack {
-                                Image(systemName: "person.fill")
+                                Text(title)
+                                    .font(.headline)
                                     .foregroundColor(.white)
-                                Text("\(participantCount)")
-                                    .foregroundColor(.white)
+                                Spacer()
+                                HStack {
+                                    Image(systemName: "person.fill")
+                                        .foregroundColor(.white)
+                                    Text("\(memberNum)")
+                                        .foregroundColor(.white)
+                                }
                             }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 6)
+                            .background(Color.black.opacity(0.3))
+                            
                         }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 6)
-                        .background(Color.black.opacity(0.3))
-                        
-                    }
-                )
-            // テキスト部分
-            VStack(alignment: .leading) {
-                Text(location)
-                    .font(.subheadline)
-                    .foregroundColor(.primary)
+                    )
+                // テキスト部分
+                VStack(alignment: .leading) {
+                    Text(location)
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
+                }
+                .padding(.horizontal, 8)
+                .padding(.bottom, 8)
+                .background(Color(UIColor.systemBackground))
+                .cornerRadius(10)
+                
             }
-            .padding(.horizontal, 8)
-            .padding(.bottom, 8)
+            .frame(width: 250)
             .background(Color(UIColor.systemBackground))
-            .cornerRadius(10)
-            
+            .cornerRadius(12)
+            .shadow(radius: 4)
         }
-        .frame(width: 250) // カード全体の幅を指定
-        .background(Color(UIColor.systemBackground))
-        .cornerRadius(12) // カード全体に角丸を設定
-        .shadow(radius: 4) // 影を追加
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -67,13 +71,14 @@ struct RoundedCorner: Shape {
 
 
 struct RoomListView: View{
-    let rooms = [
-        ("LT room", 98, "VisionDevCamp Tokyo", "Tokyo"),
-        ("Group1", 12, "VisionDevCamp Osaka", "Osaka"),
-        ("Group2", 3, "VisionDevCamp Hokkaido", "北海道"),
-        ("Group3", 43, "VisionDevCamp Mt.Fuji", "富士山"),
-        ("Group4", 32, "USA", "VisionPro"),
-    ]
+    
+    let rooms: [(
+        title: String,
+        memberNum: Int,
+        location: String,
+        image: String,
+        description: String
+    )]
     
     var body: some View {
         VStack(alignment: .leading){
@@ -82,7 +87,13 @@ struct RoomListView: View{
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 16){
                     ForEach(rooms, id: \.0){ room in
-                        RoomCard(roomName: room.0, participantCount: room.1, location: room.2, imageName: room.3)
+                        RoomCard(
+                            title: room.title,
+                            memberNum: room.memberNum,
+                            location: room.location,
+                            image: room.image,
+                            description: room.description
+                        )
                     }
                 }
                 .padding(.horizontal, 16)

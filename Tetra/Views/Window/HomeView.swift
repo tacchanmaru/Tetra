@@ -5,6 +5,24 @@ import SwiftUI
 struct HomeView: View {
     @Environment(AppModel.self) var appModel
     @State private var searchText = ""
+    
+    let nowActiveRooms = [
+        ("VisionDevCamp1", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp2", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp3", 43, "Mt.Fuji", "MtFuji", "オフラインでは富士山麓で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp4", 32, "USA", "VisionPro", "オフラインではアメリカで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp5", 98, "Tokyo", "Tokyo", "オフラインでは東京で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp6", 7, "Italy", "Italy", "オフラインではイタリアで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+    ]
+    
+    let mostPopularRooms = [
+        ("VisionDevCamp1", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp2", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp3", 43, "Mt.Fuji", "MtFuji", "オフラインでは富士山麓で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp4", 32, "USA", "VisionPro", "オフラインではアメリカで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp5", 98, "Tokyo", "Tokyo", "オフラインでは東京で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp6", 7, "Italy", "Italy", "オフラインではイタリアで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+    ]
 
     var body: some View {
         ScrollView {
@@ -47,7 +65,7 @@ struct HomeView: View {
                         .font(.title2.bold())
                         .padding(.leading, 16)
 
-                    RoomListView()
+                    RoomListView(rooms: nowActiveRooms)
 
                     Spacer().frame(height: 30)
 
@@ -55,7 +73,7 @@ struct HomeView: View {
                         .font(.title2.bold())
                         .padding(.leading, 16)
 
-                    RoomListView()
+                    RoomListView(rooms: mostPopularRooms)
 
                     Spacer()
                 }
