@@ -36,7 +36,7 @@ struct DetailView: View {
                             .font(.headline)
                     }
                     
-                    Text("欄木 , 跡部 , 斎藤")
+                    Text("tacchanmaru , yugo , morinosuke")
                         .font(.headline)
 
                     Text(room.description)
