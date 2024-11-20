@@ -16,6 +16,10 @@ struct TetraTabs: View {
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
+            SharePlayView()
+                .tabItem {
+                    Label("Share Play", systemImage: "arrow.2.circlepath.circle")
+                }
         }
     }
 }
