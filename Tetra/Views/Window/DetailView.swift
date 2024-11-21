@@ -90,6 +90,33 @@ struct DetailView: View {
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    HStack {
+                        Text("FaceTime link: ")
+                        
+                        let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=ZwAt7KeXEe+n9Y4xRDecvg&k=zyPbaG1l2PV4HUrjZFLUDoL0zQBUTwnPB2svFjYJToQ"
+                        
+                        Text(newFaceTimeLink)
+                            .padding(8)
+                            .overlay(
+                                Rectangle()
+                                    .frame(height: 2)
+                                    .foregroundColor(.black),
+                                alignment: .bottom
+                            )
+                            .fixedSize(horizontal: false, vertical: true)
+                            .lineLimit(1)
+
+                        Button {
+                            if let url = URL(string: newFaceTimeLink) {
+                                UIApplication.shared.open(url)
+                            }
+                        } label: {
+                            Text("open")
+                        }
+                        .fixedSize(horizontal: true, vertical: false)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+
                     
                 }
                 .padding(50)
