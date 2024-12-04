@@ -65,13 +65,12 @@ extension OwnerAccount {
     }
     
     static func saveKeyPairToKeychain(keyPair: KeyPair) {
-        let keychain = Keychain(service: "seer")
+        let keychain = Keychain(service: "tetra")
         try? keychain.set(keyPair.privateKey, key: keyPair.publicKey)
     }
     
     static func removeKeyPairFromKeychain(keyPair: KeyPair) {
-        let keychain = Keychain(service: "seer")
+        let keychain = Keychain(service: "tetra")
         try? keychain.remove(keyPair.publicKey)
     }
-    
 }

@@ -40,7 +40,6 @@ struct AddMetadataRelayView: View {
         .onChange(of: relays) {
             print("Updated Relays fetched by @Query: \(relays.map { $0.url })")
         }
-        
     }
     
     private var relayIcon: some View {

@@ -20,10 +20,8 @@ class AppState: ObservableObject {
     var checkUnverifiedTimer: Timer?
     var checkVerifiedTimer: Timer?
     var checkBusyTimer: Timer?
-
-    static let shared = AppState()
     
-    @Published var registeredNsec = true
+    @Published var registeredNsec: Bool = true
     @Published var selectedOwnerAccount: OwnerAccount?
     @Published var selectedRelay: Relay?
     //現在必要ない

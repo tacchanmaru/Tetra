@@ -16,7 +16,6 @@ struct ContentView: View {
                 StartView()
             }
         }.onAppear {
-            //まだnsecを登録していない場合は、登録画面に飛ぶ。
             if ownerAccounts.isEmpty {
                 appState.registeredNsec = false
             }

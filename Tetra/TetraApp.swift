@@ -10,7 +10,7 @@ struct TetraApp: App {
         let schema = Schema([
             OwnerAccount.self,
             Relay.self,
-            PublicKeyMetadata.self ,
+            PublicKeyMetadata.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -22,7 +22,7 @@ struct TetraApp: App {
     }()
     
     @State var appModel = AppModel()
-    @StateObject var appState = AppState.shared
+    @StateObject var appState = AppState()
     
     @StateObject var nostrClient = NostrClient()
     
