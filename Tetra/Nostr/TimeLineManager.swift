@@ -89,7 +89,6 @@ class NostrTimeLineDelegate: NostrClientDelegate {
         case .event(_, let event):
             // textNote の場合
             if event.kind == .textNote {
-                print("raw textNote: \(event)")
                 
                 if let metadata = manager?.getMetadata(for: event.pubkey) {
                     

@@ -17,5 +17,6 @@ struct TetraTabs: View {
                     Label("Settings", systemImage: "gearshape")
                 }
         }
+        .navigationBarBackButtonHidden()
     }
 }

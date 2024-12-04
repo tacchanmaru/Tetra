@@ -6,16 +6,14 @@ struct RoomCard: View {
     let location: String
     let image: String
     let description: String
-    
+
     var body: some View {
-        NavigationLink(destination: DetailView(room: (title, memberNum, location, image, description))){
-            VStack(alignment: .leading, spacing: 0) {
-                // 画像部分
+        NavigationLink(destination: DetailView(room: (title, memberNum, location, image, description))) {
+            VStack(alignment: .leading) {
                 Image(image)
                     .resizable()
-                    .scaledToFill()
                     .frame(width: 250, height: 250)
-                    .cornerRadius(10) // 画像の上部分だけ角を丸める
+                    .cornerRadius(12)
                     .overlay(
                         VStack {
                             Spacer()
@@ -34,10 +32,9 @@ struct RoomCard: View {
                             .padding(.horizontal, 8)
                             .padding(.vertical, 6)
                             .background(Color.black.opacity(0.3))
-                            
+                            .clipShape(RoundedCorners(cornerRadius: 12, corners: [.bottomLeft, .bottomRight]))
                         }
                     )
-                // テキスト部分
                 VStack(alignment: .leading) {
                     Text(location)
                         .font(.subheadline)
@@ -46,28 +43,16 @@ struct RoomCard: View {
                 .padding(.horizontal, 8)
                 .padding(.bottom, 8)
                 .background(Color(UIColor.systemBackground))
-                .cornerRadius(10)
-                
             }
-            .frame(width: 250)
-            .background(Color(UIColor.systemBackground))
+            .contentShape(RoundedRectangle(cornerRadius: 12))
             .cornerRadius(12)
-            .shadow(radius: 4)
+            .hoverEffect()
+            .background(Color(UIColor.systemBackground))
         }
         .buttonStyle(PlainButtonStyle())
     }
 }
 
-// カスタム角丸を部分的に適用するためのModifier
-struct RoundedCorner: Shape {
-    var radius: CGFloat = 12
-    var corners: UIRectCorner = .allCorners
-
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
 
 
 struct RoomListView: View{

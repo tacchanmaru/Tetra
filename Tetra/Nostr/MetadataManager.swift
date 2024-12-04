@@ -1,11 +1,3 @@
-//
-//  NostrClientManager.swift
-//  Tetra
-//
-//  Created by yugoatobe on 10/19/24.
-//  Copyright © 2024 Apple. All rights reserved.
-//
-
 import Foundation
 import NostrClient
 import Nostr
@@ -46,6 +38,7 @@ class NostrDelegate: NostrClientDelegate {
     }
     
     func didReceive(message: Nostr.RelayMessage, relayUrl: String) {
+        print("こんにちは")
         
         if case .event(_, let event) = message, event.kind == .setMetadata {
             
