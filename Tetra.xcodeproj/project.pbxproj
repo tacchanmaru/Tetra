@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		888FBBA92D01234900F45041 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBA82D01234900F45041 /* GameModel.swift */; };
+		888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBAA2D01235200F45041 /* PlayerModel.swift */; };
 		889316032CFEECF500A85EC3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316022CFEECF100A85EC3 /* RoundedCorners.swift */; };
 		889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */; };
 		88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAACF2CF7EC6200E8C909 /* StartView.swift */; };
@@ -41,6 +43,8 @@
 /* Begin PBXFileReference section */
 		475409EE5B8057AEF1677487 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		888FBBA82D01234900F45041 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		888FBBAA2D01235200F45041 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		889316022CFEECF100A85EC3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKeyMetadata.swift; sourceTree = "<group>"; };
 		88EFAACF2CF7EC6200E8C909 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 		F5A044252BD5788500EDAAD5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				888FBBAA2D01235200F45041 /* PlayerModel.swift */,
+				888FBBA82D01234900F45041 /* GameModel.swift */,
 				F5155FD72BD09B5D004F1CA1 /* AppModel.swift */,
 			);
 			path = Models;
@@ -313,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */,
 				88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,
@@ -325,6 +332,7 @@
 				F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */,
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
+				888FBBA92D01234900F45041 /* GameModel.swift in Sources */,
 				913CFF4E2CDD8E9300422B27 /* DetailView.swift in Sources */,
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
 				913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */,

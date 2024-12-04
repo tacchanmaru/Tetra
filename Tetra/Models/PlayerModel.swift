@@ -1,10 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-A model that represents each player's state in the SharePlay group session.
-*/
-
 import Spatial
 import SwiftUI
 
