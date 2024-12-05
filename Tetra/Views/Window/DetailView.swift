@@ -47,45 +47,25 @@ struct DetailView: View {
                     HStack {
                         Text("FaceTime link: ")
                         
-                        TextField("your FaceTime link", text: $inputSharePlayLink)
+                        let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=ZwAt7KeXEe+n9Y4xRDecvg&k=zyPbaG1l2PV4HUrjZFLUDoL0zQBUTwnPB2svFjYJToQ"
+                        
+                        Text(newFaceTimeLink)
                             .padding(8)
                             .overlay(
                                 Rectangle()
-                                    .frame(height: 2) // 下線の高さを設定
-                                    .foregroundColor(.black), // 下線の色を黒に設定
-                                alignment: .bottom // 下線の位置を下に設定
-                            )
-                            .fixedSize(horizontal: false, vertical: true)
-                       
-                        Button {
-                            // action
-                        } label: {
-                            Text("paste")
-                        }
-                        .fixedSize(horizontal: true, vertical: false)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    
-                    HStack {
-                        Text("FaceTime link: ")
-                        
-                        let sharePlayLink = "https://facetime.apple.com/join#v=1&p=d5fKQIrYEe+qASYt62+A9A&k=FnnTTVJo0RcCT6MJfZtQ5P0tT-OM9g4cgYhTMqFQLg0"
-                        
-                        Text(sharePlayLink)
-                            .padding(8)
-                            .overlay(
-                                Rectangle()
-                                    .frame(height: 2) // 下線の高さを設定
-                                    .foregroundColor(.black), // 下線の色を黒に設定
-                                alignment: .bottom // 下線の位置を下に設定
+                                    .frame(height: 2)
+                                    .foregroundColor(.black),
+                                alignment: .bottom
                             )
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(1)
-        
+
                         Button {
-                            // action
+                            if let url = URL(string: newFaceTimeLink) {
+                                UIApplication.shared.open(url)
+                            }
                         } label: {
-                            Text("copy")
+                            Text("open")
                         }
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -95,9 +75,9 @@ struct DetailView: View {
                 .padding(50)
                 .padding(.bottom, 0)
                 .padding(.trailing, 100)
-                .frame(height: geometry.size.height, alignment: .bottom) // GeometryReaderから高さを取得
+                .frame(height: geometry.size.height, alignment: .bottom)
                 .background(alignment: .bottom) {
-                    backgroundView(geometry: geometry) // 背景画像にGeometryReaderを渡す
+                    backgroundView(geometry: geometry)
                 }
                 
             }
