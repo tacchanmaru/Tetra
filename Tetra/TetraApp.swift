@@ -1,21 +1,44 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The main app structure.
-*/
-
 import SwiftUI
+import SwiftData
+import Nostr
+import NostrClient
 
 @main
 struct TetraApp: App {
+    
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            OwnerAccount.self,
+            Relay.self,
+            PublicKeyMetadata.self,
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
+    
     @State var appModel = AppModel()
+    @StateObject var appState = AppState()
+    
+    @StateObject var nostrClient = NostrClient()
     
     var body: some Scene {
-        Group {
-            TetraWindow()
-            GameSpace()
+        WindowGroup {
+            ContentView()
+                .modelContainer(sharedModelContainer)
+                .environment(appModel)
+                .environmentObject(appState)
+                .task {
+                    appState.modelContainer = sharedModelContainer
+                    await appState.initialSetup()
+                    //TODO: Chat関連なので後回し
+//                    await appState.connectAllNip29Relays()
+                    await appState.connectAllMetadataRelays()
+                }
         }
-        .environment(appModel)
     }
 }

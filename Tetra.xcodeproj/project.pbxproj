@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		888FBBA92D01234900F45041 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBA82D01234900F45041 /* GameModel.swift */; };
+		888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBAA2D01235200F45041 /* PlayerModel.swift */; };
+		889316032CFEECF500A85EC3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316022CFEECF100A85EC3 /* RoundedCorners.swift */; };
+		889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */; };
+		88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAACF2CF7EC6200E8C909 /* StartView.swift */; };
+		88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */; };
+		88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */; };
+		88EFAAD62CF7FE6700E8C909 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAAD52CF7FE6100E8C909 /* AppState.swift */; };
+		88EFAAD92CF80F5C00E8C909 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 88EFAAD82CF80F5C00E8C909 /* KeychainAccess */; };
+		88EFAADB2CF8912500E8C909 /* OwnerAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */; };
+		88EFAADD2CF8914500E8C909 /* Relay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADC2CF8914100E8C909 /* Relay.swift */; };
 		88F92F632CBE3D0D00F9A089 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F92F622CBE3D0D00F9A089 /* Assets.xcassets */; };
 		913CFF4E2CDD8E9300422B27 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF472CDD8E9300422B27 /* DetailView.swift */; };
 		913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF3F2CDD8E9300422B27 /* RoomList.swift */; };
@@ -15,10 +26,8 @@
 		913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF4B2CDD8E9300422B27 /* WelcomeView.swift */; };
 		913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF4A2CDD8E9300422B27 /* TimeLineView.swift */; };
 		913CFF542CDD8E9300422B27 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF482CDD8E9300422B27 /* HomeView.swift */; };
-		913CFF552CDD8E9300422B27 /* NameAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF422CDD8E9300422B27 /* NameAlert.swift */; };
 		913CFF562CDD8E9300422B27 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF462CDD8E9300422B27 /* ContentView.swift */; };
 		913CFF572CDD8E9300422B27 /* TetraTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF402CDD8E9300422B27 /* TetraTabs.swift */; };
-		913CFF582CDD8E9300422B27 /* TetraToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF432CDD8E9300422B27 /* TetraToolbar.swift */; };
 		91FBE5562CC3762A00E5C709 /* NostrClient in Frameworks */ = {isa = PBXBuildFile; productRef = 91FBE5552CC3762A00E5C709 /* NostrClient */; };
 		C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = C310AA562BD1F2970098D2B8 /* Publisher+withPrevious.swift */; };
 		F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50303DB2BD97752005EC512 /* GameSpace.swift */; };
@@ -27,21 +36,26 @@
 		F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */; };
 		F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */; };
 		F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */; };
-		F5CF2A052BD1C07A00C66F78 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A042BD1C07A00C66F78 /* GameModel.swift */; };
 		F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */; };
 		F5CF2A092BD1CF9600C66F78 /* TetraActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A082BD1CF9600C66F78 /* TetraActivity.swift */; };
-		F5CF2A0B2BD1D1A900C66F78 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF2A0A2BD1D1A900C66F78 /* PlayerModel.swift */; };
-		F5E971A52BE04BC200A0BE6A /* TetraWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		475409EE5B8057AEF1677487 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		888FBBA82D01234900F45041 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		888FBBAA2D01235200F45041 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
+		889316022CFEECF100A85EC3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
+		889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKeyMetadata.swift; sourceTree = "<group>"; };
+		88EFAACF2CF7EC6200E8C909 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMetadataRelayView.swift; sourceTree = "<group>"; };
+		88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
+		88EFAAD52CF7FE6100E8C909 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerAccount.swift; sourceTree = "<group>"; };
+		88EFAADC2CF8914100E8C909 /* Relay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relay.swift; sourceTree = "<group>"; };
 		88F92F622CBE3D0D00F9A089 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		913CFF3F2CDD8E9300422B27 /* RoomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomList.swift; sourceTree = "<group>"; };
 		913CFF402CDD8E9300422B27 /* TetraTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraTabs.swift; sourceTree = "<group>"; };
-		913CFF422CDD8E9300422B27 /* NameAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameAlert.swift; sourceTree = "<group>"; };
-		913CFF432CDD8E9300422B27 /* TetraToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraToolbar.swift; sourceTree = "<group>"; };
 		913CFF452CDD8E9300422B27 /* AddSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceView.swift; sourceTree = "<group>"; };
 		913CFF462CDD8E9300422B27 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		913CFF472CDD8E9300422B27 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -60,11 +74,8 @@
 		F5643ADF2BD70B2600FFF716 /* PhraseDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckView.swift; sourceTree = "<group>"; };
 		F5643AE12BD718D700FFF716 /* PhraseDeckPodiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseDeckPodiumView.swift; sourceTree = "<group>"; };
 		F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionController+RemoteParticipantSynchronization.swift"; sourceTree = "<group>"; };
-		F5CF2A042BD1C07A00C66F78 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
 		F5CF2A082BD1CF9600C66F78 /* TetraActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraActivity.swift; sourceTree = "<group>"; };
-		F5CF2A0A2BD1D1A900C66F78 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
-		F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -76,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88EFAAD92CF80F5C00E8C909 /* KeychainAccess in Frameworks */,
 				91FBE5562CC3762A00E5C709 /* NostrClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +106,7 @@
 		913CFF412CDD8E9300422B27 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				889316022CFEECF100A85EC3 /* RoundedCorners.swift */,
 				913CFF3F2CDD8E9300422B27 /* RoomList.swift */,
 				913CFF402CDD8E9300422B27 /* TetraTabs.swift */,
 			);
@@ -103,8 +116,10 @@
 		913CFF442CDD8E9300422B27 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				913CFF422CDD8E9300422B27 /* NameAlert.swift */,
-				913CFF432CDD8E9300422B27 /* TetraToolbar.swift */,
+				889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */,
+				88EFAADC2CF8914100E8C909 /* Relay.swift */,
+				88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */,
+				88EFAAD52CF7FE6100E8C909 /* AppState.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -113,11 +128,14 @@
 			isa = PBXGroup;
 			children = (
 				913CFF442CDD8E9300422B27 /* Shared */,
+				88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */,
+				88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */,
 				913CFF452CDD8E9300422B27 /* AddSpaceView.swift */,
 				913CFF462CDD8E9300422B27 /* ContentView.swift */,
 				913CFF472CDD8E9300422B27 /* DetailView.swift */,
 				913CFF482CDD8E9300422B27 /* HomeView.swift */,
 				913CFF492CDD8E9300422B27 /* SettingView.swift */,
+				88EFAACF2CF7EC6200E8C909 /* StartView.swift */,
 				913CFF4A2CDD8E9300422B27 /* TimeLineView.swift */,
 				913CFF4B2CDD8E9300422B27 /* WelcomeView.swift */,
 			);
@@ -175,7 +193,6 @@
 				913CFF4D2CDD8E9300422B27 /* Views */,
 				91FBE5592CC3A72D00E5C709 /* Nostr */,
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
-				F5E971A42BE04BC200A0BE6A /* TetraWindow.swift */,
 				F5643ADE2BD70B0E00FFF716 /* ImmersiveSpace */,
 				F5A044252BD5788500EDAAD5 /* Models */,
 				F5A044262BD578BA00EDAAD5 /* GroupActivity */,
@@ -208,9 +225,9 @@
 		F5A044252BD5788500EDAAD5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				888FBBAA2D01235200F45041 /* PlayerModel.swift */,
+				888FBBA82D01234900F45041 /* GameModel.swift */,
 				F5155FD72BD09B5D004F1CA1 /* AppModel.swift */,
-				F5CF2A042BD1C07A00C66F78 /* GameModel.swift */,
-				F5CF2A0A2BD1D1A900C66F78 /* PlayerModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -275,6 +292,7 @@
 			mainGroup = F5155FC32BD09B5D004F1CA1;
 			packageReferences = (
 				91FBE5542CC3762A00E5C709 /* XCRemoteSwiftPackageReference "NostrClient" */,
+				88EFAAD72CF80F5C00E8C909 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = F5155FCD2BD09B5D004F1CA1 /* Products */;
 			projectDirPath = "";
@@ -301,28 +319,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5CF2A0B2BD1D1A900C66F78 /* PlayerModel.swift in Sources */,
-				F5CF2A052BD1C07A00C66F78 /* GameModel.swift in Sources */,
-				F5E971A52BE04BC200A0BE6A /* TetraWindow.swift in Sources */,
+				888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */,
+				88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,
+				889316032CFEECF500A85EC3 /* RoundedCorners.swift in Sources */,
+				88EFAADD2CF8914500E8C909 /* Relay.swift in Sources */,
+				88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */,
 				F5CF2A092BD1CF9600C66F78 /* TetraActivity.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */,
 				F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */,
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
+				888FBBA92D01234900F45041 /* GameModel.swift in Sources */,
 				913CFF4E2CDD8E9300422B27 /* DetailView.swift in Sources */,
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
 				913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */,
 				913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */,
 				913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */,
+				88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */,
 				913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */,
 				913CFF542CDD8E9300422B27 /* HomeView.swift in Sources */,
-				913CFF552CDD8E9300422B27 /* NameAlert.swift in Sources */,
 				913CFF562CDD8E9300422B27 /* ContentView.swift in Sources */,
+				889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */,
+				88EFAADB2CF8912500E8C909 /* OwnerAccount.swift in Sources */,
+				88EFAAD62CF7FE6700E8C909 /* AppState.swift in Sources */,
 				913CFF572CDD8E9300422B27 /* TetraTabs.swift in Sources */,
-				913CFF582CDD8E9300422B27 /* TetraToolbar.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -539,6 +562,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		88EFAAD72CF80F5C00E8C909 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		91FBE5542CC3762A00E5C709 /* XCRemoteSwiftPackageReference "NostrClient" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Galaxoid-Labs/NostrClient.git";
@@ -550,6 +581,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		88EFAAD82CF80F5C00E8C909 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88EFAAD72CF80F5C00E8C909 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
 		91FBE5552CC3762A00E5C709 /* NostrClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 91FBE5542CC3762A00E5C709 /* XCRemoteSwiftPackageReference "NostrClient" */;
