@@ -14,7 +14,10 @@ struct TetraTabs: View {
                 .tabItem {
                     Label("Timeline", systemImage: "clock")
                 }
-            
+            ChatView()
+                .tabItem {
+                    Label("【開発用】Chat", systemImage: "message")
+                }
             SettingView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
