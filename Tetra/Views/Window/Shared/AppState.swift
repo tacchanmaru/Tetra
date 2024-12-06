@@ -24,12 +24,11 @@ class AppState: ObservableObject {
     @Published var registeredNsec: Bool = true
     @Published var selectedOwnerAccount: OwnerAccount?
     @Published var selectedRelay: Relay?
-    //現在必要ない
-//    @Published var selectedGroup: Group? {
-//        didSet {
-//            chatMessageNumResults = 50
-//        }
-//    }
+    @Published var selectedGroup: ChatGroup? {
+        didSet {
+            chatMessageNumResults = 50
+        }
+    }
     @Published var chatMessageNumResults: Int = 50
     
     @Published var statuses: [String: Bool] = [:]
@@ -147,28 +146,27 @@ class AppState: ObservableObject {
     // This function is meant to be called anytime there has been a change
     // In subscriptions, etc. It should handle the case where it's simply
     // a no-op if nothing has actually changed in subscriptions, etc.
-    //現在必要ない
-//    @MainActor func subscribeGroups(withRelayUrl relayUrl: String) async {
-//        
-//        let descriptor = FetchDescriptor<Group>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-//        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
-//            
-//            // Get latest message and use since filter so we don't keep getting the same shit
-//            //let since = events.min(by: { $0.createdAt > $1.createdAt })
-//            // TODO: use the since fitler
-//            let groupIds = events.compactMap({ $0.id }).sorted()
-//            let sub = Subscription(filters: [
-//                Filter(kinds: [
-//                    Kind.groupChatMessage,
-//                    //Kind.groupChatMessageReply,
-//                    Kind.groupForumMessage,
-//                    //Kind.groupForumMessageReply
-//                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
-//            ], id: IdSubChatMessages)
-//            
-//            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-//        }
-//    }
+    @MainActor func subscribeGroups(withRelayUrl relayUrl: String) async {
+        
+        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
+        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
+            
+            // Get latest message and use since filter so we don't keep getting the same shit
+            //let since = events.min(by: { $0.createdAt > $1.createdAt })
+            // TODO: use the since fitler
+            let groupIds = events.compactMap({ $0.id }).sorted()
+            let sub = Subscription(filters: [
+                Filter(kinds: [
+                    Kind.groupChatMessage,
+                    //Kind.groupChatMessageReply,
+                    Kind.groupForumMessage,
+                    //Kind.groupForumMessageReply
+                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
+            ], id: IdSubChatMessages)
+            
+            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
+        }
+    }
     
     //現在必要ない
 //    @MainActor func subscribeGroupMemberships(withRelayUrl relayUrl: String) async {
@@ -263,7 +261,6 @@ class AppState: ObservableObject {
     func process(event: Event, relayUrl: String) {
         Task.detached {
             
-            guard let eventId = event.id else { return }
             let publicKey = event.pubkey
             
             print("publicKey: \(publicKey)")
@@ -284,35 +281,33 @@ class AppState: ObservableObject {
 //                            }
 //                        }
                         
-                        print("ここまで通っている")
                         try? modelContext.save()
 
                     }
                     
-                // TODO: Groupに関する内容なので後ほど
-//                case Kind.groupMetadata:
-//                    
-//                    if let group = Group(event: event, relayUrl: relayUrl) {
-//                        let groupId = group.id
-//                        modelContext.insert(group)
-//                        
-//                        //try? modelContext.save()
-//                        
-//                        if let selectedOwnerAccount = self.selectedOwnerAccount {
-//                            
-//                            let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
-//                            
+                case Kind.groupMetadata:
+                    print("Let's create a group!")
+                    
+                    if let group = ChatGroup(event: event, relayUrl: relayUrl) {
+                        let groupId = group.id
+                        modelContext.insert(group)
+                        
+                        if let selectedOwnerAccount = self.selectedOwnerAccount {
+                            
+                            let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
+                            
+                            //TODO: GroupのMemberやAdminは一旦放置
 //                            group.isMember = self.getModels(context: modelContext, modelType: GroupMember.self,
 //                                                            predicate: #Predicate<GroupMember> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId && $0.relayUrl == relayUrl })?.first != nil
 //                            
 //                            group.isAdmin = self.getModels(context: modelContext, modelType: GroupAdmin.self,
 //                                                           predicate: #Predicate<GroupAdmin> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId  && $0.relayUrl == relayUrl })?.first != nil
-//                            
-//                        }
-//                        
-//                        try? modelContext.save()
-//                        
-//                    }
+                            
+                        }
+                        
+                        try? modelContext.save()
+                        
+                    }
                     
 //                case Kind.groupMembers:
 //
@@ -456,22 +451,22 @@ class AppState: ObservableObject {
 //        nostrClient.send(event: editGroupEvent, onlyToRelayUrls: [selectedRelay.url])
 //    }
 //    
-//    func createGroup(ownerAccount: OwnerAccount) {
-//        guard let key = ownerAccount.getKeyPair() else { return }
-//        guard let selectedRelay else { return }
-//        let groupId = "testgroup"
-//        //var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
-//         //                         kind: .groupCreate, tags: [Tag(id: "h", otherInformation: groupId)], content: "")
-//        var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
-//                                     kind: .groupCreate, tags: [], content: "")
-//        do {
-//            try createGroupEvent.sign(with: key)
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//
-//        nostrClient.send(event: createGroupEvent, onlyToRelayUrls: [selectedRelay.url])
-//    }
+    func createGroup(ownerAccount: OwnerAccount) {
+        guard let key = ownerAccount.getKeyPair() else { return }
+        guard let selectedRelay else { return }
+        let groupId = "testgroup"
+        //var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
+         //                         kind: .groupCreate, tags: [Tag(id: "h", otherInformation: groupId)], content: "")
+        var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
+                                     kind: .groupCreate, tags: [], content: "")
+        do {
+            try createGroupEvent.sign(with: key)
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        nostrClient.send(event: createGroupEvent, onlyToRelayUrls: [selectedRelay.url])
+    }
 //    
 //    func joinGroup(ownerAccount: OwnerAccount, group: Group) {
 //        guard let key = ownerAccount.getKeyPair() else { return }
@@ -619,7 +614,6 @@ extension AppState: NostrClientDelegate {
     }
     
     func didReceive(message: Nostr.RelayMessage, relayUrl: String) {
-        print("Stast didReceive: \(message)")
         switch message {
         case .event(_, let event):
             if event.isValid() {

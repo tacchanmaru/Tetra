@@ -11,6 +11,7 @@ struct TetraApp: App {
             OwnerAccount.self,
             Relay.self,
             PublicKeyMetadata.self,
+            ChatGroup.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -35,8 +36,7 @@ struct TetraApp: App {
                 .task {
                     appState.modelContainer = sharedModelContainer
                     await appState.initialSetup()
-                    //TODO: Chat関連なので後回し
-//                    await appState.connectAllNip29Relays()
+                    await appState.connectAllNip29Relays()
                     await appState.connectAllMetadataRelays()
                 }
         }
