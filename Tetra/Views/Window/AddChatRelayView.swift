@@ -22,7 +22,37 @@ struct AddChatRelayView: View {
     var body: some View {
             ZStack {
                 VStack(spacing: 16) {
-                    // UI コンポーネントの定義 (省略)
+                    Image(systemName: "network")
+                        .frame(width: 50, height: 50)
+                        .foregroundStyle(.white)
+                        .imageScale(.large)
+                        .font(.largeTitle)
+                        .bold()
+                        .padding()
+                        .background(LinearGradient(colors: [.blue, .blue.opacity(0.5)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    VStack(spacing: 8) {
+                        Text("Add Chat Relay")
+                            .font(.title)
+                            .bold()
+                        Text("Let's get started by adding an nip29 enabled relay")
+                            .foregroundStyle(.secondary)
+                    }
+
+                    
+                    Divider()
+                   
+                    HStack {
+                        TextField("wss://<nip29 enabled relay>", text: $inputText)
+                            .textFieldStyle(.roundedBorder)
+                        Button("Add") {
+                            Task {
+                                await addRelay(relayUrl: inputText)
+                            }
+                        }
+                    }
+
                     
                     List {
                         connectedChatRelaysSection

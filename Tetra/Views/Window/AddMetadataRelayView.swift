@@ -9,10 +9,10 @@ struct AddMetadataRelayView: View {
     @Binding var navigationPath: NavigationPath
     
     @Query private var relays: [Relay]
-    //おそらく必要ない
-    //    var metadataRelays: [Relay] {
-    //        relays.filter { $0.supportsNip1 }
-    //    }
+    var metadataRelays: [Relay] {
+        //紛らわしいため。Nip29のために利用するリレーとNip1のために利用するリレーは異なるはず。
+        relays.filter { !$0.supportsNip29 }
+    }
     
     @State private var suggestedRelays: [String] = ["wss://relay.damus.io", "wss://nostr.land", "wss://yabu.me"]
     var filteredSuggestedRelays: [String] {
@@ -80,7 +80,7 @@ struct AddMetadataRelayView: View {
     private var relayList: some View {
         List {
             Section("Connected Metadata Relays") {
-                ForEach(relays) { relay in
+                ForEach(metadataRelays) { relay in
                     HStack {
                         Text(relay.url)
                         Spacer()
