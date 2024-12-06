@@ -9,8 +9,11 @@
 /* Begin PBXBuildFile section */
 		888FBBA92D01234900F45041 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBA82D01234900F45041 /* GameModel.swift */; };
 		888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBAA2D01235200F45041 /* PlayerModel.swift */; };
-		888FBBD92D014DEB00F45041 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBD82D014DE900F45041 /* ChatView.swift */; };
+		888FBBD92D014DEB00F45041 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBD82D014DE900F45041 /* GroupListView.swift */; };
 		888FBBDB2D0154F200F45041 /* AddChatRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBDA2D0154E900F45041 /* AddChatRelayView.swift */; };
+		888FBBDD2D02980200F45041 /* GroupListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBDC2D0297FF00F45041 /* GroupListRow.swift */; };
+		888FBBDF2D029A6D00F45041 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBDE2D029A6900F45041 /* Group.swift */; };
+		888FBBE22D02AC8D00F45041 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBE12D02AC8A00F45041 /* ChatMessage.swift */; };
 		889316032CFEECF500A85EC3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316022CFEECF100A85EC3 /* RoundedCorners.swift */; };
 		889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */; };
 		88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAACF2CF7EC6200E8C909 /* StartView.swift */; };
@@ -47,8 +50,11 @@
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		888FBBA82D01234900F45041 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		888FBBAA2D01235200F45041 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
-		888FBBD82D014DE900F45041 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		888FBBD82D014DE900F45041 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		888FBBDA2D0154E900F45041 /* AddChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatRelayView.swift; sourceTree = "<group>"; };
+		888FBBDC2D0297FF00F45041 /* GroupListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListRow.swift; sourceTree = "<group>"; };
+		888FBBDE2D029A6900F45041 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		888FBBE12D02AC8A00F45041 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		889316022CFEECF100A85EC3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKeyMetadata.swift; sourceTree = "<group>"; };
 		88EFAACF2CF7EC6200E8C909 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -110,6 +116,7 @@
 		913CFF412CDD8E9300422B27 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				888FBBDC2D0297FF00F45041 /* GroupListRow.swift */,
 				889316022CFEECF100A85EC3 /* RoundedCorners.swift */,
 				913CFF3F2CDD8E9300422B27 /* RoomList.swift */,
 				913CFF402CDD8E9300422B27 /* TetraTabs.swift */,
@@ -123,6 +130,8 @@
 				889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */,
 				88EFAADC2CF8914100E8C909 /* Relay.swift */,
 				88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */,
+				888FBBDE2D029A6900F45041 /* Group.swift */,
+				888FBBE12D02AC8A00F45041 /* ChatMessage.swift */,
 				88EFAAD52CF7FE6100E8C909 /* AppState.swift */,
 			);
 			path = Shared;
@@ -136,7 +145,7 @@
 				888FBBDA2D0154E900F45041 /* AddChatRelayView.swift */,
 				88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */,
 				913CFF452CDD8E9300422B27 /* AddSpaceView.swift */,
-				888FBBD82D014DE900F45041 /* ChatView.swift */,
+				888FBBD82D014DE900F45041 /* GroupListView.swift */,
 				913CFF462CDD8E9300422B27 /* ContentView.swift */,
 				913CFF472CDD8E9300422B27 /* DetailView.swift */,
 				913CFF482CDD8E9300422B27 /* HomeView.swift */,
@@ -325,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				888FBBDF2D029A6D00F45041 /* Group.swift in Sources */,
 				888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */,
 				88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
@@ -338,7 +348,9 @@
 				F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */,
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
+				888FBBDD2D02980200F45041 /* GroupListRow.swift in Sources */,
 				888FBBA92D01234900F45041 /* GameModel.swift in Sources */,
+				888FBBE22D02AC8D00F45041 /* ChatMessage.swift in Sources */,
 				913CFF4E2CDD8E9300422B27 /* DetailView.swift in Sources */,
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
 				913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */,
@@ -346,7 +358,7 @@
 				913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */,
 				88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */,
 				913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */,
-				888FBBD92D014DEB00F45041 /* ChatView.swift in Sources */,
+				888FBBD92D014DEB00F45041 /* GroupListView.swift in Sources */,
 				888FBBDB2D0154F200F45041 /* AddChatRelayView.swift in Sources */,
 				913CFF542CDD8E9300422B27 /* HomeView.swift in Sources */,
 				913CFF562CDD8E9300422B27 /* ContentView.swift in Sources */,

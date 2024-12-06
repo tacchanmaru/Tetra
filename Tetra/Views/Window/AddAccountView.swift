@@ -96,8 +96,7 @@ struct AddAccountView: View {
                             modelContext.insert(ownerAccount)
                             appState.selectedOwnerAccount = ownerAccount
                             Task {
-                                // TODO: Chatに関わる部分なので後ほど実装
-//                                await appState.connectAllNip29Relays()
+                                await appState.connectAllNip29Relays()
                                 await appState.connectAllMetadataRelays()
                             }
                             appState.registeredNsec = true
