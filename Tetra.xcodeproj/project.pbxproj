@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		888FBBA92D01234900F45041 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBA82D01234900F45041 /* GameModel.swift */; };
 		888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBAA2D01235200F45041 /* PlayerModel.swift */; };
+		888FBBD92D014DEB00F45041 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBD82D014DE900F45041 /* ChatView.swift */; };
+		888FBBDB2D0154F200F45041 /* AddChatRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBDA2D0154E900F45041 /* AddChatRelayView.swift */; };
 		889316032CFEECF500A85EC3 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316022CFEECF100A85EC3 /* RoundedCorners.swift */; };
 		889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */; };
 		88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAACF2CF7EC6200E8C909 /* StartView.swift */; };
@@ -45,6 +47,8 @@
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		888FBBA82D01234900F45041 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		888FBBAA2D01235200F45041 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
+		888FBBD82D014DE900F45041 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		888FBBDA2D0154E900F45041 /* AddChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatRelayView.swift; sourceTree = "<group>"; };
 		889316022CFEECF100A85EC3 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKeyMetadata.swift; sourceTree = "<group>"; };
 		88EFAACF2CF7EC6200E8C909 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -129,8 +133,10 @@
 			children = (
 				913CFF442CDD8E9300422B27 /* Shared */,
 				88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */,
+				888FBBDA2D0154E900F45041 /* AddChatRelayView.swift */,
 				88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */,
 				913CFF452CDD8E9300422B27 /* AddSpaceView.swift */,
+				888FBBD82D014DE900F45041 /* ChatView.swift */,
 				913CFF462CDD8E9300422B27 /* ContentView.swift */,
 				913CFF472CDD8E9300422B27 /* DetailView.swift */,
 				913CFF482CDD8E9300422B27 /* HomeView.swift */,
@@ -340,6 +346,8 @@
 				913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */,
 				88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */,
 				913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */,
+				888FBBD92D014DEB00F45041 /* ChatView.swift in Sources */,
+				888FBBDB2D0154F200F45041 /* AddChatRelayView.swift in Sources */,
 				913CFF542CDD8E9300422B27 /* HomeView.swift in Sources */,
 				913CFF562CDD8E9300422B27 /* ContentView.swift in Sources */,
 				889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */,

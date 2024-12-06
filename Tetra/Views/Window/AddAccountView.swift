@@ -113,9 +113,6 @@ struct AddAccountView: View {
 //                    }
 //                    .buttonStyle(.bordered)
 //                    .disabled(true)
-                    NavigationLink(destination: SettingView()){
-                        Text("Go to SettingView")
-                    }
                 }
                     
             }

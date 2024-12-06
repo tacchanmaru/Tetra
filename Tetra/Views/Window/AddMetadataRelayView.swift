@@ -123,7 +123,7 @@ struct AddMetadataRelayView: View {
             Button("Back") {
                 navigationPath.removeLast()
             }
-            NavigationLink("Next", value: 1)
+            NavigationLink("Next", value: 2)
                 .disabled(!nextEnabled())
         }
         .controlSize(.large)
