@@ -158,7 +158,7 @@ class AppState: ObservableObject {
             let sub = Subscription(filters: [
                 Filter(kinds: [
                     Kind.groupChatMessage,
-                    //Kind.groupChatMessageReply,
+                    Kind.groupChatMessageReply,
                     Kind.groupForumMessage,
                     //Kind.groupForumMessageReply
                 ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
@@ -168,46 +168,44 @@ class AppState: ObservableObject {
         }
     }
     
-    //現在必要ない
-//    @MainActor func subscribeGroupMemberships(withRelayUrl relayUrl: String) async {
-//        
-//        let descriptor = FetchDescriptor<Group>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-//        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
-//            
-//            // Get latest message and use since filter so we don't keep getting the same shit
-//            //let since = events.min(by: { $0.createdAt > $1.createdAt })
-//            // TODO: use the since fitler
-//            let groupIds = events.compactMap({ $0.id }).sorted()
-//            let sub = Subscription(filters: [
-//                Filter(kinds: [
-//                    Kind.groupAddUser,
-//                    Kind.groupRemoveUser
-//                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
-//            ], id: IdSubGroupMembers)
-//            
-//            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-//        }
-//    }
+    @MainActor func subscribeGroupMemberships(withRelayUrl relayUrl: String) async {
+        
+        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
+        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
+            
+            // Get latest message and use since filter so we don't keep getting the same shit
+            //let since = events.min(by: { $0.createdAt > $1.createdAt })
+            // TODO: use the since fitler
+            let groupIds = events.compactMap({ $0.id }).sorted()
+            let sub = Subscription(filters: [
+                Filter(kinds: [
+                    Kind.groupAddUser,
+                    Kind.groupRemoveUser
+                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
+            ], id: IdSubGroupMembers)
+            
+            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
+        }
+    }
     
-    //現在必要ない
-//    @MainActor func subscribeGroupAdmins(withRelayUrl relayUrl: String) async {
-//        
-//        let descriptor = FetchDescriptor<Group>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-//        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
-//            
-//            // Get latest message and use since filter so we don't keep getting the same shit
-//            //let since = events.min(by: { $0.createdAt > $1.createdAt })
-//            // TODO: use the since fitler
-//            let groupIds = events.compactMap({ $0.id }).sorted()
-//            let sub = Subscription(filters: [
-//                Filter(kinds: [
-//                    Kind.groupAdmins
-//                ], since: nil, tags: [Tag(id: "d", otherInformation: groupIds)]),
-//            ], id: IdSubGroupAdmins)
-//            
-//            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-//        }
-//    }
+    @MainActor func subscribeGroupAdmins(withRelayUrl relayUrl: String) async {
+        
+        let descriptor = FetchDescriptor<Group>(predicate: #Predicate { $0.relayUrl == relayUrl  })
+        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
+            
+            // Get latest message and use since filter so we don't keep getting the same shit
+            //let since = events.min(by: { $0.createdAt > $1.createdAt })
+            // TODO: use the since fitler
+            let groupIds = events.compactMap({ $0.id }).sorted()
+            let sub = Subscription(filters: [
+                Filter(kinds: [
+                    Kind.groupAdmins
+                ], since: nil, tags: [Tag(id: "d", otherInformation: groupIds)]),
+            ], id: IdSubGroupAdmins)
+            
+            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
+        }
+    }
     
     public func remove(relaysWithUrl relayUrls: [String]) {
         for relayUrl in relayUrls {
@@ -262,6 +260,7 @@ class AppState: ObservableObject {
         Task.detached {
             
             let publicKey = event.pubkey
+            guard let eventId = event.id else { return }
             
             print("publicKey: \(publicKey)")
             
@@ -272,14 +271,13 @@ class AppState: ObservableObject {
                     if let publicKeyMetadata = PublicKeyMetadata(event: event) {
                         modelContext.insert(publicKeyMetadata)
                         
-                        // TODO: ここもチャット関連の内容
-//                        // Fetch all ChatMessages with publicKey and assign publicKeyMetadata relationship
-//                        if let messages = self.getModels(context: modelContext, modelType: ChatMessage.self,
-//                                                         predicate: #Predicate<ChatMessage> { $0.publicKey == publicKey }) {
-//                            for message in messages {
-//                                message.publicKeyMetadata = publicKeyMetadata
-//                            }
-//                        }
+                        // Fetch all ChatMessages with publicKey and assign publicKeyMetadata relationship
+                        if let messages = self.getModels(context: modelContext, modelType: ChatMessage.self,
+                                                         predicate: #Predicate<ChatMessage> { $0.publicKey == publicKey }) {
+                            for message in messages {
+                                message.publicKeyMetadata = publicKeyMetadata
+                            }
+                        }
                         
                         try? modelContext.save()
 
@@ -296,12 +294,11 @@ class AppState: ObservableObject {
                             
                             let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
                             
-                            //TODO: GroupのMemberやAdminは一旦放置
-//                            group.isMember = self.getModels(context: modelContext, modelType: GroupMember.self,
-//                                                            predicate: #Predicate<GroupMember> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId && $0.relayUrl == relayUrl })?.first != nil
-//                            
-//                            group.isAdmin = self.getModels(context: modelContext, modelType: GroupAdmin.self,
-//                                                           predicate: #Predicate<GroupAdmin> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId  && $0.relayUrl == relayUrl })?.first != nil
+                            group.isMember = self.getModels(context: modelContext, modelType: GroupMember.self,
+                                                            predicate: #Predicate<GroupMember> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId && $0.relayUrl == relayUrl })?.first != nil
+                            
+                            group.isAdmin = self.getModels(context: modelContext, modelType: GroupAdmin.self,
+                                                           predicate: #Predicate<GroupAdmin> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId  && $0.relayUrl == relayUrl })?.first != nil
                             
                         }
                         
@@ -309,120 +306,120 @@ class AppState: ObservableObject {
                         
                     }
                     
-//                case Kind.groupMembers:
-//
-//                    let tags = event.tags.map({ $0 })
-//                    if let groupId = tags.first(where: { $0.id == "d" })?.otherInformation.first {
-//                        let members = tags.filter({ $0.id == "p" })
-//                            .compactMap({ $0.otherInformation.last })
-//                            .filter({ $0.isValidPublicKey })
-//                            .map({ GroupMember(publicKey: $0, groupId: groupId, relayUrl: relayUrl) })
-//
-//                        for member in members {
-//                            modelContext.insert(member)
-//                        }
-//
-//                        //try? modelContext.save()
-//
-//                        let publicKeys = members.map({ $0.publicKey })
-//                        if let publicKeyMetadatas = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
-//                                                                   predicate: #Predicate<PublicKeyMetadata> { publicKeys.contains($0.publicKey) }) {
-//                            for member in members {
-//                                member.publicKeyMetadata = publicKeyMetadatas.first(where: { $0.publicKey == member.publicKey })
-//                            }
-//                        }
-//
-//                        // Set group isAdmin/isMember just incase we got the members/admins after the group was fetched
-//                        if let groups = self.getModels(context: modelContext, modelType: Group.self, predicate: #Predicate { $0.relayUrl == relayUrl && $0.id == groupId }) {
-//                            if let selectedOwnerAccount = self.selectedOwnerAccount {
-//                                let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
-//                                for group in groups {
-//                                    group.isMember = members.first(where: { $0.publicKey == selectedOwnerPublicKey }) != nil
-//                                }
-//                            }
-//                        }
-//
-//                        try? modelContext.save()
-//                    }
+                case Kind.groupMembers:
+
+                    let tags = event.tags.map({ $0 })
+                    if let groupId = tags.first(where: { $0.id == "d" })?.otherInformation.first {
+                        let members = tags.filter({ $0.id == "p" })
+                            .compactMap({ $0.otherInformation.last })
+                            .filter({ $0.isValidPublicKey })
+                            .map({ GroupMember(publicKey: $0, groupId: groupId, relayUrl: relayUrl) })
+
+                        for member in members {
+                            modelContext.insert(member)
+                        }
+
+                        //try? modelContext.save()
+
+                        let publicKeys = members.map({ $0.publicKey })
+                        if let publicKeyMetadatas = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
+                                                                   predicate: #Predicate<PublicKeyMetadata> { publicKeys.contains($0.publicKey) }) {
+                            for member in members {
+                                member.publicKeyMetadata = publicKeyMetadatas.first(where: { $0.publicKey == member.publicKey })
+                            }
+                        }
+
+                        // Set group isAdmin/isMember just incase we got the members/admins after the group was fetched
+                        if let groups = self.getModels(context: modelContext, modelType: Group.self, predicate: #Predicate { $0.relayUrl == relayUrl && $0.id == groupId }) {
+                            if let selectedOwnerAccount = self.selectedOwnerAccount {
+                                let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
+                                for group in groups {
+                                    group.isMember = members.first(where: { $0.publicKey == selectedOwnerPublicKey }) != nil
+                                }
+                            }
+                        }
+
+                        try? modelContext.save()
+                    }
                     
-//                case Kind.groupAdmins:
-//                    
-//                    let tags = event.tags.map({ $0 })
-//                    if let groupId = tags.first(where: { $0.id == "d" })?.otherInformation.first {
-//                        let admins = tags.filter({ $0.id == "p" })
-//                            .compactMap({ $0.otherInformation })
-//                            .compactMap({ GroupAdmin(publicKey: $0.first, groupId: groupId, capabilities: Array($0[2...]),
-//                                                     relayUrl: relayUrl) })
-//                            .filter({ $0.publicKey.isValidPublicKey })
-//                        
-//                        for admin in admins {
-//                            modelContext.insert(admin)
-//                        }
-//                        
-//                        //try? modelContext.save()
-//                        
-//                        let publicKeys = admins.map({ $0.publicKey })
-//                        if let publicKeyMetadatas = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
-//                                                                   predicate: #Predicate<PublicKeyMetadata> { publicKeys.contains($0.publicKey) }) {
-//                            for admin in admins {
-//                                admin.publicKeyMetadata = publicKeyMetadatas.first(where: { $0.publicKey == admin.publicKey })
-//                            }
-//                        }
-//                        
-//                        if let groups = self.getModels(context: modelContext, modelType: Group.self, predicate: #Predicate { $0.relayUrl == relayUrl && $0.id == groupId }) {
-//                            if let selectedOwnerAccount = self.selectedOwnerAccount {
-//                                let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
-//                                for group in groups {
-//                                    group.isAdmin = admins.first(where: { $0.publicKey == selectedOwnerPublicKey }) != nil
-//                                }
-//                            }
-//                        }
-//                        
-//                        try? modelContext.save()
-//                    }
-//                    
-//                case Kind.groupChatMessage:
-//                    
-//                    if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
-//                        
-//                        if let chatMessages = self.getModels(context: modelContext, modelType: ChatMessage.self,
-//                                                             predicate: #Predicate<ChatMessage> { $0.id == eventId }), chatMessages.count == 0 {
-//                            
-//                            modelContext.insert(chatMessage)
-//                            
-//                            //try? modelContext.save()
-//                            
-//                            if let publicKeyMetadata = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
-//                                                                      predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })?.first {
-//                                chatMessage.publicKeyMetadata = publicKeyMetadata
-//                            }
-//                            
-//                            if let replyToEventId = chatMessage.replyToEventId {
-//                                if let replyToChatMessage = self.getModels(context: modelContext, modelType: ChatMessage.self,
-//                                                                        predicate: #Predicate<ChatMessage> { $0.id == replyToEventId })?.first {
-//                                    chatMessage.replyToChatMessage = replyToChatMessage
-//                                }
-//                            }
-//                            
-//                            // Check if any messages point to me?
-//                            if let replies = self.getModels(context: modelContext, modelType: ChatMessage.self, predicate: #Predicate<ChatMessage> { $0.replyToEventId == eventId }) {
-//                                
-//                                for message in replies {
-//                                    message.replyToChatMessage = chatMessage
-//                                }
-//                                
-//                            }
-//                            
-//                            try? modelContext.save()
-//                            
-//                        }
-//                    }
-//                    
-//                case Kind.groupAddUser:
-//                    print(event)
-//                    
-//                case Kind.groupRemoveUser:
-//                    print(event)
+                case Kind.groupAdmins:
+                    
+                    let tags = event.tags.map({ $0 })
+                    if let groupId = tags.first(where: { $0.id == "d" })?.otherInformation.first {
+                        let admins = tags.filter({ $0.id == "p" })
+                            .compactMap({ $0.otherInformation })
+                            .compactMap({ GroupAdmin(publicKey: $0.first, groupId: groupId, capabilities: Array($0[2...]),
+                                                     relayUrl: relayUrl) })
+                            .filter({ $0.publicKey.isValidPublicKey })
+                        
+                        for admin in admins {
+                            modelContext.insert(admin)
+                        }
+                        
+                        //try? modelContext.save()
+                        
+                        let publicKeys = admins.map({ $0.publicKey })
+                        if let publicKeyMetadatas = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
+                                                                   predicate: #Predicate<PublicKeyMetadata> { publicKeys.contains($0.publicKey) }) {
+                            for admin in admins {
+                                admin.publicKeyMetadata = publicKeyMetadatas.first(where: { $0.publicKey == admin.publicKey })
+                            }
+                        }
+                        
+                        if let groups = self.getModels(context: modelContext, modelType: Group.self, predicate: #Predicate { $0.relayUrl == relayUrl && $0.id == groupId }) {
+                            if let selectedOwnerAccount = self.selectedOwnerAccount {
+                                let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
+                                for group in groups {
+                                    group.isAdmin = admins.first(where: { $0.publicKey == selectedOwnerPublicKey }) != nil
+                                }
+                            }
+                        }
+                        
+                        try? modelContext.save()
+                    }
+                    
+                case Kind.groupChatMessage:
+                    
+                    if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
+                        
+                        if let chatMessages = self.getModels(context: modelContext, modelType: ChatMessage.self,
+                                                             predicate: #Predicate<ChatMessage> { $0.id == eventId }), chatMessages.count == 0 {
+                            
+                            modelContext.insert(chatMessage)
+                            
+                            //try? modelContext.save()
+                            
+                            if let publicKeyMetadata = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
+                                                                      predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })?.first {
+                                chatMessage.publicKeyMetadata = publicKeyMetadata
+                            }
+                            
+                            if let replyToEventId = chatMessage.replyToEventId {
+                                if let replyToChatMessage = self.getModels(context: modelContext, modelType: ChatMessage.self,
+                                                                        predicate: #Predicate<ChatMessage> { $0.id == replyToEventId })?.first {
+                                    chatMessage.replyToChatMessage = replyToChatMessage
+                                }
+                            }
+                            
+                            // Check if any messages point to me?
+                            if let replies = self.getModels(context: modelContext, modelType: ChatMessage.self, predicate: #Predicate<ChatMessage> { $0.replyToEventId == eventId }) {
+                                
+                                for message in replies {
+                                    message.replyToChatMessage = chatMessage
+                                }
+                                
+                            }
+                            
+                            try? modelContext.save()
+                            
+                        }
+                    }
+                    
+                case Kind.groupAddUser:
+                    print(event)
+                    
+                case Kind.groupRemoveUser:
+                    print(event)
                     
                 default: ()
             }
@@ -628,20 +625,20 @@ extension AppState: NostrClientDelegate {
             print(id, acceptance, m)
         case .eose(let id):
             print("EOSE => Subscription: \(id), relay: \(relayUrl)")
-//            switch id {
-//                case IdSubGroupList:
-//                    Task {
-//                        await subscribeGroups(withRelayUrl: relayUrl)
-//                        await subscribeGroupMemberships(withRelayUrl: relayUrl)
-//                        await subscribeGroupAdmins(withRelayUrl: relayUrl)
-//                    }
-//                case IdSubChatMessages,IdSubGroupList:
-//                    Task {
-//                        await connectAllMetadataRelays()
-//                    }
-//                default:
-//                    ()
-//            }
+            switch id {
+                case IdSubGroupList:
+                    Task {
+                        await subscribeGroups(withRelayUrl: relayUrl)
+                        await subscribeGroupMemberships(withRelayUrl: relayUrl)
+                        await subscribeGroupAdmins(withRelayUrl: relayUrl)
+                    }
+                case IdSubChatMessages,IdSubGroupList:
+                    Task {
+                        await connectAllMetadataRelays()
+                    }
+                default:
+                    ()
+            }
         case .closed(let id, let message):
             print(id, message)
         case .other(let other):

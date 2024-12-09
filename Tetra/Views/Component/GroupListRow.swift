@@ -4,8 +4,7 @@ import SwiftData
 struct GroupListRowView: View {
     
     let group: ChatGroup
-    // TODO: すぐ直す
-//    let lastMessage: ChatMessage?
+    let lastMessage: ChatMessage?
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -13,17 +12,17 @@ struct GroupListRowView: View {
                 Text(group.name ?? "")
                     .bold()
                 Spacer()
-//                if let lastMessage {
-//                    Text(lastMessage.createdAt, style: .time)
-//                        .font(.caption)
-//                        .foregroundStyle(.secondary)
-//                }
+                if let lastMessage {
+                    Text(lastMessage.createdAt, style: .time)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             Text(group.id)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-//            Text(lastMessage?.content ?? "")
+            Text(lastMessage?.content ?? "")
                 .lineLimit(2)
                 .foregroundStyle(.tertiary)
         }

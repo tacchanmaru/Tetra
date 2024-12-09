@@ -152,6 +152,19 @@ extension ChatMessage {
     }
 }
 
+extension URL {
+    func isImageType() -> Bool {
+        let imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "tiff"]
+        return imageExtensions.contains(self.pathExtension.lowercased())
+    }
+    
+    func isVideoType() -> Bool {
+        let videoExtensions = ["mp4", "mov", "avi", "mkv", "flv", "wmv", "webm"]
+        return videoExtensions.contains(self.pathExtension.lowercased())
+    }
+}
+
+
 
 @propertyWrapper
 struct Cached<T> {
@@ -176,4 +189,3 @@ struct Cached<T> {
         }
     }
 }
-

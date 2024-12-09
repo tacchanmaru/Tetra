@@ -12,6 +12,9 @@ struct TetraApp: App {
             Relay.self,
             PublicKeyMetadata.self,
             ChatGroup.self,
+            ChatMessage.self,
+            GroupAdmin.self,
+            GroupMember.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

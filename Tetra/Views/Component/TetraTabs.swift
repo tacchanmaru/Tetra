@@ -5,7 +5,7 @@ struct TetraTabs: View {
     
     var body: some View {
         TabView {
-            GroupListView(relayUrl: appState.selectedRelay?.url ?? "")
+            ChatGroupListView(relayUrl: appState.selectedRelay?.url ?? "")
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }
