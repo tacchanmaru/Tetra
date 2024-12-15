@@ -19,7 +19,8 @@
 		88EFAADB2CF8912500E8C909 /* OwnerAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */; };
 		88EFAADD2CF8914500E8C909 /* Relay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADC2CF8914100E8C909 /* Relay.swift */; };
 		88F92F632CBE3D0D00F9A089 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F92F622CBE3D0D00F9A089 /* Assets.xcassets */; };
-		913CFF4E2CDD8E9300422B27 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF472CDD8E9300422B27 /* DetailView.swift */; };
+		90B712802D0959CE001828BD /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B7127F2D0959C6001828BD /* DetailView.swift */; };
+		913CFF4E2CDD8E9300422B27 /* DetailViewDepricated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF472CDD8E9300422B27 /* DetailViewDepricated.swift */; };
 		913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF3F2CDD8E9300422B27 /* RoomList.swift */; };
 		913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF492CDD8E9300422B27 /* SettingView.swift */; };
 		913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF452CDD8E9300422B27 /* AddSpaceView.swift */; };
@@ -54,11 +55,12 @@
 		88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerAccount.swift; sourceTree = "<group>"; };
 		88EFAADC2CF8914100E8C909 /* Relay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relay.swift; sourceTree = "<group>"; };
 		88F92F622CBE3D0D00F9A089 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		90B7127F2D0959C6001828BD /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		913CFF3F2CDD8E9300422B27 /* RoomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomList.swift; sourceTree = "<group>"; };
 		913CFF402CDD8E9300422B27 /* TetraTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraTabs.swift; sourceTree = "<group>"; };
 		913CFF452CDD8E9300422B27 /* AddSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceView.swift; sourceTree = "<group>"; };
 		913CFF462CDD8E9300422B27 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		913CFF472CDD8E9300422B27 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		913CFF472CDD8E9300422B27 /* DetailViewDepricated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewDepricated.swift; sourceTree = "<group>"; };
 		913CFF482CDD8E9300422B27 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		913CFF492CDD8E9300422B27 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		913CFF4A2CDD8E9300422B27 /* TimeLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineView.swift; sourceTree = "<group>"; };
@@ -132,7 +134,8 @@
 				88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */,
 				913CFF452CDD8E9300422B27 /* AddSpaceView.swift */,
 				913CFF462CDD8E9300422B27 /* ContentView.swift */,
-				913CFF472CDD8E9300422B27 /* DetailView.swift */,
+				913CFF472CDD8E9300422B27 /* DetailViewDepricated.swift */,
+				90B7127F2D0959C6001828BD /* DetailView.swift */,
 				913CFF482CDD8E9300422B27 /* HomeView.swift */,
 				913CFF492CDD8E9300422B27 /* SettingView.swift */,
 				88EFAACF2CF7EC6200E8C909 /* StartView.swift */,
@@ -333,11 +336,12 @@
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
 				888FBBA92D01234900F45041 /* GameModel.swift in Sources */,
-				913CFF4E2CDD8E9300422B27 /* DetailView.swift in Sources */,
+				913CFF4E2CDD8E9300422B27 /* DetailViewDepricated.swift in Sources */,
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
 				913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */,
 				913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */,
 				913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */,
+				90B712802D0959CE001828BD /* DetailView.swift in Sources */,
 				88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */,
 				913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */,
 				913CFF542CDD8E9300422B27 /* HomeView.swift in Sources */,
