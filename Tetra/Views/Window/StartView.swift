@@ -49,7 +49,6 @@ struct StartView: View {
                 
             }
             .navigationDestination(for: Int.self) { t in
-                // TODO: ここ本当はcase 0 でChatRelayを設定するべき。
                 switch t {
                 case 0:
                     AddChatRelayView(navigationPath: $navigationPath)

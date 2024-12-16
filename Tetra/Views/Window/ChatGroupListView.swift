@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-struct ChatGroupListView: View {
+struct ChatGroupView: View {
     
     @EnvironmentObject var appState: AppState
 
@@ -35,26 +35,38 @@ struct ChatGroupListView: View {
     }
     
     var body: some View {
-        
-        List(selection: $appState.selectedGroup) {
-            ForEach(sortedGroups, id: \.id) { group in
-                NavigationLink(value: group) {
-                    GroupListRowView(group: group, lastMessage: latestMessage(for: group.id))
+        NavigationView {
+            VStack {
+                HStack {
+                    Text("Chat")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.leading, 16)
+                    Spacer()
+                    Button(action: {
+                        appState.createGroup(ownerAccount: appState.selectedOwnerAccount!)
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .font(.title)
+                    }
+                    .buttonStyle(.plain)
                 }
-            }
-        }
-        .listStyle(.automatic)
-        .toolbar {
-            ToolbarItemGroup(placement: .automatic) {
-                Spacer()
-                Button(action: {
-                    appState.createGroup(ownerAccount: appState.selectedOwnerAccount!)
-                }) {
-                    Image(systemName: "plus.circle")
-                }
+                .padding()
                 
+                List(selection: $appState.selectedGroup) {
+                    ForEach(sortedGroups, id: \.id) { group in
+                        NavigationLink(destination: ChatDetailView(
+                            relayUrl: appState.selectedRelay?.url ?? "",
+                            groupId: group.id,
+                            chatMessageNumResults: $appState.chatMessageNumResults
+                        )) {
+                            GroupListRow(group: group, lastMessage: latestMessage(for: group.id))
+                        }
+                    }
+                }
+                .listStyle(.automatic)
             }
-            
         }
     }
 }
+
