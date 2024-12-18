@@ -5,7 +5,10 @@ struct TetraTabs: View {
     
     var body: some View {
         TabView {
-            
+            AddChatRelayView(navigationPath: )
+                .tabItem {
+                    Label("Add Relay", systemImage: "plus")
+                }
             NavigationStack { HomeView() }
                 .tabItem {
                     Label("Home", systemImage: "house")
