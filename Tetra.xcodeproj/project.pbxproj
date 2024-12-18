@@ -394,7 +394,7 @@
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
 				888FBBA92D01234900F45041 /* GameModel.swift in Sources */,
 				888FBBE22D02AC8D00F45041 /* ChatMessage.swift in Sources */,
-				913CFF4E2CDD8E9300422B27 /* DetailView.swift in Sources */,
+				913CFF4E2CDD8E9300422B27 /* DetailViewDepricated.swift in Sources */,
 				88BF74C72D0FC3CA0038D999 /* GroupListRow.swift in Sources */,
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
 				913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */,

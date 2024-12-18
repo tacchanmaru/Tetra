@@ -5,16 +5,15 @@ struct TetraTabs: View {
     
     var body: some View {
         TabView {
+            
+            NavigationStack { HomeView() }
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
             ChatGroupView(relayUrl: appState.selectedRelay?.url ?? "")
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }
-            NavigationStack {
-                HomeView()
-            }
-            .tabItem {
-                Label("Home", systemImage: "house")
-            }
             TimeLineView()
                 .tabItem {
                     Label("Timeline", systemImage: "clock")
