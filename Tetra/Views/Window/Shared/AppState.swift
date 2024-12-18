@@ -302,7 +302,7 @@ class AppState: ObservableObject {
             let publicKey = event.pubkey
             guard let eventId = event.id else { return }
             
-            print("publicKey: \(publicKey)")
+            print("event.kind: \(event.kind)")
             
             guard let modelContext = self.backgroundContext() else { return }
             switch event.kind {
@@ -468,22 +468,22 @@ class AppState: ObservableObject {
         
         nostrClient.send(event: createGroupEvent, onlyToRelayUrls: [selectedRelay.url])
     }
-    //
-    //    func joinGroup(ownerAccount: OwnerAccount, group: Group) {
-    //        guard let key = ownerAccount.getKeyPair() else { return }
-    //        let relayUrl = group.relayUrl
-    //        let groupId = group.id
-    //        var joinEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
-    //                              kind: .groupJoinRequest, tags: [Tag(id: "h", otherInformation: groupId)], content: "")
-    //
-    //        do {
-    //            try joinEvent.sign(with: key)
-    //        } catch {
-    //            print(error.localizedDescription)
-    //        }
-    //
-    //        nostrClient.send(event: joinEvent, onlyToRelayUrls: [relayUrl])
-    //    }
+    
+    func joinGroup(ownerAccount: OwnerAccount, group: ChatGroup) {
+        guard let key = ownerAccount.getKeyPair() else { return }
+        let relayUrl = group.relayUrl
+        let groupId = group.id
+        var joinEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
+                              kind: .groupJoinRequest, tags: [Tag(id: "h", otherInformation: groupId)], content: "")
+
+        do {
+            try joinEvent.sign(with: key)
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        nostrClient.send(event: joinEvent, onlyToRelayUrls: [relayUrl])
+    }
     //
     //    func addMember(ownerAccount: OwnerAccount, group: Group, publicKey: String) {
     //        guard let key = ownerAccount.getKeyPair() else { return }

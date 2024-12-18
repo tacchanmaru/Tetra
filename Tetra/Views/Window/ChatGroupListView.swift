@@ -35,37 +35,19 @@ struct ChatGroupView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Text("Chat")
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(.leading, 16)
-                    Spacer()
-                    Button(action: {
-                        appState.createGroup(ownerAccount: appState.selectedOwnerAccount!)
-                    }) {
-                        Image(systemName: "plus.circle")
-                            .font(.title)
-                    }
-                    .buttonStyle(.plain)
-                }
-                .padding()
-                
-                List(selection: $appState.selectedGroup) {
-                    ForEach(sortedGroups, id: \.id) { group in
-                        NavigationLink(destination: ChatDetailView(
-                            relayUrl: appState.selectedRelay?.url ?? "",
-                            groupId: group.id,
-                            chatMessageNumResults: $appState.chatMessageNumResults
-                        )) {
-                            GroupListRow(group: group, lastMessage: latestMessage(for: group.id))
-                        }
-                    }
-                }
-                .listStyle(.automatic)
-            }
+        NavigationSplitView {
+            ChatListView(
+                sortedGroups: sortedGroups,
+                latestMessage: latestMessage
+            )
+            .environmentObject(appState)
+            
+        } detail: {
+            ChatDetailView(
+                relayUrl: appState.selectedRelay?.url ?? "",
+                groupId: appState.selectedGroup?.id ?? "",
+                chatMessageNumResults: $appState.chatMessageNumResults
+            )
         }
     }
 }

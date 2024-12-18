@@ -2,38 +2,34 @@ import SwiftUI
 import SwiftData
 import Nostr
 
-//struct ToolbarContentView: View {
-//    @EnvironmentObject var appState: AppState
-//    let groupMembers: [GroupMember]
-//    let groupAdmins: [GroupAdmin]
-//
-//    var body: some View {
-//        HStack {
-//            GroupPicture(pictureUrl: appState.selectedGroup?.picture)
-//            VStack(alignment: .leading) {
-//                Text(appState.selectedGroup?.name ?? "---")
-//                    .font(.headline)
-//                    .bold()
-//                Text(appState.selectedGroup?.relayUrl ?? "--")
-//                    .font(.subheadline)
-//                    .foregroundStyle(.secondary)
-//            }
-//            .opacity(appState.selectedGroup == nil ? 0.0 : 1.0)
-//
-//            Spacer()
-//
-//            if !isMemberOrAdmin() && groupMembers.count > 0 {
-//                Button(action: joinGroupAction) {
-//                    Text("Join")
-//                        .foregroundStyle(.white)
-//                }
-//                .buttonStyle(.plain)
-//                .padding(.horizontal, 8)
-//                .padding(.vertical, 4)
-//                .background(.blue)
-//                .cornerRadius(6)
-//            }
-//
+struct ToolbarContentView: View {
+    @EnvironmentObject var appState: AppState
+    let groupMembers: [GroupMember]
+    let groupAdmins: [GroupAdmin]
+
+    var body: some View {
+        HStack {
+            GroupPicture(pictureUrl: appState.selectedGroup?.picture)
+            VStack(alignment: .leading) {
+                Text(appState.selectedGroup?.name ?? "---")
+                    .font(.headline)
+                    .bold()
+                Text(appState.selectedGroup?.relayUrl ?? "--")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+            .opacity(appState.selectedGroup == nil ? 0.0 : 1.0)
+
+            Spacer()
+
+            Button(action: joinGroupAction) {
+                Text("Join")
+                    .foregroundStyle(.white)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .cornerRadius(6)
+
 //            if let selectedGroup = appState.selectedGroup {
 //                if appState.chatMessageNumResults < appState.allMessagesCount {
 //                    Button(action: loadMoreMessages) {
@@ -44,26 +40,26 @@ import Nostr
 //                ShareLink(item: selectedGroup.relayUrl + "'" + selectedGroup.id)
 //                    .fontWeight(.semibold)
 //            }
-//        }
-//    }
-//
-//    private func joinGroupAction() {
-//        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
-//        guard let selectedGroup = appState.selectedGroup else { return }
-//        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
-//    }
-//
-//    private func loadMoreMessages() {
-//        appState.chatMessageNumResults *= 2
-//    }
-//
-//    private func isMemberOrAdmin() -> Bool {
-//        if let selectedGroup = appState.selectedGroup {
-//            return selectedGroup.isMember || selectedGroup.isAdmin
-//        }
-//        return false
-//    }
-//}
+        }
+    }
+
+    private func joinGroupAction() {
+        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
+        guard let selectedGroup = appState.selectedGroup else { return }
+        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
+    }
+
+    private func loadMoreMessages() {
+        appState.chatMessageNumResults *= 2
+    }
+
+    private func isMemberOrAdmin() -> Bool {
+        if let selectedGroup = appState.selectedGroup {
+            return selectedGroup.isMember || selectedGroup.isAdmin
+        }
+        return false
+    }
+}
 
 
 
@@ -157,7 +153,7 @@ struct ChatDetailView: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            if appState.selectedGroup != nil && isMemberOrAdmin() {
+            if isMemberOrAdmin() {
                 
                 HStack(spacing: 8) {
                     
@@ -201,22 +197,7 @@ struct ChatDetailView: View {
                         .padding(.vertical, 8)
                         .background(.background)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
-                    //                    .background(
-                    //                        RoundedRectangle(cornerRadius: 16)
-                    //                            .stroke(style: .init(lineWidth: 1))
-                    //                            .foregroundStyle(.secondary.opacity(0.6))
-                    //                    )
-//                        .overlay(alignment: .trailing) {
-//                            Button("", systemImage: "face.smiling") {
-//                                Task {
-//                                    NSApp.orderFrontCharacterPalette($messageText) // TODO: Fix where this comes up
-//                                }
-//                            }
-//                            .buttonStyle(.plain)
-//                            .imageScale(.large)
-//                        }
                         .focused($inputFocused)
-                    
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 8)
@@ -229,17 +210,17 @@ struct ChatDetailView: View {
                 }
             }
         }
-//        .toolbar {
-//            ToolbarItemGroup(placement: .automatic) {
-//                ToolbarContentView(groupMembers: groupMembers, groupAdmins: groupAdmins)
-//            }
-//        }
-//        .onChange(of: appState.selectedGroup) { oldValue, newValue in
-//            if oldValue != newValue {
-//                self.replyMessage = nil
-//
-//            }
-//        }
+        .toolbar {
+            ToolbarItemGroup(placement: .automatic) {
+                ToolbarContentView(groupMembers: groupMembers, groupAdmins: groupAdmins)
+            }
+        }
+        .onChange(of: appState.selectedGroup) { oldValue, newValue in
+            if oldValue != newValue {
+                self.replyMessage = nil
+
+            }
+        }
     }
     
     func isMemberOrAdmin() -> Bool {
