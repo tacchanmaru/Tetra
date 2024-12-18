@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		8827195C2D12492F00D606A4 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827195B2D12492900D606A4 /* ChatListView.swift */; };
+		882719632D12C4B100D606A4 /* TimeLineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719622D12C4AD00D606A4 /* TimeLineManager.swift */; };
+		882719652D12C53B00D606A4 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719642D12C53700D606A4 /* AppState.swift */; };
 		888FBBA92D01234900F45041 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBA82D01234900F45041 /* GameModel.swift */; };
 		888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBAA2D01235200F45041 /* PlayerModel.swift */; };
 		888FBBD92D014DEB00F45041 /* ChatGroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBD82D014DE900F45041 /* ChatGroupListView.swift */; };
@@ -59,6 +61,8 @@
 		475409EE5B8057AEF1677487 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		8827195B2D12492900D606A4 /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
+		882719622D12C4AD00D606A4 /* TimeLineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineManager.swift; sourceTree = "<group>"; };
+		882719642D12C53700D606A4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		888FBBA82D01234900F45041 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		888FBBAA2D01235200F45041 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		888FBBD82D014DE900F45041 /* ChatGroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupListView.swift; sourceTree = "<group>"; };
@@ -108,10 +112,6 @@
 		F5CF2A082BD1CF9600C66F78 /* TetraActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraActivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		91FBE5592CC3A72D00E5C709 /* Nostr */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Nostr; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		F5155FC92BD09B5D004F1CA1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -131,6 +131,14 @@
 				F1D93E542B451142BE1E50AB /* SampleCode.xcconfig */,
 			);
 			name = Configuration;
+			sourceTree = "<group>";
+		};
+		882719612D12C4A300D606A4 /* Nostr */ = {
+			isa = PBXGroup;
+			children = (
+				882719622D12C4AD00D606A4 /* TimeLineManager.swift */,
+			);
+			path = Nostr;
 			sourceTree = "<group>";
 		};
 		88BF74C12D0FC3720038D999 /* Chat */ = {
@@ -159,7 +167,7 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		913CFF442CDD8E9300422B27 /* Shared */ = {
+		913CFF442CDD8E9300422B27 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				889316042CFFDB1E00A85EC3 /* PublicKeyMetadata.swift */,
@@ -171,13 +179,13 @@
 				888FBBE12D02AC8A00F45041 /* ChatMessage.swift */,
 				88EFAAD52CF7FE6100E8C909 /* AppState.swift */,
 			);
-			path = Shared;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		913CFF4C2CDD8E9300422B27 /* Window */ = {
 			isa = PBXGroup;
 			children = (
-				913CFF442CDD8E9300422B27 /* Shared */,
+				913CFF442CDD8E9300422B27 /* Models */,
 				88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */,
 				888FBBDA2D0154E900F45041 /* AddChatRelayView.swift */,
 				88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */,
@@ -244,10 +252,10 @@
 			isa = PBXGroup;
 			children = (
 				913CFF4D2CDD8E9300422B27 /* Views */,
-				91FBE5592CC3A72D00E5C709 /* Nostr */,
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
 				F5643ADE2BD70B0E00FFF716 /* ImmersiveSpace */,
 				F5A044252BD5788500EDAAD5 /* Models */,
+				882719612D12C4A300D606A4 /* Nostr */,
 				F5A044262BD578BA00EDAAD5 /* GroupActivity */,
 				C310AA552BD1F2750098D2B8 /* Utilities */,
 				F54255CE2BD2DE07006B9A37 /* Resources */,
@@ -278,6 +286,7 @@
 		F5A044252BD5788500EDAAD5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				882719642D12C53700D606A4 /* AppState.swift */,
 				888FBBAA2D01235200F45041 /* PlayerModel.swift */,
 				888FBBA82D01234900F45041 /* GameModel.swift */,
 				F5155FD72BD09B5D004F1CA1 /* AppModel.swift */,
@@ -309,9 +318,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				91FBE5592CC3A72D00E5C709 /* Nostr */,
 			);
 			name = Tetra;
 			productName = Tetra;
@@ -373,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				888FBBDF2D029A6D00F45041 /* Group.swift in Sources */,
+				882719632D12C4B100D606A4 /* TimeLineManager.swift in Sources */,
 				888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */,
 				88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
@@ -392,6 +399,7 @@
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
 				8827195C2D12492F00D606A4 /* ChatListView.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
+				882719652D12C53B00D606A4 /* AppState.swift in Sources */,
 				888FBBA92D01234900F45041 /* GameModel.swift in Sources */,
 				888FBBE22D02AC8D00F45041 /* ChatMessage.swift in Sources */,
 				913CFF4E2CDD8E9300422B27 /* DetailViewDepricated.swift in Sources */,
