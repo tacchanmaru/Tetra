@@ -18,12 +18,12 @@ class NostrManager: ObservableObject {
     
     private var metadataDict: [String: (name: String?, picture: String?)] = [:]
     
-    init(public_keys: [String]) {
+    init(public_key: String) {
         client = NostrClient()
         client.delegate = delegate
         
         client.add(relayWithUrl: "wss://relay.damus.io", autoConnect: true)
-        let metadataSubscription = Subscription(filters: [.init(authors: public_keys, kinds: [Kind(id: 0)])])
+        let metadataSubscription = Subscription(filters: [.init(authors: [public_key], kinds: [Kind(id: 0)])])
         client.add(subscriptions: [metadataSubscription])
     }
     
