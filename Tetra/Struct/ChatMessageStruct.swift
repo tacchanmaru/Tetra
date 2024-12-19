@@ -5,6 +5,6 @@ struct ChatMessageMetadata: Identifiable, Hashable {
     var createdAt: Date
     var groupId: String
     var publicKey: String
-//    var publicKeyMetadata: PublicKeyMetadata
+    var publicKeyMetadata: PublicKeyMetadata?
     var content: String
 }

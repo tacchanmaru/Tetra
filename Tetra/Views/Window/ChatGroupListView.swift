@@ -41,15 +41,9 @@ struct ChatGroupView: View {
                 sortedGroups: sortedGroups,
                 latestMessage: latestMessage
             )
-//            .environmentObject(appState)
             
         } detail: {
-            Spacer()
-//            ChatDetailView(
-//                relayUrl: appState.selectedNip29Relay?.url ?? "",
-//                groupId: appState.selectedGroup?.id ?? "",
-//                chatMessageNumResults: $appState.chatMessageNumResults
-//            )
+            ChatDetailView()
         }
     }
 }
