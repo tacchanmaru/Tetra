@@ -12,7 +12,7 @@ struct StartView: View {
             ZStack(alignment: .center) {
                 Color.clear
                     .overlay(alignment: .top) {
-                        Image("テトラポット")
+                        Image("TetraPot")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                     }
@@ -49,12 +49,14 @@ struct StartView: View {
                 
             }
             .navigationDestination(for: Int.self) { t in
-                // TODO: ここ本当はcase 0 でChatRelayを設定するべき。
                 switch t {
                 case 0:
-                    AddMetadataRelayView(navigationPath: $navigationPath)
+                    AddChatRelayView(navigationPath: $navigationPath)
                         .navigationBarBackButtonHidden()
                 case 1:
+                    AddMetadataRelayView(navigationPath: $navigationPath)
+                        .navigationBarBackButtonHidden()
+                case 2:
                     AddAccountView(navigationPath: $navigationPath)
                         .navigationBarBackButtonHidden()
                 default:

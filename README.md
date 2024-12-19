@@ -1,7 +1,3 @@
-# Customizing spatial Persona templates
+# Tetra
 
-Arrange spatial Personas for coworking space.
-
-## Overview
-
-> Note: This sample code project is associated with WWDC24 session [10201: Customize spatial Persona templates in SharePlay](https://developer.apple.com/videos/play/wwdc2024/10201).
+An innovative online communication tool using Persona.

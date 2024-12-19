@@ -39,7 +39,7 @@ import Nostr
 
 extension OwnerAccount {
     
-    // TODO: 新規登録に必要な部分なので後ほど実装
+    // TODO: 新規登録に必要な部分なのでvisionOSの文字を打つ面倒さの観点から後回し
 //    static func createNew() -> OwnerAccount? {
 //        if let keypair = try? KeyPair() {
 //            OwnerAccount.saveKeyPairToKeychain(keyPair: keypair)
