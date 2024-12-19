@@ -8,7 +8,7 @@ struct RoomCard: View {
     let description: String
 
     var body: some View {
-        NavigationLink(destination: SessionDetailView(room: (title, memberNum, location, image, description))) {
+        NavigationLink(destination: DetailView(room: (title, memberNum, location, image, description))) {
             VStack(alignment: .leading) {
                 Image(image)
                     .resizable()
