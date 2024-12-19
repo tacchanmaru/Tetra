@@ -23,7 +23,7 @@ class AppState: ObservableObject {
     
     @Published var registeredNsec: Bool = true
     @Published var selectedOwnerAccount: OwnerAccount?
-    @Published var selectedRelay: Relay?
+    @Published var selectedNip29Relay: Relay?
     @Published var selectedGroup: ChatGroup? {
         didSet {
             chatMessageNumResults = 50
@@ -33,45 +33,53 @@ class AppState: ObservableObject {
     
     @Published var statuses: [String: Bool] = [:]
     
+    @Published var ownerPostContents: Array<Post> = []
+    @Published var ownerMetadata: Metadata?
+    
     init() {
         nostrClient.delegate = self
     }
     
     @MainActor
     func initialSetup() async {
-        print("Starting initialSetup...")
-        
+
         var selectedAccountDescriptor = FetchDescriptor<OwnerAccount>(predicate: #Predicate { $0.selected })
+        var selectedMetadataRelayDesctiptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip1 && !$0.supportsNip29 })
         selectedAccountDescriptor.fetchLimit = 1
-        print("FetchDescriptor created with predicate for selected accounts.")
-        
-        if let context = modelContainer?.mainContext {
-            do {
-                print("Fetching selected account from context...")
-                let fetchedAccounts = try context.fetch(selectedAccountDescriptor)
-                self.selectedOwnerAccount = fetchedAccounts.first
-                
-                if let account = self.selectedOwnerAccount {
-                    print("Selected account fetched successfully: \(account)")
-                } else {
-                    print("No selected account found.")
-                }
-            } catch {
-                print("Error fetching selected account: \(error)")
-            }
-        } else {
-            print("Error: modelContainer or mainContext is nil.")
+        selectedMetadataRelayDesctiptor.fetchLimit = 1
+
+        guard
+            let context = modelContainer?.mainContext,
+            let selectedMetadataRelay = try? context.fetch(selectedMetadataRelayDesctiptor).first
+        else {
+            print("Context or selectedMetadataRelay is nil.")
+            return
         }
-        
-        print("initialSetup completed.")
+
+        do {
+            let fetchedAccounts = try context.fetch(selectedAccountDescriptor)
+            self.selectedOwnerAccount = fetchedAccounts.first
+
+            if let account = self.selectedOwnerAccount {
+
+                let publicKey = account.publicKey
+                nostrClient.add(relayWithUrl: selectedMetadataRelay.url, autoConnect: true)
+                let metadataSubscription = Subscription(filters: [.init(authors: [publicKey], kinds: [Kind.setMetadata])])
+                nostrClient.add(subscriptions: [metadataSubscription])
+            }
+        } catch {
+            print("Error fetching selected account: \(error)")
+        }
     }
+
     
     
     //全てのアカウント（自分と、その他のチャットを行う人）の名前などのMetadataを取得する
     @MainActor func connectAllMetadataRelays() async {
         
-        let relaysDescriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip1 })
-        guard let relays = try? modelContainer?.mainContext.fetch(relaysDescriptor) else { return }
+        //メタデータ用のリレー
+        let relaysDescriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip1 && !$0.supportsNip29 })
+        guard let relay = try? modelContainer?.mainContext.fetch(relaysDescriptor).first else { return }
         
         var selectedAccountDescriptor = FetchDescriptor<OwnerAccount>(predicate: #Predicate { $0.selected })
         selectedAccountDescriptor.fetchLimit = 1
@@ -80,53 +88,97 @@ class AppState: ObservableObject {
         var pubkeys = Set([selectedAccount.publicKey])
         
         
-        let membersDescriptor = FetchDescriptor<GroupMember>()
-        if let members = try? modelContainer?.mainContext.fetch(membersDescriptor) {
-            for member in members {
-                pubkeys.insert(member.publicKey)
-            }
-        }
+//        let membersDescriptor = FetchDescriptor<GroupMember>()
+//        if let members = try? modelContainer?.mainContext.fetch(membersDescriptor) {
+//            for member in members {
+//                pubkeys.insert(member.publicKey)
+//            }
+//        }
         
         let adminsDescriptor = FetchDescriptor<GroupAdmin>()
         if let admins = try? modelContainer?.mainContext.fetch(adminsDescriptor) {
             for admin in admins {
-                pubkeys.insert(admin.publicKey)
+                print("Adminユーザー：\(admin.publicKey)")
+//                pubkeys.insert(admin.publicKey)
             }
         }
         
         let sortedPubkeys = Array(pubkeys).sorted()
         
-        for relay in relays {
-            nostrClient.add(relayWithUrl: relay.url, subscriptions: [
-                Subscription(filters: [
-                    Filter(authors: sortedPubkeys, kinds: [
-                        .setMetadata,
-                    ])
-                ], id: IdSubPublicMetadata),
-                Subscription(filters: [
-                    Filter(authors: [selectedAccount.publicKey], kinds: [
-                        .setMetadata,
-                    ])
-                ], id: IdSubOwnerMetadata)
-            ])
-            nostrClient.connect(relayWithUrl: relay.url)
-        }
+        nostrClient.add(relayWithUrl: relay.url, subscriptions: [
+            // メンバーのメタデータを取得できるようになる
+            Subscription(filters: [
+                Filter(authors: sortedPubkeys, kinds: [
+                    .setMetadata,
+                ])
+            ], id: IdSubPublicMetadata),
+            //これより下いるんか？
+//            Subscription(filters: [
+//                Filter(authors: [selectedAccount.publicKey], kinds: [
+//                    .setMetadata,
+//                ])
+//            ], id: IdSubOwnerMetadata)
+        ])
+        nostrClient.connect(relayWithUrl: relay.url)
     }
     
     //NIP-29対応のリレーにグループのメタデータ（メンバーなど？）を取得しにいく
     @MainActor func connectAllNip29Relays() async {
         let descriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip29 })
-        if let relays = try? modelContainer?.mainContext.fetch(descriptor) {
-            for relay in relays {
-                nostrClient.add(relayWithUrl: relay.url, subscriptions: [
-                    Subscription(filters: [
-                        Filter(kinds: [
-                            Kind.groupMetadata
-                        ])
-                    ], id: IdSubGroupList)
-                ])
+        if let relay = try? modelContainer?.mainContext.fetch(descriptor).first {
+            nostrClient.add(relayWithUrl: relay.url, subscriptions: [
+                Subscription(filters: [ Filter(kinds: [ Kind.groupMetadata ]) ], id: IdSubGroupList)]
+            )
+            self.selectedNip29Relay = relay
+        }
+    }
+    
+    func getOwnerMetadata(for key: String) -> (Metadata)? {
+        return ownerMetadata
+    }
+    
+    func saveOwnerMetadata(for key: String, pubkey: String, name: String?, picture: String?, about: String?) {
+        let metadata = Metadata(id: key, pubkey: pubkey, name: name, picture: picture, about: about)
+        
+        DispatchQueue.main.async {
+            self.ownerMetadata = metadata
+        }
+    }
+    
+    // MARK: ここから下タイムラインの内容なので最終的には必要ない
+    
+    func subscribeToPostsForOwner() {
+        guard let public_key = selectedOwnerAccount?.publicKey else { return }
+        let postSubscription = Subscription(filters: [.init(authors: [public_key], kinds: [Kind.textNote])])
+        nostrClient.add(subscriptions: [postSubscription])
+    }
+    
+    func appendOwnerPost(_ post: Post) {
+        DispatchQueue.main.async {
+            print("Post: \(post.text)")
+            self.ownerPostContents.append(post)
+        }
+    }
+
+    func formatNostrTimestamp(_ nostrTimestamp: Nostr.Timestamp) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(nostrTimestamp.timestamp))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.string(from: date)
+    }
+    
+    func sortOwnerPostsByTimestamp() {
+        DispatchQueue.main.async {
+            self.ownerPostContents.sort { post1, post2 in
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                if let date1 = dateFormatter.date(from: post1.timeStamp),
+                   let date2 = dateFormatter.date(from: post2.timeStamp) {
+                    return date1 > date2
+                }
+                return false
             }
-            self.selectedRelay = relays.first
         }
     }
     
@@ -306,21 +358,39 @@ class AppState: ObservableObject {
             
             guard let modelContext = self.backgroundContext() else { return }
             switch event.kind {
-            case Kind.setMetadata:
                 
-                if let publicKeyMetadata = PublicKeyMetadata(event: event) {
-                    modelContext.insert(publicKeyMetadata)
-                    
-                    // Fetch all ChatMessages with publicKey and assign publicKeyMetadata relationship
-                    if let messages = self.getModels(context: modelContext, modelType: ChatMessage.self,
-                                                     predicate: #Predicate<ChatMessage> { $0.publicKey == publicKey }) {
-                        for message in messages {
-                            message.publicKeyMetadata = publicKeyMetadata
-                        }
+            case Kind.setMetadata:
+                if let jsonData = event.content.data(using: .utf8),
+                   let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                    let name = jsonObject["display_name"] as? String
+                    let picture = jsonObject["picture"] as? String
+                    let about = jsonObject["about"] as? String
+
+                    self.saveOwnerMetadata(
+                        for: event.pubkey,
+                        pubkey: event.pubkey,
+                        name: name,
+                        picture: picture,
+                        about: about
+                    )
+                    if self.ownerPostContents.isEmpty {
+                        self.subscribeToPostsForOwner()
                     }
                     
-                    try? modelContext.save()
-                    
+                }
+            
+            case Kind.textNote:
+                if let metadata = self.getOwnerMetadata(for: event.pubkey) {
+                    let timeStampString = self.formatNostrTimestamp(event.createdAt)
+                    let post = Post(
+                        id: UUID().uuidString,
+                        text: event.content,
+                        name: metadata.name,
+                        picture: metadata.picture,
+                        timeStamp: timeStampString
+                    )
+                    self.appendOwnerPost(post)
+                    self.sortOwnerPostsByTimestamp()
                 }
                 
             case Kind.groupMetadata:
@@ -454,7 +524,7 @@ class AppState: ObservableObject {
     //
     func createGroup(ownerAccount: OwnerAccount) {
         guard let key = ownerAccount.getKeyPair() else { return }
-        guard let selectedRelay else { return }
+        guard let selectedNip29Relay else { return }
         let groupId = "testgroup"
         //var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
         //                         kind: .groupCreate, tags: [Tag(id: "h", otherInformation: groupId)], content: "")
@@ -466,7 +536,7 @@ class AppState: ObservableObject {
             print(error.localizedDescription)
         }
         
-        nostrClient.send(event: createGroupEvent, onlyToRelayUrls: [selectedRelay.url])
+        nostrClient.send(event: createGroupEvent, onlyToRelayUrls: [selectedNip29Relay.url])
     }
     
     func joinGroup(ownerAccount: OwnerAccount, group: ChatGroup) {
@@ -639,7 +709,7 @@ extension AppState: NostrClientDelegate {
                 }
             case IdSubChatMessages,IdSubGroupList:
                 Task {
-                    await connectAllMetadataRelays()
+//                    await connectAllMetadataRelays()
                 }
             default:
                 ()

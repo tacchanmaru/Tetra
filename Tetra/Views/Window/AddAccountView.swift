@@ -97,7 +97,7 @@ struct AddAccountView: View {
                             appState.selectedOwnerAccount = ownerAccount
                             Task {
                                 await appState.connectAllNip29Relays()
-                                await appState.connectAllMetadataRelays()
+//                                await appState.connectAllMetadataRelays()
                             }
                             appState.registeredNsec = true
                         } else {

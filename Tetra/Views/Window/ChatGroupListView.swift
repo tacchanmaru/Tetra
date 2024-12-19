@@ -44,7 +44,7 @@ struct ChatGroupView: View {
             
         } detail: {
             ChatDetailView(
-                relayUrl: appState.selectedRelay?.url ?? "",
+                relayUrl: appState.selectedNip29Relay?.url ?? "",
                 groupId: appState.selectedGroup?.id ?? "",
                 chatMessageNumResults: $appState.chatMessageNumResults
             )

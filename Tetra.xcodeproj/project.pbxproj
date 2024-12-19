@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8827195C2D12492F00D606A4 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827195B2D12492900D606A4 /* ChatListView.swift */; };
-		882719632D12C4B100D606A4 /* TimeLineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719622D12C4AD00D606A4 /* TimeLineManager.swift */; };
 		882719652D12C53B00D606A4 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719642D12C53700D606A4 /* AppState.swift */; };
+		882719742D13C83300D606A4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719732D13C83200D606A4 /* Post.swift */; };
+		882719762D13C86C00D606A4 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719752D13C86800D606A4 /* Metadata.swift */; };
 		888FBBA92D01234900F45041 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBA82D01234900F45041 /* GameModel.swift */; };
 		888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBAA2D01235200F45041 /* PlayerModel.swift */; };
 		888FBBD92D014DEB00F45041 /* ChatGroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBD82D014DE900F45041 /* ChatGroupListView.swift */; };
@@ -30,7 +31,6 @@
 		88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAACF2CF7EC6200E8C909 /* StartView.swift */; };
 		88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */; };
 		88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */; };
-		88EFAAD62CF7FE6700E8C909 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAAD52CF7FE6100E8C909 /* AppState.swift */; };
 		88EFAAD92CF80F5C00E8C909 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 88EFAAD82CF80F5C00E8C909 /* KeychainAccess */; };
 		88EFAADB2CF8912500E8C909 /* OwnerAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */; };
 		88EFAADD2CF8914500E8C909 /* Relay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADC2CF8914100E8C909 /* Relay.swift */; };
@@ -38,7 +38,7 @@
 		90B712802D0959CE001828BD /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B7127F2D0959C6001828BD /* DetailView.swift */; };
 		913CFF4E2CDD8E9300422B27 /* DetailViewDepricated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF472CDD8E9300422B27 /* DetailViewDepricated.swift */; };
 		913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF3F2CDD8E9300422B27 /* RoomList.swift */; };
-		913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF492CDD8E9300422B27 /* SettingView.swift */; };
+		913CFF502CDD8E9300422B27 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF492CDD8E9300422B27 /* ProfileView.swift */; };
 		913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF452CDD8E9300422B27 /* AddSpaceView.swift */; };
 		913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF4B2CDD8E9300422B27 /* WelcomeView.swift */; };
 		913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF4A2CDD8E9300422B27 /* TimeLineView.swift */; };
@@ -61,8 +61,9 @@
 		475409EE5B8057AEF1677487 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		8827195B2D12492900D606A4 /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
-		882719622D12C4AD00D606A4 /* TimeLineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineManager.swift; sourceTree = "<group>"; };
 		882719642D12C53700D606A4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		882719732D13C83200D606A4 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		882719752D13C86800D606A4 /* Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
 		888FBBA82D01234900F45041 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		888FBBAA2D01235200F45041 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		888FBBD82D014DE900F45041 /* ChatGroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupListView.swift; sourceTree = "<group>"; };
@@ -83,7 +84,6 @@
 		88EFAACF2CF7EC6200E8C909 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMetadataRelayView.swift; sourceTree = "<group>"; };
 		88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
-		88EFAAD52CF7FE6100E8C909 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerAccount.swift; sourceTree = "<group>"; };
 		88EFAADC2CF8914100E8C909 /* Relay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relay.swift; sourceTree = "<group>"; };
 		88F92F622CBE3D0D00F9A089 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 		913CFF462CDD8E9300422B27 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		913CFF472CDD8E9300422B27 /* DetailViewDepricated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewDepricated.swift; sourceTree = "<group>"; };
 		913CFF482CDD8E9300422B27 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		913CFF492CDD8E9300422B27 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		913CFF492CDD8E9300422B27 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		913CFF4A2CDD8E9300422B27 /* TimeLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineView.swift; sourceTree = "<group>"; };
 		913CFF4B2CDD8E9300422B27 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		C310AA562BD1F2970098D2B8 /* Publisher+withPrevious.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+withPrevious.swift"; sourceTree = "<group>"; };
@@ -133,12 +133,13 @@
 			name = Configuration;
 			sourceTree = "<group>";
 		};
-		882719612D12C4A300D606A4 /* Nostr */ = {
+		882719722D13C80D00D606A4 /* Struct */ = {
 			isa = PBXGroup;
 			children = (
-				882719622D12C4AD00D606A4 /* TimeLineManager.swift */,
+				882719752D13C86800D606A4 /* Metadata.swift */,
+				882719732D13C83200D606A4 /* Post.swift */,
 			);
-			path = Nostr;
+			path = Struct;
 			sourceTree = "<group>";
 		};
 		88BF74C12D0FC3720038D999 /* Chat */ = {
@@ -177,7 +178,6 @@
 				88BF74B12D0924130038D999 /* GroupMember.swift */,
 				88BF74B32D0924270038D999 /* GroupAdmin.swift */,
 				888FBBE12D02AC8A00F45041 /* ChatMessage.swift */,
-				88EFAAD52CF7FE6100E8C909 /* AppState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,7 +195,7 @@
 				913CFF472CDD8E9300422B27 /* DetailViewDepricated.swift */,
 				90B7127F2D0959C6001828BD /* DetailView.swift */,
 				913CFF482CDD8E9300422B27 /* HomeView.swift */,
-				913CFF492CDD8E9300422B27 /* SettingView.swift */,
+				913CFF492CDD8E9300422B27 /* ProfileView.swift */,
 				88EFAACF2CF7EC6200E8C909 /* StartView.swift */,
 				913CFF4A2CDD8E9300422B27 /* TimeLineView.swift */,
 				913CFF4B2CDD8E9300422B27 /* WelcomeView.swift */,
@@ -254,8 +254,8 @@
 				913CFF4D2CDD8E9300422B27 /* Views */,
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
 				F5643ADE2BD70B0E00FFF716 /* ImmersiveSpace */,
-				F5A044252BD5788500EDAAD5 /* Models */,
-				882719612D12C4A300D606A4 /* Nostr */,
+				882719722D13C80D00D606A4 /* Struct */,
+				F5A044252BD5788500EDAAD5 /* Nostr */,
 				F5A044262BD578BA00EDAAD5 /* GroupActivity */,
 				C310AA552BD1F2750098D2B8 /* Utilities */,
 				F54255CE2BD2DE07006B9A37 /* Resources */,
@@ -283,7 +283,7 @@
 			path = ImmersiveSpace;
 			sourceTree = "<group>";
 		};
-		F5A044252BD5788500EDAAD5 /* Models */ = {
+		F5A044252BD5788500EDAAD5 /* Nostr */ = {
 			isa = PBXGroup;
 			children = (
 				882719642D12C53700D606A4 /* AppState.swift */,
@@ -291,7 +291,7 @@
 				888FBBA82D01234900F45041 /* GameModel.swift */,
 				F5155FD72BD09B5D004F1CA1 /* AppModel.swift */,
 			);
-			path = Models;
+			path = Nostr;
 			sourceTree = "<group>";
 		};
 		F5A044262BD578BA00EDAAD5 /* GroupActivity */ = {
@@ -379,7 +379,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				888FBBDF2D029A6D00F45041 /* Group.swift in Sources */,
-				882719632D12C4B100D606A4 /* TimeLineManager.swift in Sources */,
 				888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */,
 				88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
@@ -391,11 +390,13 @@
 				88BF74CD2D0FC47B0038D999 /* ChatMessageRow.swift in Sources */,
 				889316032CFEECF500A85EC3 /* RoundedCorners.swift in Sources */,
 				88EFAADD2CF8914500E8C909 /* Relay.swift in Sources */,
+				882719742D13C83300D606A4 /* Post.swift in Sources */,
 				88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */,
 				F5CF2A092BD1CF9600C66F78 /* TetraActivity.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */,
 				F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */,
+				882719762D13C86C00D606A4 /* Metadata.swift in Sources */,
 				F5643AE02BD70C6E00FFF716 /* PhraseDeckView.swift in Sources */,
 				8827195C2D12492F00D606A4 /* ChatListView.swift in Sources */,
 				F5CF2A072BD1CD8A00C66F78 /* SessionController.swift in Sources */,
@@ -405,7 +406,7 @@
 				913CFF4E2CDD8E9300422B27 /* DetailViewDepricated.swift in Sources */,
 				88BF74C72D0FC3CA0038D999 /* GroupListRow.swift in Sources */,
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
-				913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */,
+				913CFF502CDD8E9300422B27 /* ProfileView.swift in Sources */,
 				913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */,
 				913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */,
 				90B712802D0959CE001828BD /* DetailView.swift in Sources */,
@@ -419,7 +420,6 @@
 				913CFF562CDD8E9300422B27 /* ContentView.swift in Sources */,
 				889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */,
 				88EFAADB2CF8912500E8C909 /* OwnerAccount.swift in Sources */,
-				88EFAAD62CF7FE6700E8C909 /* AppState.swift in Sources */,
 				913CFF572CDD8E9300422B27 /* TetraTabs.swift in Sources */,
 				88BF74CB2D0FC4300038D999 /* GroupPicture.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */,
