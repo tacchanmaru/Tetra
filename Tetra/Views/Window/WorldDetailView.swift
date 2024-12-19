@@ -2,7 +2,7 @@ import SwiftUI
 import GroupActivities
 
 /// A view that presents the video content details.
-struct DetailView: View {
+struct WorldDetailView: View {
     @State var inputSharePlayLink = ""
     
     let room: (
