@@ -9,7 +9,7 @@ struct TetraTabs: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            ChatGroupView(relayUrl: appState.selectedRelay?.url ?? "")
+            ChatGroupView(relayUrl: appState.selectedNip29Relay?.url ?? "")
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }
@@ -18,9 +18,9 @@ struct TetraTabs: View {
                     Label("Timeline", systemImage: "clock")
                 }
             
-            SettingView()
+            ProfileView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Label("Profile", systemImage: "person.crop.circle")
                 }
         }
         .navigationBarBackButtonHidden()

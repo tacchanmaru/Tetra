@@ -1,19 +1,10 @@
 import SwiftUI
 import SwiftData
 
-/// A view that presents the app's content library.
-struct SettingView: View {
-    @Environment(AppModel.self) var appModel
+struct ProfileView: View {
     @State private var accountName: String = ""
     @State private var about: String = ""
-    
-    @EnvironmentObject private var appState: AppState
-    
-    @Query private var publicKeyMetadata: [PublicKeyMetadata]
-    var selectedOwnerAccountPublicKeyMetadata: PublicKeyMetadata? {
-        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return nil }
-        return publicKeyMetadata.first(where: { $0.publicKey == selectedOwnerAccount.publicKey })
-    }
+    @EnvironmentObject private var appState : AppState
     
     var body: some View {
         ScrollView{
@@ -23,7 +14,7 @@ struct SettingView: View {
                     .padding(.bottom, 20)
                 
                 Group{
-                    if let picture = selectedOwnerAccountPublicKeyMetadata?.picture,
+                    if let picture = appState.ownerMetadata?.picture,
                        let url = URL(string: picture) {
                         AsyncImage(url: url) { image in
                             image
@@ -41,7 +32,7 @@ struct SettingView: View {
                     }
                     Text("Public Key")
                         .font(.headline)
-                    if let publicKey = selectedOwnerAccountPublicKeyMetadata?.bech32PublicKey {
+                    if let publicKey = appState.ownerMetadata?.pubkey {
                         Text(publicKey)
                     } else {
                         Text("No public key available")
@@ -68,39 +59,35 @@ struct SettingView: View {
                     
                 }.onAppear {
                     // Initialize state properties with data from the model
-                    if let metadata = selectedOwnerAccountPublicKeyMetadata {
+                    if let metadata = appState.ownerMetadata {
                         accountName = metadata.name ?? ""
                         about = metadata.about ?? ""
                     }
                 }
                 Spacer()
-                HStack{
-                    Spacer()
-                    
-                    Button(action: {
-                        print("Account settings saved")
-                    }) {
-                        Text("Save Changes")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
-                            .padding()
-                            .frame(width: 300)
-                    }
-                    .background(Color.blue)
-                    .cornerRadius(12)
-                    .buttonStyle(.plain)
-                    
-                    Spacer()
-                }
+                //TODO: プロフィールを編集できるようにする
+//                HStack{
+//                    Spacer()
+//                    
+//                    Button(action: {
+//                        print("Account settings saved")
+//                    }) {
+//                        Text("Save Changes")
+//                            .font(.headline)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(12)
+//                            .padding()
+//                            .frame(width: 300)
+//                    }
+//                    .background(Color.blue)
+//                    .cornerRadius(12)
+//                    .buttonStyle(.plain)
+//                    
+//                    Spacer()
+//                }
                 
             }
             .padding()
         }
     }
-}
-
-#Preview{
-    SettingView()
-        .environment(AppModel())
 }

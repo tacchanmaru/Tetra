@@ -28,7 +28,6 @@ struct TetraApp: App {
     @State var appModel = AppModel()
     @StateObject var appState = AppState()
     
-    @StateObject var nostrClient = NostrClient()
     
     var body: some Scene {
         WindowGroup {
