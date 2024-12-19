@@ -29,6 +29,8 @@ class AppState: ObservableObject {
             chatMessageNumResults = 50
         }
     }
+    @Published var allChatGroup: Array<ChatGroupMetadata> = []
+    @Published var allChatMessage: Array<ChatMessageMetadata> = []
     @Published var chatMessageNumResults: Int = 50
     
     @Published var statuses: [String: Bool] = [:]
@@ -105,21 +107,21 @@ class AppState: ObservableObject {
         
         let sortedPubkeys = Array(pubkeys).sorted()
         
-        nostrClient.add(relayWithUrl: relay.url, subscriptions: [
-            // メンバーのメタデータを取得できるようになる
-            Subscription(filters: [
-                Filter(authors: sortedPubkeys, kinds: [
-                    .setMetadata,
-                ])
-            ], id: IdSubPublicMetadata),
-            //これより下いるんか？
+//        nostrClient.add(relayWithUrl: relay.url, subscriptions: [
+//            // メンバーのメタデータを取得できるようになる
 //            Subscription(filters: [
-//                Filter(authors: [selectedAccount.publicKey], kinds: [
+//                Filter(authors: sortedPubkeys, kinds: [
 //                    .setMetadata,
 //                ])
-//            ], id: IdSubOwnerMetadata)
-        ])
-        nostrClient.connect(relayWithUrl: relay.url)
+//            ], id: IdSubPublicMetadata),
+//            //これより下いるんか？
+////            Subscription(filters: [
+////                Filter(authors: [selectedAccount.publicKey], kinds: [
+////                    .setMetadata,
+////                ])
+////            ], id: IdSubOwnerMetadata)
+//        ])
+//        nostrClient.connect(relayWithUrl: relay.url)
     }
     
     //NIP-29対応のリレーにグループのメタデータ（メンバーなど？）を取得しにいく
@@ -155,7 +157,6 @@ class AppState: ObservableObject {
     
     func appendOwnerPost(_ post: Post) {
         DispatchQueue.main.async {
-            print("Post: \(post.text)")
             self.ownerPostContents.append(post)
         }
     }
@@ -188,55 +189,55 @@ class AppState: ObservableObject {
     // a no-op if nothing has actually changed in subscriptions, etc.
     @MainActor func subscribeGroups(withRelayUrl relayUrl: String) async {
         
-        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
+//        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
+//        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
             
             // Get latest message and use since filter so we don't keep getting the same shit
             //let since = events.min(by: { $0.createdAt > $1.createdAt })
             // TODO: use the since fitler
-            let groupIds = events.compactMap({ $0.id }).sorted()
-            let sub = Subscription(filters: [
-                Filter(kinds: [
-                    Kind.groupChatMessage,
-                    Kind.groupChatMessageReply,
-                    Kind.groupForumMessage,
-                    //Kind.groupForumMessageReply
-                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
-            ], id: IdSubChatMessages)
+        let groupIds = self.allChatGroup.compactMap({ $0.id }).sorted()
+        let sub = Subscription(filters: [
+            Filter(kinds: [
+                Kind.groupChatMessage,
+                Kind.groupChatMessageReply,
+                Kind.groupForumMessage,
+                //Kind.groupForumMessageReply
+            ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
+        ], id: IdSubChatMessages)
             
-            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-        }
+        nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
+//        }
     }
     
     @MainActor func subscribeGroupMemberships(withRelayUrl relayUrl: String) async {
         
-        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
-            
-            // Get latest message and use since filter so we don't keep getting the same shit
-            //let since = events.min(by: { $0.createdAt > $1.createdAt })
-            // TODO: use the since fitler
-            let groupIds = events.compactMap({ $0.id }).sorted()
-            let sub = Subscription(filters: [
-                Filter(kinds: [
-                    Kind.groupAddUser,
-                    Kind.groupRemoveUser
-                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
-            ], id: IdSubGroupMembers)
-            
-            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-        }
+//        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
+//        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
+//            
+//            // Get latest message and use since filter so we don't keep getting the same shit
+//            //let since = events.min(by: { $0.createdAt > $1.createdAt })
+//            // TODO: use the since fitler
+//            let groupIds = events.compactMap({ $0.id }).sorted()
+//            let sub = Subscription(filters: [
+//                Filter(kinds: [
+//                    Kind.groupAddUser,
+//                    Kind.groupRemoveUser
+//                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
+//            ], id: IdSubGroupMembers)
+//            
+//            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
+//        }
     }
     
     @MainActor func subscribeGroupAdmins(withRelayUrl relayUrl: String) async {
         
-        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
+//        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
+//        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
             
             // Get latest message and use since filter so we don't keep getting the same shit
             //let since = events.min(by: { $0.createdAt > $1.createdAt })
             // TODO: use the since fitler
-            let groupIds = events.compactMap({ $0.id }).sorted()
+            let groupIds = self.allChatGroup.compactMap({ $0.id }).sorted()
             let sub = Subscription(filters: [
                 Filter(kinds: [
                     Kind.groupAdmins
@@ -244,7 +245,7 @@ class AppState: ObservableObject {
             ], id: IdSubGroupAdmins)
             
             nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-        }
+//        }
     }
     
     public func remove(relaysWithUrl relayUrls: [String]) {
@@ -309,42 +310,52 @@ class AppState: ObservableObject {
 
         let pOtherInfos: [[String]] = pTags.compactMap { $0.otherInformation }
 
-        var admins: [GroupAdmin] = []
+        var admins: [GroupAdminMetadata] = []
         for info in pOtherInfos {
             guard let publicKey = info.first else { continue }
-            let capabilities = info.count > 2 ? Array(info[2...]) : []
             
-            if let admin = GroupAdmin(publicKey: publicKey, groupId: groupId, capabilities: capabilities, relayUrl: relayUrl),
-               admin.publicKey.isValidPublicKey {
+            let capabilities: Set<GroupAdminMetadata.Capability> = Set(
+                info.dropFirst(2).compactMap { GroupAdminMetadata.Capability(rawValue: $0) }
+            )
+            
+            let admin = GroupAdminMetadata(
+                id: UUID().uuidString,
+                publicKey: publicKey,
+                groupId: groupId,
+                capabilities: capabilities,
+                relayUrl: relayUrl
+            )
+            
+            if admin.publicKey.isValidPublicKey {
                 admins.append(admin)
             }
         }
 
-        for admin in admins {
-            modelContext.insert(admin)
-        }
+//        for admin in admins {
+//            modelContext.insert(admin)
+//        }
 
         let adminPublicKeys = admins.map { $0.publicKey }
         let adminsPredicate: Predicate<PublicKeyMetadata> = #Predicate<PublicKeyMetadata> { adminPublicKeys.contains($0.publicKey) }
 
-        if let publicKeyMetadatas = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self, predicate: adminsPredicate) {
-            for admin in admins {
-                admin.publicKeyMetadata = publicKeyMetadatas.first(where: { $0.publicKey == admin.publicKey })
-            }
-        }
+//        if let publicKeyMetadatas = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self, predicate: adminsPredicate) {
+//            for admin in admins {
+//                admin.publicKeyMetadata = publicKeyMetadatas.first(where: { $0.publicKey == admin.publicKey })
+//            }
+//        }
 
         let groupPredicateForAdmins: Predicate<ChatGroup> = #Predicate<ChatGroup> { $0.relayUrl == relayUrl && $0.id == groupId }
 
-        if let groups = self.getModels(context: modelContext, modelType: ChatGroup.self, predicate: groupPredicateForAdmins) {
-            if let selectedOwnerAccount = self.selectedOwnerAccount {
-                let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
-                for group in groups {
-                    group.isAdmin = admins.first(where: { $0.publicKey == selectedOwnerPublicKey }) != nil
-                }
-            }
-        }
-        
-        try? modelContext.save()
+//        if let groups = self.getModels(context: modelContext, modelType: ChatGroup.self, predicate: groupPredicateForAdmins) {
+//            if let selectedOwnerAccount = self.selectedOwnerAccount {
+//                let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
+//                for group in groups {
+//                    group.isAdmin = admins.first(where: { $0.publicKey == selectedOwnerPublicKey }) != nil
+//                }
+//            }
+//        }
+//        
+//        try? modelContext.save()
     }
 
     
@@ -354,14 +365,13 @@ class AppState: ObservableObject {
             let publicKey = event.pubkey
             guard let eventId = event.id else { return }
             
-            print("event.kind: \(event.kind)")
-            
             guard let modelContext = self.backgroundContext() else { return }
             switch event.kind {
                 
             case Kind.setMetadata:
                 if let jsonData = event.content.data(using: .utf8),
                    let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                    print("JsonObject: \(jsonObject)")
                     let name = jsonObject["display_name"] as? String
                     let picture = jsonObject["picture"] as? String
                     let about = jsonObject["about"] as? String
@@ -394,27 +404,53 @@ class AppState: ObservableObject {
                 }
                 
             case Kind.groupMetadata:
-                print("Let's create a group!")
+//                print("event.kind: \(event.kind)")
+//                print("event.tag: \(event.tags)")
+                let tags = event.tags.map({ $0 })
+                guard let groupId = tags.first(where: { $0.id == "d" })?.otherInformation.first else { return  }
+                let isPublic = tags.first(where: { $0.id == "private"}) == nil
+                let isOpen = tags.first(where: { $0.id == "closed" }) == nil
+                let name = tags.first(where: { $0.id == "name" })?.otherInformation.first
+                let about = tags.first(where: { $0.id == "about" })?.otherInformation.first
+                let picture = tags.first(where: { $0.id == "picture" })?.otherInformation.first
                 
-                if let group = ChatGroup(event: event, relayUrl: relayUrl) {
-                    let groupId = group.id
-                    modelContext.insert(group)
+
+                let metadata = ChatGroupMetadata(
+                    id: groupId,
+                    relayUrl: self.selectedNip29Relay?.url ?? "",
+                    name: name,
+                    picture: picture,
+                    about: about,
+                    isPublic: isPublic,
+                    isOpen: isOpen,
+                    isMember: false,
+                    isAdmin: false
+                )
                     
-                    if let selectedOwnerAccount = self.selectedOwnerAccount {
-                        
-                        let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
-                        
-                        group.isMember = self.getModels(context: modelContext, modelType: GroupMember.self,
-                                                        predicate: #Predicate<GroupMember> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId && $0.relayUrl == relayUrl })?.first != nil
-                        
-                        group.isAdmin = self.getModels(context: modelContext, modelType: GroupAdmin.self,
-                                                       predicate: #Predicate<GroupAdmin> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId  && $0.relayUrl == relayUrl })?.first != nil
-                        
-                    }
-                    
-                    try? modelContext.save()
-                    
+                DispatchQueue.main.async {
+//                    print("exact metadata: \(metadata)")
+                    self.allChatGroup.append(metadata)
                 }
+                
+//                if let group = ChatGroup(event: event, relayUrl: relayUrl) {
+//                    let groupId = group.id
+//                    modelContext.insert(group)
+//                    
+//                    if let selectedOwnerAccount = self.selectedOwnerAccount {
+//                        
+//                        let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
+//                        
+//                        group.isMember = self.getModels(context: modelContext, modelType: GroupMember.self,
+//                                                        predicate: #Predicate<GroupMember> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId && $0.relayUrl == relayUrl })?.first != nil
+//                        
+//                        group.isAdmin = self.getModels(context: modelContext, modelType: GroupAdmin.self,
+//                                                       predicate: #Predicate<GroupAdmin> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId  && $0.relayUrl == relayUrl })?.first != nil
+//                        
+//                    }
+//                    
+//                    try? modelContext.save()
+//                    
+//                }
                 
             case Kind.groupAdmins:
                 self.handleGroupAdmins(event: event, relayUrl: relayUrl, modelContext: modelContext)
@@ -454,40 +490,56 @@ class AppState: ObservableObject {
                 //                    }
                 
             case Kind.groupChatMessage:
-                print("Messageを受信しました")
+                print("event.tags: \(event.tags)")
+                print("event.content: \(event.content)")
+                guard let groupId = event.tags.first(where: { $0.id == "h" })?.otherInformation.first else { return }
+                guard let id = event.id else { return }
                 
-                if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
-                    
-                    if let chatMessages = self.getModels(context: modelContext, modelType: ChatMessage.self,
-                                                         predicate: #Predicate<ChatMessage> { $0.id == eventId }), chatMessages.count == 0 {
-                        
-                        modelContext.insert(chatMessage)
-                        
-                        if let publicKeyMetadata = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
-                                                                  predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })?.first {
-                            chatMessage.publicKeyMetadata = publicKeyMetadata
-                        }
-                        
-                        if let replyToEventId = chatMessage.replyToEventId {
-                            if let replyToChatMessage = self.getModels(context: modelContext, modelType: ChatMessage.self,
-                                                                       predicate: #Predicate<ChatMessage> { $0.id == replyToEventId })?.first {
-                                chatMessage.replyToChatMessage = replyToChatMessage
-                            }
-                        }
-                        
-                        // Check if any messages point to me?
-                        if let replies = self.getModels(context: modelContext, modelType: ChatMessage.self, predicate: #Predicate<ChatMessage> { $0.replyToEventId == eventId }) {
-                            
-                            for message in replies {
-                                message.replyToChatMessage = chatMessage
-                            }
-                            
-                        }
-                        
-                        try? modelContext.save()
-                        
-                    }
+                let chatMessage = ChatMessageMetadata(
+                    id: id,
+                    createdAt: event.createdAt.date,
+                    groupId: groupId,
+                    publicKey: event.pubkey,
+                    content: event.content
+                )
+                
+                DispatchQueue.main.async {
+                    self.allChatMessage.append(chatMessage)
                 }
+                
+                
+//                if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
+//                    
+//                    if let chatMessages = self.getModels(context: modelContext, modelType: ChatMessage.self,
+//                                                         predicate: #Predicate<ChatMessage> { $0.id == eventId }), chatMessages.count == 0 {
+//                        
+//                        modelContext.insert(chatMessage)
+//                        
+//                        if let publicKeyMetadata = self.getModels(context: modelContext, modelType: PublicKeyMetadata.self,
+//                                                                  predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })?.first {
+//                            chatMessage.publicKeyMetadata = publicKeyMetadata
+//                        }
+//                        
+//                        if let replyToEventId = chatMessage.replyToEventId {
+//                            if let replyToChatMessage = self.getModels(context: modelContext, modelType: ChatMessage.self,
+//                                                                       predicate: #Predicate<ChatMessage> { $0.id == replyToEventId })?.first {
+//                                chatMessage.replyToChatMessage = replyToChatMessage
+//                            }
+//                        }
+//                        
+//                        // Check if any messages point to me?
+//                        if let replies = self.getModels(context: modelContext, modelType: ChatMessage.self, predicate: #Predicate<ChatMessage> { $0.replyToEventId == eventId }) {
+//                            
+//                            for message in replies {
+//                                message.replyToChatMessage = chatMessage
+//                            }
+//                            
+//                        }
+//                        
+//                        try? modelContext.save()
+//                        
+//                    }
+//                }
                 
             case Kind.groupAddUser:
                 print(event)
@@ -522,22 +574,21 @@ class AppState: ObservableObject {
     //        nostrClient.send(event: editGroupEvent, onlyToRelayUrls: [selectedRelay.url])
     //    }
     //
-    func createGroup(ownerAccount: OwnerAccount) {
-        guard let key = ownerAccount.getKeyPair() else { return }
-        guard let selectedNip29Relay else { return }
-        let groupId = "testgroup"
-        //var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
-        //                         kind: .groupCreate, tags: [Tag(id: "h", otherInformation: groupId)], content: "")
-        var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
-                                     kind: .groupCreate, tags: [], content: "")
-        do {
-            try createGroupEvent.sign(with: key)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        nostrClient.send(event: createGroupEvent, onlyToRelayUrls: [selectedNip29Relay.url])
-    }
+//    func createGroup(ownerAccount: OwnerAccount) {
+//        guard let key = ownerAccount.getKeyPair() else { return }
+//        let groupId = "testgroup"
+//        //var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
+//        //                         kind: .groupCreate, tags: [Tag(id: "h", otherInformation: groupId)], content: "")
+//        var createGroupEvent = Event(pubkey: ownerAccount.publicKey, createdAt: .init(),
+//                                     kind: .groupCreate, tags: [], content: "")
+//        do {
+//            try createGroupEvent.sign(with: key)
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//        
+//        nostrClient.send(event: createGroupEvent, onlyToRelayUrls: [selectedNip29Relay.url])
+//    }
     
     func joinGroup(ownerAccount: OwnerAccount, group: ChatGroup) {
         guard let key = ownerAccount.getKeyPair() else { return }
@@ -607,55 +658,55 @@ class AppState: ObservableObject {
     
             guard let mainContext = modelContainer?.mainContext else { return }
             let publicKey = ownerAccount.publicKey
-            let ownerPublicKeyMetadata = try? mainContext.fetch(FetchDescriptor(predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })).first
-            if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
-                chatMessage.publicKeyMetadata = ownerPublicKeyMetadata
-                withAnimation {
-                    mainContext.insert(chatMessage)
-                    try? mainContext.save()
-    
-                }
-                nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
-            }
+//            let ownerPublicKeyMetadata = try? mainContext.fetch(FetchDescriptor(predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })).first
+//            if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
+//                chatMessage.publicKeyMetadata = ownerPublicKeyMetadata
+//                withAnimation {
+//                    mainContext.insert(chatMessage)
+//                    try? mainContext.save()
+//    
+//                }
+//                nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
+//            }
     
         }
     
-        @MainActor
-        func sendChatMessageReply(ownerAccount: OwnerAccount, group: ChatGroup, withText text: String, replyChatMessage: ChatMessage) async {
-            guard let key = ownerAccount.getKeyPair() else { return }
-            let relayUrl = group.relayUrl
-            let groupId = group.id
-            var tags: [Tag] = [Tag(id: "h", otherInformation: groupId)]
-            if let rootEventId = replyChatMessage.rootEventId {
-                tags.append(Tag(id: "e", otherInformation: [rootEventId, relayUrl, "root", replyChatMessage.publicKey]))
-                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "reply", replyChatMessage.publicKey]))
-            } else {
-                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "root", replyChatMessage.publicKey]))
-                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "reply", replyChatMessage.publicKey]))
-            }
-    
-            var event = Event(pubkey: ownerAccount.publicKey, createdAt: .init(), kind: .groupChatMessage,
-                              tags: tags, content: text)
-            do {
-                try event.sign(with: key)
-            } catch {
-                print(error.localizedDescription)
-            }
-    
-            guard let mainContext = modelContainer?.mainContext else { return }
-            let publicKey = ownerAccount.publicKey
-            let ownerPublicKeyMetadata = try? mainContext.fetch(FetchDescriptor(predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })).first
-            if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
-                chatMessage.publicKeyMetadata = ownerPublicKeyMetadata
-                chatMessage.replyToChatMessage = replyChatMessage
-                withAnimation {
-                    mainContext.insert(chatMessage)
-                    try? mainContext.save()
-    
-                }
-                nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
-            }
-        }
+//        @MainActor
+//        func sendChatMessageReply(ownerAccount: OwnerAccount, group: ChatGroup, withText text: String, replyChatMessage: ChatMessage) async {
+//            guard let key = ownerAccount.getKeyPair() else { return }
+//            let relayUrl = group.relayUrl
+//            let groupId = group.id
+//            var tags: [Tag] = [Tag(id: "h", otherInformation: groupId)]
+//            if let rootEventId = replyChatMessage.rootEventId {
+//                tags.append(Tag(id: "e", otherInformation: [rootEventId, relayUrl, "root", replyChatMessage.publicKey]))
+//                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "reply", replyChatMessage.publicKey]))
+//            } else {
+//                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "root", replyChatMessage.publicKey]))
+//                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "reply", replyChatMessage.publicKey]))
+//            }
+//    
+//            var event = Event(pubkey: ownerAccount.publicKey, createdAt: .init(), kind: .groupChatMessage,
+//                              tags: tags, content: text)
+//            do {
+//                try event.sign(with: key)
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//    
+//            guard let mainContext = modelContainer?.mainContext else { return }
+//            let publicKey = ownerAccount.publicKey
+//            let ownerPublicKeyMetadata = try? mainContext.fetch(FetchDescriptor(predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })).first
+//            if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
+//                chatMessage.publicKeyMetadata = ownerPublicKeyMetadata
+//                chatMessage.replyToChatMessage = replyChatMessage
+//                withAnimation {
+//                    mainContext.insert(chatMessage)
+//                    try? mainContext.save()
+//    
+//                }
+//                nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
+//            }
+//        }
     
 #if os(macOS)
     func copyToClipboard(_ string: String) {

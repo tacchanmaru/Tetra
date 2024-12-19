@@ -11,6 +11,10 @@
 		882719652D12C53B00D606A4 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719642D12C53700D606A4 /* AppState.swift */; };
 		882719742D13C83300D606A4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719732D13C83200D606A4 /* Post.swift */; };
 		882719762D13C86C00D606A4 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882719752D13C86800D606A4 /* Metadata.swift */; };
+		885D16602D143CDA00E603D7 /* ChatGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D165F2D143CD700E603D7 /* ChatGroup.swift */; };
+		885D16622D145D6000E603D7 /* ChatMessageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D16612D145D5C00E603D7 /* ChatMessageStruct.swift */; };
+		885D16642D14691C00E603D7 /* GroupAdminStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D16632D14691700E603D7 /* GroupAdminStruct.swift */; };
+		885D16662D1469FE00E603D7 /* PublicKeyMetadataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D16652D1469F700E603D7 /* PublicKeyMetadataStruct.swift */; };
 		888FBBA92D01234900F45041 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBA82D01234900F45041 /* GameModel.swift */; };
 		888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBAA2D01235200F45041 /* PlayerModel.swift */; };
 		888FBBD92D014DEB00F45041 /* ChatGroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888FBBD82D014DE900F45041 /* ChatGroupListView.swift */; };
@@ -64,6 +68,10 @@
 		882719642D12C53700D606A4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		882719732D13C83200D606A4 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		882719752D13C86800D606A4 /* Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
+		885D165F2D143CD700E603D7 /* ChatGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroup.swift; sourceTree = "<group>"; };
+		885D16612D145D5C00E603D7 /* ChatMessageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageStruct.swift; sourceTree = "<group>"; };
+		885D16632D14691700E603D7 /* GroupAdminStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAdminStruct.swift; sourceTree = "<group>"; };
+		885D16652D1469F700E603D7 /* PublicKeyMetadataStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicKeyMetadataStruct.swift; sourceTree = "<group>"; };
 		888FBBA82D01234900F45041 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		888FBBAA2D01235200F45041 /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		888FBBD82D014DE900F45041 /* ChatGroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupListView.swift; sourceTree = "<group>"; };
@@ -136,6 +144,10 @@
 		882719722D13C80D00D606A4 /* Struct */ = {
 			isa = PBXGroup;
 			children = (
+				885D16652D1469F700E603D7 /* PublicKeyMetadataStruct.swift */,
+				885D16632D14691700E603D7 /* GroupAdminStruct.swift */,
+				885D16612D145D5C00E603D7 /* ChatMessageStruct.swift */,
+				885D165F2D143CD700E603D7 /* ChatGroup.swift */,
 				882719752D13C86800D606A4 /* Metadata.swift */,
 				882719732D13C83200D606A4 /* Post.swift */,
 			);
@@ -380,6 +392,7 @@
 			files = (
 				888FBBDF2D029A6D00F45041 /* Group.swift in Sources */,
 				888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */,
+				885D16622D145D6000E603D7 /* ChatMessageStruct.swift in Sources */,
 				88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,
@@ -394,6 +407,7 @@
 				88EFAAD02CF7EC6600E8C909 /* StartView.swift in Sources */,
 				F5CF2A092BD1CF9600C66F78 /* TetraActivity.swift in Sources */,
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
+				885D16642D14691C00E603D7 /* GroupAdminStruct.swift in Sources */,
 				F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */,
 				F5643AE22BD7191700FFF716 /* PhraseDeckPodiumView.swift in Sources */,
 				882719762D13C86C00D606A4 /* Metadata.swift in Sources */,
@@ -405,6 +419,7 @@
 				888FBBE22D02AC8D00F45041 /* ChatMessage.swift in Sources */,
 				913CFF4E2CDD8E9300422B27 /* DetailViewDepricated.swift in Sources */,
 				88BF74C72D0FC3CA0038D999 /* GroupListRow.swift in Sources */,
+				885D16662D1469FE00E603D7 /* PublicKeyMetadataStruct.swift in Sources */,
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
 				913CFF502CDD8E9300422B27 /* ProfileView.swift in Sources */,
 				913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */,
@@ -419,6 +434,7 @@
 				88BF74B42D09242A0038D999 /* GroupAdmin.swift in Sources */,
 				913CFF562CDD8E9300422B27 /* ContentView.swift in Sources */,
 				889316052CFFDB2900A85EC3 /* PublicKeyMetadata.swift in Sources */,
+				885D16602D143CDA00E603D7 /* ChatGroup.swift in Sources */,
 				88EFAADB2CF8912500E8C909 /* OwnerAccount.swift in Sources */,
 				913CFF572CDD8E9300422B27 /* TetraTabs.swift in Sources */,
 				88BF74CB2D0FC4300038D999 /* GroupPicture.swift in Sources */,

@@ -9,7 +9,8 @@ struct TetraTabs: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            ChatGroupView(relayUrl: appState.selectedNip29Relay?.url ?? "")
+//            ChatGroupView(relayUrl: appState.selectedNip29Relay?.url ?? "")
+            ChatGroupView()
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }

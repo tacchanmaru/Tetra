@@ -21,7 +21,7 @@ final class ChatMessage: Identifiable, Hashable {
     
     @Relationship(deleteRule: .nullify) var rootChatMessage: ChatMessage?
     @Relationship(deleteRule: .nullify) var replyToChatMessage: ChatMessage?
-    @Relationship(deleteRule: .nullify) var publicKeyMetadata: PublicKeyMetadata?
+//    @Relationship(deleteRule: .nullify) var publicKeyMetadata: PublicKeyMetadata?
     
     @Transient @Cached
     var contentFormated: AttributedString?
@@ -42,7 +42,7 @@ final class ChatMessage: Identifiable, Hashable {
         self.relayUrl = relayUrl
         self.rootEventId = rootEventId
         self.replyToEventId = replyToEventId
-        self.publicKeyMetadata = publicKeyMetadata
+//        self.publicKeyMetadata = publicKeyMetadata
         self.rootChatMessage = rootChatMessage
         self.replyToChatMessage = replyToChatMessage
         self.contentFormated = ChatMessage.format(content: content)
