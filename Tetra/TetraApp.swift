@@ -10,9 +10,9 @@ struct TetraApp: App {
         let schema = Schema([
             OwnerAccount.self,
             Relay.self,
-            PublicKeyMetadata.self,
+            PublicKey.self,
             ChatGroup.self,
-            ChatMessage.self,
+//            ChatMessage.self,
             GroupAdmin.self,
             GroupMember.self,
         ])
@@ -28,7 +28,6 @@ struct TetraApp: App {
     @State var appModel = AppModel()
     @StateObject var appState = AppState()
     
-    @StateObject var nostrClient = NostrClient()
     
     var body: some Scene {
         WindowGroup {

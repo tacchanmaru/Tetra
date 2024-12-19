@@ -1,11 +1,3 @@
-//
-//  PersonaCamera.swift
-//  Tetra
-//
-//  Created by yugoatobe on 12/6/24.
-//  Copyright © 2024 Apple. All rights reserved.
-//
-
 import Foundation
 import AVFoundation
 import UIKit

@@ -3,7 +3,7 @@ import SwiftData
 import Nostr
 
 @Model
-final class PublicKeyMetadata {
+final class PublicKey {
    
     @Attribute(.unique) var publicKey: String
     var bech32PublicKey: String
@@ -93,7 +93,7 @@ struct MetadataContentData: Codable {
     var website: String?
 }
 
-extension PublicKeyMetadata: Hashable, Identifiable {
-    var id: String { return publicKey }
-}
+//extension PublicKeyMetadata: Hashable, Identifiable {
+//    var id: String { return publicKey }
+//}
 

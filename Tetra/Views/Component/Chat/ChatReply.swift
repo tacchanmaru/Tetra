@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ChatReply: View {
-    let replyMessage: ChatMessage
+    let replyMessage: ChatMessageMetadata
     @Binding var isHighlitedMessageAnimating: Bool
     @Binding var highlightedMessageId: String?
     let scroll: ScrollViewProxy?
@@ -19,7 +19,8 @@ struct ChatReply: View {
                     .padding(.vertical, 4)
 
                 VStack(alignment: .leading) {
-                    Text(replyMessage.publicKeyMetadata?.bestPublicName ?? replyMessage.publicKey)
+//                    Text(replyMessage.publicKeyMetadata?.bestPublicName ?? replyMessage.publicKey)
+                    Text(replyMessage.publicKey)
                         .font(.subheadline)
                         .bold()
                     Text(replyMessage.content)

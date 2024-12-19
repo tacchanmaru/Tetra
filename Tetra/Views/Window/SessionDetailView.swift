@@ -1,11 +1,3 @@
-//
-//  SessionDetailView.swift
-//  Tetra
-//
-//  Created by yugoatobe on 12/5/24.
-//  Copyright © 2024 Apple. All rights reserved.
-//
-
 import SwiftUI
 
 struct SessionDetailView: View {
@@ -126,11 +118,5 @@ struct MemberView: View {
             Text(name)
                 .font(.headline)
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

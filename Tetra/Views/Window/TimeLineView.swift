@@ -2,8 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct TimeLineView: View {
-    @Environment(AppModel.self) var appModel
-    @ObservedObject var nostrTimeLineManager = NostrTimeLineManager(public_keys: ["670874fa6dd544edc5867763ce793552396aedda1a5fda3a97949f66ab0acfb3","6bcc27d284f7b10c0ec4252ac90d37b3aaeb30a53fadf2ce798d7d47b67d296e","63e37dc3317417a3676d67adb7fbbf77c98271015299af634093e31b54f632a2"])
+    @EnvironmentObject private var appState: AppState
     
     func formatTimeStamp(_ timeStamp: String) -> String {
         let dateFormatter = DateFormatter()
@@ -18,7 +17,7 @@ struct TimeLineView: View {
     }
     
     var body: some View {
-        List(nostrTimeLineManager.contents, id: \.id) { post in
+        List(appState.ownerPostContents, id: \.id) { post in
             VStack(spacing: 0) {
                 HStack(alignment: .top, spacing: 5) {
                     if let pictureUrlString = post.picture, let url = URL(string: pictureUrlString) {
@@ -57,9 +56,4 @@ struct TimeLineView: View {
         }
         .listStyle(PlainListStyle())
     }
-}
-
-#Preview {
-    TimeLineView()
-        .environment(AppModel())
 }

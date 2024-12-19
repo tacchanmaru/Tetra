@@ -3,8 +3,8 @@ import SwiftUI
 struct ChatListView: View {
     
     @EnvironmentObject var appState: AppState
-    let sortedGroups: [ChatGroup]
-    let latestMessage: (String) -> ChatMessage?
+    let sortedGroups: [ChatGroupMetadata]
+    let latestMessage: (String) -> ChatMessageMetadata?
     
     var body: some View {
         VStack {
@@ -16,7 +16,7 @@ struct ChatListView: View {
                 Spacer()
                 Button(action: {
                     if let ownerAccount = appState.selectedOwnerAccount {
-                        appState.createGroup(ownerAccount: ownerAccount)
+//                        appState.createGroup(ownerAccount: ownerAccount)
                     }
                 }) {
                     Image(systemName: "plus.circle")

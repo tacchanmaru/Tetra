@@ -7,8 +7,8 @@ struct HomeView: View {
     @State private var searchText = ""
     
     let nowActiveRooms = [
-        ("VisionDevCamp: LT Room", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCamp Osakaのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp2: LT Room", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCamp Osakaのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp2", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
         ("VisionDevCamp3", 43, "Mt.Fuji", "MtFuji", "オフラインでは富士山麓で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
         ("VisionDevCamp4", 32, "USA", "VisionPro", "オフラインではアメリカで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
         ("VisionDevCamp5", 98, "Tokyo", "Tokyo", "オフラインでは東京で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),

@@ -3,8 +3,8 @@ import SwiftData
 
 struct GroupListRow: View {
     
-    let group: ChatGroup
-    let lastMessage: ChatMessage?
+    let group: ChatGroupMetadata
+    let lastMessage: ChatMessageMetadata?
     
     var body: some View {
         VStack(alignment: .leading) {
