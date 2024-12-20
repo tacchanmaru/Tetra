@@ -150,26 +150,23 @@ struct ChatDetailView: View {
                             guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
                             guard let selectedGroup = appState.selectedGroup else { return }
                             if let replyMessage {
-//                                let text = messageText.trimmingCharacters(in: .newlines)
-//                                let reply = replyMessage
-//                                Task {
-//                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, group: selectedGroup,
-//                                                                        withText: text,
-//                                                                        replyChatMessage: reply)
-//                                    
-//                                    if let last = chatMessages.last {
-//                                        self.scroll?.scrollTo(last.id, anchor: .bottom)
-//                                    }
-//                                }
-//                                
-//                                self.replyMessage = nil
-//                                messageText = ""
+                                let text = messageText.trimmingCharacters(in: .newlines)
+                                let reply = replyMessage
+                                Task {
+                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
+                                    
+                                    if let last = chatMessages.last {
+                                        self.scroll?.scrollTo(last.id, anchor: .bottom)
+                                    }
+                                }
+                                
+                                self.replyMessage = nil
+                                messageText = ""
                                 
                             } else {
                                 let text = messageText.trimmingCharacters(in: .newlines)
                                 Task {
-//                                    await appState.sendChatMessage(ownerAccount: selectedOwnerAccount,
-//                                                                   group: selectedGroup, withText: text)
+                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
                                     
                                     if let last = chatMessages.last {
                                         self.scroll?.scrollTo(last.id, anchor: .bottom)

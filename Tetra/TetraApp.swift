@@ -10,11 +10,8 @@ struct TetraApp: App {
         let schema = Schema([
             OwnerAccount.self,
             Relay.self,
-            PublicKey.self,
-            ChatGroup.self,
-//            ChatMessage.self,
-            GroupAdmin.self,
-            GroupMember.self,
+//            GroupAdmin.self,
+//            GroupMember.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

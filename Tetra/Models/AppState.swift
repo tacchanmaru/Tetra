@@ -32,6 +32,7 @@ class AppState: ObservableObject {
     @Published var allChatGroup: Array<ChatGroupMetadata> = []
     @Published var allChatMessage: Array<ChatMessageMetadata> = []
     @Published var allPublicKeyMetadata: Array<PublicKeyMetadata> = []
+    @Published var allAdmin: Array<GroupAdminMetadata> = []
     
     
     @Published var chatMessageNumResults: Int = 50
@@ -79,51 +80,41 @@ class AppState: ObservableObject {
 
     
     
-    //全てのアカウント（自分と、その他のチャットを行う人）の名前などのMetadataを取得する
-    @MainActor func connectAllMetadataRelays() async {
+    //全てのアカウント（その他のチャットを行う人）の名前などのMetadataを取得する
+    @MainActor
+    func connectAllMetadataRelays() async {
         
         //メタデータ用のリレー
         let relaysDescriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip1 && !$0.supportsNip29 })
         guard let relay = try? modelContainer?.mainContext.fetch(relaysDescriptor).first else { return }
         
-        var selectedAccountDescriptor = FetchDescriptor<OwnerAccount>(predicate: #Predicate { $0.selected })
-        selectedAccountDescriptor.fetchLimit = 1
-        guard let selectedAccount = try? modelContainer?.mainContext.fetch(selectedAccountDescriptor).first else { return }
+//        var selectedAccountDescriptor = FetchDescriptor<OwnerAccount>(predicate: #Predicate { $0.selected })
+//        selectedAccountDescriptor.fetchLimit = 1
+//        guard let selectedAccount = try? modelContainer?.mainContext.fetch(selectedAccountDescriptor).first else { return }
         
-        var pubkeys = Set([selectedAccount.publicKey])
+        var pubkeys = [String]()
         
+        for admin in self.allAdmin {
+            print("\(admin.publicKeyMetadata?.name ?? "不明なユーザー") のパブリックキー：\(admin.publicKey)")
+            pubkeys.append(admin.publicKey)
+        }
         
-//        let membersDescriptor = FetchDescriptor<GroupMember>()
-//        if let members = try? modelContainer?.mainContext.fetch(membersDescriptor) {
-//            for member in members {
-//                pubkeys.insert(member.publicKey)
-//            }
-//        }
-        
-//        let adminsDescriptor = FetchDescriptor<GroupAdmin>()
-//        if let admins = try? modelContainer?.mainContext.fetch(adminsDescriptor) {
-//            for admin in admins {
-//                print("Adminユーザー：\(admin.publicKey)")
-////                pubkeys.insert(admin.publicKey)
-//            }
-//        }
-        
-        let sortedPubkeys = Array(pubkeys).sorted()
         
         nostrClient.add(relayWithUrl: relay.url, subscriptions: [
             // メンバーのメタデータを取得できるようになる
             Subscription(filters: [
-                Filter(authors: sortedPubkeys, kinds: [
+                Filter(authors: pubkeys, kinds: [
                     .setMetadata,
                 ])
-            ], id: IdSubPublicMetadata),
+            ] , id: IdSubPublicMetadata),
             //これより下いるんか？
-            Subscription(filters: [
-                Filter(authors: [selectedAccount.publicKey], kinds: [
-                    .setMetadata,
-                ])
-            ], id: IdSubOwnerMetadata)
+//            Subscription(filters: [
+//                Filter(authors: [selectedAccount.publicKey], kinds: [
+//                    .setMetadata,
+//                ])
+//            ], id: IdSubOwnerMetadata)
         ])
+        print("始まっています")
         nostrClient.connect(relayWithUrl: relay.url)
     }
     
@@ -186,10 +177,6 @@ class AppState: ObservableObject {
         }
     }
     
-    
-    // This function is meant to be called anytime there has been a change
-    // In subscriptions, etc. It should handle the case where it's simply
-    // a no-op if nothing has actually changed in subscriptions, etc.
     @MainActor func subscribeGroups(withRelayUrl relayUrl: String) async {
         
 //        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
@@ -240,15 +227,16 @@ class AppState: ObservableObject {
             // Get latest message and use since filter so we don't keep getting the same shit
             //let since = events.min(by: { $0.createdAt > $1.createdAt })
             // TODO: use the since fitler
-            let groupIds = self.allChatGroup.compactMap({ $0.id }).sorted()
-            let sub = Subscription(filters: [
-                Filter(kinds: [
-                    Kind.groupAdmins
-                ], since: nil, tags: [Tag(id: "d", otherInformation: groupIds)]),
-            ], id: IdSubGroupAdmins)
+        let groupIds = self.allChatGroup.compactMap({ $0.id }).sorted()
+        let sub = Subscription(filters: [
+            Filter(kinds: [
+                Kind.groupAdmins
+            ], since: nil, tags: [Tag(id: "d", otherInformation: groupIds)]),
+        ], id: IdSubGroupAdmins)
+        print("これは動くのかい")
             
-            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-//        }
+        nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
+        
     }
     
     public func remove(relaysWithUrl relayUrls: [String]) {
@@ -311,14 +299,15 @@ class AppState: ObservableObject {
 
         let pTags = tags.filter { $0.id == "p" }
         let pOtherInfos: [[String]] = pTags.compactMap { $0.otherInformation }
-
-        var allAdmins: [GroupAdminMetadata] = []
+        
         for info in pOtherInfos {
             guard let publicKey = info.first else { continue }
 
             let capabilities: Set<GroupAdminMetadata.Capability> = Set(
                 info.dropFirst(2).compactMap { GroupAdminMetadata.Capability(rawValue: $0) }
             )
+            
+            print("パブリックキー: \(publicKey), capabilities: \(capabilities)")
 
             let admin = GroupAdminMetadata(
                 id: UUID().uuidString,
@@ -329,29 +318,36 @@ class AppState: ObservableObject {
             )
 
             if admin.publicKey.isValidPublicKey {
-                allAdmins.append(admin)
+                DispatchQueue.main.async {
+                    self.allAdmin.append(admin)
+                    print("allAdmin updated: \(self.allAdmin)")
+                }
             }
         }
 
-        for i in 0..<allAdmins.count {
-            var admin = allAdmins[i]
-            admin.publicKeyMetadata = self.allPublicKeyMetadata.first(where: { $0.publicKey == admin.publicKey })
-            allAdmins[i] = admin
-        }
-
-//        let adminPublicKeys = allAdmins.map { $0.publicKey }
+//        DispatchQueue.main.async {
+//            for i in 0..<self.allAdmin.count {
+//                var admin = self.allAdmin[i]
+//                admin.publicKeyMetadata = self.allPublicKeyMetadata.first(where: { $0.publicKey == admin.publicKey })
+//                self.allAdmin[i] = admin
+//                print("allAdmin publicKeyMetadata updated: \(self.allAdmin)")
+//            }
+//        }
 
         if let selectedOwnerAccount = self.selectedOwnerAccount {
             DispatchQueue.global(qos: .userInitiated).async {
                 var updatedChatGroups = self.allChatGroup
                 for i in 0..<updatedChatGroups.count {
                     var group = updatedChatGroups[i]
-                    group.isAdmin = allAdmins.first(where: { $0.publicKey == selectedOwnerAccount.publicKey }) != nil
+                    print("selectedOwnerAccount.publicKey: \(selectedOwnerAccount.publicKey)")
+                    print("これがみたい：\(self.allAdmin.first(where: { $0.publicKey == selectedOwnerAccount.publicKey })?.publicKey)")
+                    group.isAdmin = self.allAdmin.first(where: { $0.publicKey == selectedOwnerAccount.publicKey }) != nil
                     updatedChatGroups[i] = group
                 }
                 
                 DispatchQueue.main.async {
                     self.allChatGroup = updatedChatGroups
+                    print("allChatGroup isAdmin updated: \(self.allChatGroup)")
                 }
             }
         }
@@ -369,45 +365,53 @@ class AppState: ObservableObject {
             switch event.kind {
                 
             case Kind.setMetadata:
-//                if let jsonData = event.content.data(using: .utf8),
-//                   let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
-//                    print("publicKey: \(publicKey)")
-//                    let name = jsonObject["display_name"] as? String
-//                    let picture = jsonObject["picture"] as? String
-//                    let about = jsonObject["about"] as? String
-//
-//                    self.saveOwnerMetadata(
-//                        for: event.pubkey,
-//                        pubkey: event.pubkey,
-//                        name: name,
-//                        picture: picture,
-//                        about: about
-//                    )
-//                    if self.ownerPostContents.isEmpty {
+                if let jsonData = event.content.data(using: .utf8),
+                   let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                    print("publicKey: \(publicKey)")
+                    let name = jsonObject["display_name"] as? String
+                    let picture = jsonObject["picture"] as? String
+                    let about = jsonObject["about"] as? String
+                    
+                    if event.pubkey == self.selectedOwnerAccount?.publicKey {
+                        print("Adminであります")
+                        self.saveOwnerMetadata(
+                            for: event.pubkey,
+                            pubkey: event.pubkey,
+                            name: name,
+                            picture: picture,
+                            about: about
+                        )
+                        //タイムライン用
 //                        self.subscribeToPostsForOwner()
-//                    }
-//                    
-//                }
-                
-                let publicKeyMetadata = PublicKeyMetadata(
-                    publicKey: event.pubkey,
-                    bech32PublicKey: {
-                        guard let bech32PublicKey = try? event.pubkey.bech32FromHex(hrp: "npub") else {
-                            return ""
-                        }
-                        return bech32PublicKey
-                    }(),
-                    createdAt: event.createdAt.date,
-                    nip05Verified: false
-                )
-                DispatchQueue.main.async {
-                    self.allChatMessage = self.allChatMessage.map { message in
-                        var updatedMessage = message
-                        if updatedMessage.publicKey == publicKey {
-                            updatedMessage.publicKeyMetadata = publicKeyMetadata
-                        }
-                        return updatedMessage
                     }
+                    
+                    let publicKeyMetadata = PublicKeyMetadata(
+                        publicKey: event.pubkey,
+                        bech32PublicKey: {
+                            guard let bech32PublicKey = try? event.pubkey.bech32FromHex(hrp: "npub") else {
+                                return ""
+                            }
+                            return bech32PublicKey
+                        }(),
+                        name: name,
+                        about: about,
+                        picture: picture,
+                        createdAt: event.createdAt.date,
+                        nip05Verified: false
+                    )
+                    DispatchQueue.main.async {
+                        self.allPublicKeyMetadata.append(publicKeyMetadata)
+                        self.allChatMessage = self.allChatMessage.map { message in
+                            var updatedMessage = message
+                            if updatedMessage.publicKey == publicKey {
+                                updatedMessage.publicKeyMetadata = publicKeyMetadata
+                            }
+                            return updatedMessage
+                        }
+                        
+                        print("allPublicKeyMetadata updated: \(self.allPublicKeyMetadata)")
+                    }
+                                        
                 }
                 
             
@@ -426,8 +430,6 @@ class AppState: ObservableObject {
                 }
                 
             case Kind.groupMetadata:
-//                print("event.kind: \(event.kind)")
-//                print("event.tag: \(event.tags)")
                 let tags = event.tags.map({ $0 })
                 guard let groupId = tags.first(where: { $0.id == "d" })?.otherInformation.first else { return  }
                 let isPublic = tags.first(where: { $0.id == "private"}) == nil
@@ -450,29 +452,10 @@ class AppState: ObservableObject {
                 )
                     
                 DispatchQueue.main.async {
-//                    print("exact metadata: \(metadata)")
                     self.allChatGroup.append(metadata)
+                    print("Updated group metadata: \(self.allChatGroup)")
                 }
                 
-//                if let group = ChatGroup(event: event, relayUrl: relayUrl) {
-//                    let groupId = group.id
-//                    modelContext.insert(group)
-//                    
-//                    if let selectedOwnerAccount = self.selectedOwnerAccount {
-//                        
-//                        let selectedOwnerPublicKey = selectedOwnerAccount.publicKey
-//                        
-//                        group.isMember = self.getModels(context: modelContext, modelType: GroupMember.self,
-//                                                        predicate: #Predicate<GroupMember> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId && $0.relayUrl == relayUrl })?.first != nil
-//                        
-//                        group.isAdmin = self.getModels(context: modelContext, modelType: GroupAdmin.self,
-//                                                       predicate: #Predicate<GroupAdmin> { $0.publicKey == selectedOwnerPublicKey && $0.groupId == groupId  && $0.relayUrl == relayUrl })?.first != nil
-//                        
-//                    }
-//                    
-//                    try? modelContext.save()
-//                    
-//                }
                 
             case Kind.groupAdmins:
                 self.handleGroupAdmins(event: event, relayUrl: relayUrl)
@@ -518,13 +501,16 @@ class AppState: ObservableObject {
                 guard let id = event.id else { return }
                 
                
+                let publiKeyMetadata = self.allPublicKeyMetadata.filter({ $0.publicKey == event.pubkey}).first
+                    
+                
                 
                 let chatMessage = ChatMessageMetadata(
                     id: id,
                     createdAt: event.createdAt.date,
                     groupId: groupId,
                     publicKey: event.pubkey,
-//                    publicKeyMetadata: ,
+                    publicKeyMetadata: publiKeyMetadata,
                     content: event.content
                 )
                 
@@ -681,7 +667,7 @@ class AppState: ObservableObject {
                print(clientMessage)
             }
     
-            guard let mainContext = modelContainer?.mainContext else { return }
+//            guard let mainContext = modelContainer?.mainContext else { return }
             let publicKey = ownerAccount.publicKey
 //            let ownerPublicKeyMetadata = try? mainContext.fetch(FetchDescriptor(predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })).first
 //            if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
@@ -696,12 +682,14 @@ class AppState: ObservableObject {
     
         }
     
-//        @MainActor
-//        func sendChatMessageReply(ownerAccount: OwnerAccount, group: ChatGroup, withText text: String, replyChatMessage: ChatMessage) async {
-//            guard let key = ownerAccount.getKeyPair() else { return }
+        @MainActor
+        func sendChatMessageReply(ownerAccount: OwnerAccount, withText text: String) async {
+            guard let key = ownerAccount.getKeyPair() else { return }
+            let relayUrl = selectedGroup?.relayUrl ?? ""
+            let groupId = selectedGroup?.id ?? ""
 //            let relayUrl = group.relayUrl
 //            let groupId = group.id
-//            var tags: [Tag] = [Tag(id: "h", otherInformation: groupId)]
+            var tags: [Tag] = [Tag(id: "h", otherInformation: groupId)]
 //            if let rootEventId = replyChatMessage.rootEventId {
 //                tags.append(Tag(id: "e", otherInformation: [rootEventId, relayUrl, "root", replyChatMessage.publicKey]))
 //                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "reply", replyChatMessage.publicKey]))
@@ -709,29 +697,30 @@ class AppState: ObservableObject {
 //                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "root", replyChatMessage.publicKey]))
 //                tags.append(Tag(id: "e", otherInformation: [replyChatMessage.id, relayUrl, "reply", replyChatMessage.publicKey]))
 //            }
-//    
-//            var event = Event(pubkey: ownerAccount.publicKey, createdAt: .init(), kind: .groupChatMessage,
-//                              tags: tags, content: text)
-//            do {
-//                try event.sign(with: key)
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//    
+    
+            var event = Event(pubkey: ownerAccount.publicKey, createdAt: .init(), kind: .groupChatMessage,
+                              tags: tags, content: text)
+            do {
+                try event.sign(with: key)
+            } catch {
+                print(error.localizedDescription)
+            }
+    
 //            guard let mainContext = modelContainer?.mainContext else { return }
-//            let publicKey = ownerAccount.publicKey
+            let publicKey = ownerAccount.publicKey
 //            let ownerPublicKeyMetadata = try? mainContext.fetch(FetchDescriptor(predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })).first
-//            if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
-//                chatMessage.publicKeyMetadata = ownerPublicKeyMetadata
+            let ownerPublicKeyMetadata = self.allPublicKeyMetadata.filter({ $0.publicKey == publicKey }).first
+            var chatMessage = allChatMessage.filter({ $0.publicKey == publicKey }).first
+            chatMessage?.publicKeyMetadata = ownerPublicKeyMetadata
 //                chatMessage.replyToChatMessage = replyChatMessage
 //                withAnimation {
 //                    mainContext.insert(chatMessage)
 //                    try? mainContext.save()
-//    
+//
 //                }
-//                nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
-//            }
-//        }
+            nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
+            
+        }
     
 #if os(macOS)
     func copyToClipboard(_ string: String) {
@@ -765,7 +754,6 @@ extension AppState: NostrClientDelegate {
         case .event(_, let event):
             if event.isValid() {
                 process(event: event, relayUrl: relayUrl)
-                print("event is ok.")
             } else {
                 print("\(event.id ?? "") is an invalid event on \(relayUrl)")
             }
@@ -778,14 +766,13 @@ extension AppState: NostrClientDelegate {
             switch id {
             case IdSubGroupList:
                 Task {
-                    print("ここにきている可能性")
                     await subscribeGroups(withRelayUrl: relayUrl)
                     await subscribeGroupMemberships(withRelayUrl: relayUrl)
                     await subscribeGroupAdmins(withRelayUrl: relayUrl)
                 }
             case IdSubChatMessages,IdSubGroupList:
                 Task {
-//                    await connectAllMetadataRelays()
+                    await connectAllMetadataRelays()
                 }
             default:
                 ()
