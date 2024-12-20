@@ -40,6 +40,7 @@
 		88EFAADB2CF8912500E8C909 /* OwnerAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */; };
 		88EFAADD2CF8914500E8C909 /* Relay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAADC2CF8914100E8C909 /* Relay.swift */; };
 		88F92F632CBE3D0D00F9A089 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F92F622CBE3D0D00F9A089 /* Assets.xcassets */; };
+		90787B952D15510E004BA96A /* CreateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90787B942D15510E004BA96A /* CreateSessionView.swift */; };
 		913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF3F2CDD8E9300422B27 /* RoomList.swift */; };
 		913CFF502CDD8E9300422B27 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF492CDD8E9300422B27 /* SettingView.swift */; };
 		913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF452CDD8E9300422B27 /* AddSpaceView.swift */; };
@@ -95,6 +96,7 @@
 		88EFAADA2CF8911D00E8C909 /* OwnerAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerAccount.swift; sourceTree = "<group>"; };
 		88EFAADC2CF8914100E8C909 /* Relay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relay.swift; sourceTree = "<group>"; };
 		88F92F622CBE3D0D00F9A089 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		90787B942D15510E004BA96A /* CreateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionView.swift; sourceTree = "<group>"; };
 		913CFF3F2CDD8E9300422B27 /* RoomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomList.swift; sourceTree = "<group>"; };
 		913CFF402CDD8E9300422B27 /* TetraTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraTabs.swift; sourceTree = "<group>"; };
 		913CFF452CDD8E9300422B27 /* AddSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceView.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */,
 				88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */,
 				913CFF452CDD8E9300422B27 /* AddSpaceView.swift */,
+				90787B942D15510E004BA96A /* CreateSessionView.swift */,
 				913CFF462CDD8E9300422B27 /* ContentView.swift */,
 				913CFF482CDD8E9300422B27 /* HomeView.swift */,
 				913CFF492CDD8E9300422B27 /* SettingView.swift */,
@@ -415,6 +418,7 @@
 				885D16702D14766700E603D7 /* SessionDetailView.swift in Sources */,
 				885D16712D14766700E603D7 /* WorldDetailView.swift in Sources */,
 				885D16722D14766700E603D7 /* DetailViewDepricated.swift in Sources */,
+				90787B952D15510E004BA96A /* CreateSessionView.swift in Sources */,
 				885D16732D14766700E603D7 /* AddChatRelayView.swift in Sources */,
 				885D16742D14766700E603D7 /* ChatGroupListView.swift in Sources */,
 				F50303DC2BD97752005EC512 /* GameSpace.swift in Sources */,
