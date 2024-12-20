@@ -3,7 +3,6 @@ import PhotosUI
 
 /// A view that presents the group settings input.
 struct AddSpaceView: View {
-    @Environment(AppModel.self) var appModel
     @State private var groupName: String = ""
     @State private var maxMembers: String = ""
     @State private var groupDescription: String = ""
@@ -93,10 +92,5 @@ struct AddSpaceView: View {
             .padding()
         }
     }
-}
-
-#Preview {
-    AddSpaceView()
-        .environment(AppModel())
 }
 
