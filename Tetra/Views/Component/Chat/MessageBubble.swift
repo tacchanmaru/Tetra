@@ -5,7 +5,7 @@ import Translation
 struct MessageBubble: View {
     
     let owner: Bool
-    let chatMessage: ChatMessage
+    let chatMessage: ChatMessageMetadata
     @Binding var showTranslation: Bool
     
     var body: some View {
@@ -37,31 +37,31 @@ struct MessageBubble: View {
                 
                 VStack(alignment: .leading) {
                     
-                    if let replyToChatMessage = chatMessage.replyToChatMessage {
-                        
-                        HStack(spacing: 0) {
-                            Color
-                                .white
-                                .frame(width: 3)
-                            
-                            VStack(alignment: .leading) {
-                                Text(replyToChatMessage.publicKeyMetadata?.bestPublicName ?? replyToChatMessage.publicKey)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.white)
-                                    .bold()
-                                Text(replyToChatMessage.content)
-                                    .foregroundStyle(.white)
-                                    .lineLimit(1)
-                            }
-                            .padding(4)
-                            
-                        }
-                        .background((owner ? Color.accentColor : .gray).brightness(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        
-                    }
+//                    if let replyToChatMessage = chatMessage.replyToChatMessage {
+//                        
+//                        HStack(spacing: 0) {
+//                            Color
+//                                .white
+//                                .frame(width: 3)
+//                            
+//                            VStack(alignment: .leading) {
+//                                Text(replyToChatMessage.publicKeyMetadata?.bestPublicName ?? replyToChatMessage.publicKey)
+//                                    .font(.subheadline)
+//                                    .foregroundStyle(.white)
+//                                    .bold()
+//                                Text(replyToChatMessage.content)
+//                                    .foregroundStyle(.white)
+//                                    .lineLimit(1)
+//                            }
+//                            .padding(4)
+//                            
+//                        }
+//                        .background((owner ? Color.accentColor : .gray).brightness(0.1))
+//                        .clipShape(RoundedRectangle(cornerRadius: 8))
+//                        
+//                    }
                     
-                    Text(chatMessage.formatedContent() ?? "")
+                    Text(chatMessage.content)
                         .foregroundStyle(.white)
                         .textSelection(.enabled)
                     

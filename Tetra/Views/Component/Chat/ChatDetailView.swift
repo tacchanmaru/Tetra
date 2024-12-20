@@ -4,8 +4,6 @@ import Nostr
 
 struct ToolbarContentView: View {
     @EnvironmentObject var appState: AppState
-    let groupMembers: [GroupMember]
-    let groupAdmins: [GroupAdmin]
 
     var body: some View {
         HStack {
@@ -46,7 +44,7 @@ struct ToolbarContentView: View {
     private func joinGroupAction() {
         guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
         guard let selectedGroup = appState.selectedGroup else { return }
-        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
+//        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
     }
 
     private func loadMoreMessages() {
@@ -67,15 +65,13 @@ struct ChatDetailView: View {
     
     @EnvironmentObject var appState: AppState
     
-    let relayUrl: String
-    let groupId: String
-    
-    @Query private var allMessages: [ChatMessage]
-    @Query var groupMembers: [GroupMember]
-    @Query var groupAdmins: [GroupAdmin]
-    
-    var chatMessages: [ChatMessage] {
-        return Array(allMessages.suffix(appState.chatMessageNumResults))
+    var chatMessages: [ChatMessageMetadata] {
+        return Array(
+            appState.allChatMessage
+                .filter { $0.groupId == appState.selectedGroup?.id }
+                .sorted(by: { $0.createdAt < $1.createdAt })
+                .suffix(appState.chatMessageNumResults)
+        )
     }
     
     @State private var scroll: ScrollViewProxy?
@@ -92,15 +88,6 @@ struct ChatDetailView: View {
     @FocusState private var inputFocused: Bool
 
     private let maxHeight : CGFloat = 350
-    
-    init(relayUrl: String, groupId: String, chatMessageNumResults: Binding<Int>) {
-        self.relayUrl = relayUrl
-        self.groupId = groupId
-        _groupMembers = Query(filter: GroupMember.predicate(byGroupId: groupId, relayUrl: relayUrl))
-        _groupAdmins = Query(filter: GroupAdmin.predicate(byGroupId: groupId, relayUrl: relayUrl))
-        _allMessages = Query(filter: ChatMessage.predicate(byGroupId: groupId, relayUrl: relayUrl),
-                             sort: [SortDescriptor(\.createdAt, order: .forward)], animation: .interactiveSpring)
-    }
     
     private func scrollToLastMessageIfNeeded() {
         DispatchQueue.main.async {
@@ -119,8 +106,8 @@ struct ChatDetailView: View {
                         message: message,
                         isHighlighted: isHighlitedMessageAnimating,
                         highlightedMessageId: highlightedMessageId,
-                        scroll: scroll,
-                        replyMessage: $replyMessage
+                        scroll: scroll
+//                        replyMessage: $replyMessage
                     )
                 }
                 .listStyle(.plain)
@@ -141,14 +128,14 @@ struct ChatDetailView: View {
                     }
                 }
                 
-                if let replyMessage = replyMessage {
-                    ChatReply(
-                        replyMessage: replyMessage,
-                        isHighlitedMessageAnimating: $isHighlitedMessageAnimating,
-                        highlightedMessageId: $highlightedMessageId,
-                        scroll: scroll
-                    )
-                }
+//                if let replyMessage = replyMessage {
+//                    ChatReply(
+//                        replyMessage: replyMessage,
+//                        isHighlitedMessageAnimating: $isHighlitedMessageAnimating,
+//                        highlightedMessageId: $highlightedMessageId,
+//                        scroll: scroll
+//                    )
+//                }
                 
             }
         }
@@ -166,9 +153,7 @@ struct ChatDetailView: View {
                                 let text = messageText.trimmingCharacters(in: .newlines)
                                 let reply = replyMessage
                                 Task {
-                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, group: selectedGroup,
-                                                                        withText: text,
-                                                                        replyChatMessage: reply)
+                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
                                     
                                     if let last = chatMessages.last {
                                         self.scroll?.scrollTo(last.id, anchor: .bottom)
@@ -181,8 +166,7 @@ struct ChatDetailView: View {
                             } else {
                                 let text = messageText.trimmingCharacters(in: .newlines)
                                 Task {
-                                    await appState.sendChatMessage(ownerAccount: selectedOwnerAccount,
-                                                                   group: selectedGroup, withText: text)
+                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
                                     
                                     if let last = chatMessages.last {
                                         self.scroll?.scrollTo(last.id, anchor: .bottom)
@@ -212,7 +196,7 @@ struct ChatDetailView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .automatic) {
-                ToolbarContentView(groupMembers: groupMembers, groupAdmins: groupAdmins)
+                ToolbarContentView()
             }
         }
         .onChange(of: appState.selectedGroup) { oldValue, newValue in

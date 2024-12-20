@@ -9,18 +9,19 @@ struct TetraTabs: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            ChatGroupView(relayUrl: appState.selectedRelay?.url ?? "")
+            ChatGroupView()
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }
-            TimeLineView()
-                .tabItem {
-                    Label("Timeline", systemImage: "clock")
-                }
+            //MARK: なぜか複数取得となる状態なので消している
+//            TimeLineView()
+//                .tabItem {
+//                    Label("Timeline", systemImage: "clock")
+//                }
             
-            SettingView()
+            ProfileView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Label("Profile", systemImage: "person.crop.circle")
                 }
         }
         .navigationBarBackButtonHidden()

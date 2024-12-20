@@ -1,7 +1,10 @@
 import SwiftUI
 import PhotosUI
 
+<<<<<<< HEAD
 /// A view that presents the group settings input.
+=======
+>>>>>>> Fix/appState
 struct CreateSessionView: View {
     @Environment(AppModel.self) var appModel
     @State private var groupName: String = ""
