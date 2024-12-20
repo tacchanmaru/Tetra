@@ -1,4 +1,4 @@
-struct Metadata: Identifiable, Encodable {
+struct ProfileMetadata: Identifiable, Encodable {
     var id: String
     var pubkey: String
     var name: String?
