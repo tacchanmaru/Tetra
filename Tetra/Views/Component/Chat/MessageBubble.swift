@@ -12,7 +12,7 @@ struct MessageBubble: View {
         HStack(alignment: .top) {
             
             if !owner {
-                AvatarImage(avatarUrl: chatMessage.publicKeyMetadata?.picture ?? "", size: 40)
+                AvatarImage(avatarUrl: chatMessage.userMetadata?.picture ?? "", size: 40)
                     .offset(y: 8)
             }
             
@@ -21,11 +21,11 @@ struct MessageBubble: View {
                 if !owner {
                     HStack {
                         
-                        Text(chatMessage.publicKeyMetadata?.name ?? chatMessage.publicKey.prefix(12).lowercased())
+                        Text(chatMessage.userMetadata?.name ?? chatMessage.publicKey.prefix(12).lowercased())
                             .bold()
                             .padding(.leading, 8)
                         
-                        if let nip05 = chatMessage.publicKeyMetadata?.nip05 { // TODO: Check nip verified
+                        if let nip05 = chatMessage.userMetadata?.nip05 { // TODO: Check nip verified
                             HStack(spacing: 2) {
                                 Text(verbatim: nip05)
                                     .foregroundStyle(.secondary)
@@ -45,7 +45,7 @@ struct MessageBubble: View {
 //                                .frame(width: 3)
 //                            
 //                            VStack(alignment: .leading) {
-//                                Text(replyToChatMessage.publicKeyMetadata?.bestPublicName ?? replyToChatMessage.publicKey)
+//                    Text(replyToChatMessage.userMetadata?.bestPublicName ?? replyToChatMessage.publicKey)
 //                                    .font(.subheadline)
 //                                    .foregroundStyle(.white)
 //                                    .bold()

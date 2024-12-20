@@ -80,7 +80,7 @@ struct ChatDetailView: View {
     @State private var searchText = ""
     @State private var infoPopoverPresented = false
     @State private var showTranslation: Bool = false
-    @State private var replyMessage: ChatMessage?
+    @State private var replyMessage: ChatMessageMetadata?
     
     @State private var highlightedMessageId: String?
     @State private var isHighlitedMessageAnimating = false

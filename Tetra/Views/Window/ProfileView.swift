@@ -14,15 +14,29 @@ struct ProfileView: View {
                     .padding(.bottom, 20)
                 
                 Group{
-                    if let picture = appState.ownerMetadata?.picture,
+                    if let picture = appState.profileMetadata?.picture,
                        let url = URL(string: picture) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 200)
-                        } placeholder: {
-                            ProgressView()
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                                case .empty:
+                                    ProgressView()
+                                        .frame(width: 200, height: 200)
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 200, height: 200)
+                                case .failure(_):
+                                    Text("画像がありません")
+                                        .frame(width: 200, height: 200)
+                                        .background(Color.gray.opacity(0.2))
+                                        .cornerRadius(10)
+                                @unknown default:
+                                    Text("不明な状態です")
+                                        .frame(width: 200, height: 200)
+                                        .background(Color.gray.opacity(0.2))
+                                        .cornerRadius(10)
+                            }
                         }
                     } else {
                         Text("画像がありません")
@@ -32,7 +46,7 @@ struct ProfileView: View {
                     }
                     Text("Public Key")
                         .font(.headline)
-                    if let publicKey = appState.ownerMetadata?.pubkey {
+                    if let publicKey = appState.profileMetadata?.pubkey {
                         Text(publicKey)
                     } else {
                         Text("No public key available")
@@ -58,8 +72,7 @@ struct ProfileView: View {
                         .cornerRadius(8)
                     
                 }.onAppear {
-                    // Initialize state properties with data from the model
-                    if let metadata = appState.ownerMetadata {
+                    if let metadata = appState.profileMetadata {
                         accountName = metadata.name ?? ""
                         about = metadata.about ?? ""
                     }

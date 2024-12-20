@@ -10,8 +10,6 @@ struct TetraApp: App {
         let schema = Schema([
             OwnerAccount.self,
             Relay.self,
-//            GroupAdmin.self,
-//            GroupMember.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
