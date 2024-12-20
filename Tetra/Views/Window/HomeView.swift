@@ -5,10 +5,11 @@ import SwiftUI
 struct HomeView: View {
     @Environment(AppModel.self) var appModel
     @State private var searchText = ""
+    @State private var sheetDetail: InventoryItem?
     
     let nowActiveRooms = [
-        ("VisionDevCamp", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCamp Osakaのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp2", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp: LT Room", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCamp Osakaのオンライン参加用ルームです。お楽しみください。"),
+        ("VisionDevCamp2: LT Room", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
         ("VisionDevCamp3", 43, "Mt.Fuji", "MtFuji", "オフラインでは富士山麓で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
         ("VisionDevCamp4", 32, "USA", "VisionPro", "オフラインではアメリカで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
         ("VisionDevCamp5", 98, "Tokyo", "Tokyo", "オフラインでは東京で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
@@ -46,12 +47,24 @@ struct HomeView: View {
                     .frame(height: 40)
 
                     Spacer()
-
-                    NavigationLink(destination: AddSpaceView()) {
-                        Text("+ Add Space")
-                            .padding(.horizontal)
-                            .padding(.vertical, 8)
-                            .cornerRadius(12)
+                    
+                    Button("+ Start Session") {
+                        sheetDetail = InventoryItem(
+                            id: "0123456789",
+                            partNumber: "Z-1234A",
+                            quantity: 100,
+                            name: "Widget")
+                    }
+                    .sheet(item: $sheetDetail,onDismiss: didDismiss) { detail in
+                        VStack(alignment: .leading, spacing: 20) {
+                            CreateSessionView(sheetDetail: $sheetDetail)
+                        }
+                        .presentationDetents([
+                            .large,
+                            .large,
+                            .height(300),
+                            .fraction(0.9),
+                        ])
                     }
 
                 }
@@ -81,4 +94,15 @@ struct HomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
+    
+    func didDismiss() {
+        
+    }
+}
+
+struct InventoryItem: Identifiable {
+    var id: String
+    let partNumber: String
+    let quantity: Int
+    let name: String
 }
