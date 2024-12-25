@@ -32,9 +32,9 @@ struct TetraApp: App {
                 .environmentObject(appState)
                 .task {
                     appState.modelContainer = sharedModelContainer
-                    await appState.initialSetup()
+                    await appState.setupYourOwnMetadata()
                     await appState.connectAllNip29Relays()
-                    await appState.connectAllMetadataRelays()
+                    print("初めに動くべき関数")
                 }
         }
     }

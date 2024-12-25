@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8819C4292D158C3D00DAAF6B /* CreateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C4282D158C3700DAAF6B /* CreateSessionView.swift */; };
+		8819C42C2D18E7FD00DAAF6B /* SubscriptionIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C42B2D18E7F800DAAF6B /* SubscriptionIDs.swift */; };
 		885D16702D14766700E603D7 /* SessionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166E2D14766700E603D7 /* SessionDetailView.swift */; };
 		885D16712D14766700E603D7 /* WorldDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166F2D14766700E603D7 /* WorldDetailView.swift */; };
 		885D16722D14766700E603D7 /* DetailViewDepricated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166D2D14766700E603D7 /* DetailViewDepricated.swift */; };
@@ -65,6 +66,7 @@
 		475409EE5B8057AEF1677487 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		8819C4282D158C3700DAAF6B /* CreateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionView.swift; sourceTree = "<group>"; };
+		8819C42B2D18E7F800DAAF6B /* SubscriptionIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionIDs.swift; sourceTree = "<group>"; };
 		885D166B2D14766700E603D7 /* AddChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatRelayView.swift; sourceTree = "<group>"; };
 		885D166C2D14766700E603D7 /* ChatGroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupListView.swift; sourceTree = "<group>"; };
 		885D166D2D14766700E603D7 /* DetailViewDepricated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewDepricated.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 				F1D93E542B451142BE1E50AB /* SampleCode.xcconfig */,
 			);
 			name = Configuration;
+			sourceTree = "<group>";
+		};
+		8819C42A2D18E7EA00DAAF6B /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				8819C42B2D18E7F800DAAF6B /* SubscriptionIDs.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		885D168D2D14770300E603D7 /* Chat */ = {
@@ -267,6 +277,7 @@
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
 				F5A044252BD5788500EDAAD5 /* Models */,
 				88AC1EC72D1584B0009805D4 /* Struct */,
+				8819C42A2D18E7EA00DAAF6B /* Service */,
 				88AC1ECA2D1584B0009805D4 /* SwiftData */,
 				F5A044262BD578BA00EDAAD5 /* GroupActivity */,
 				F54255CE2BD2DE07006B9A37 /* Resources */,
@@ -401,6 +412,7 @@
 				885D16922D14770300E603D7 /* ChatReply.swift in Sources */,
 				885D16932D14770300E603D7 /* ChatMessageRow.swift in Sources */,
 				885D16942D14770300E603D7 /* ChatListView.swift in Sources */,
+				8819C42C2D18E7FD00DAAF6B /* SubscriptionIDs.swift in Sources */,
 				885D16952D14770300E603D7 /* GroupPicture.swift in Sources */,
 				885D16812D14768D00E603D7 /* StartModal.swift in Sources */,
 				885D16822D14768D00E603D7 /* PersonaCameraView.swift in Sources */,
