@@ -34,12 +34,6 @@ struct AddMetadataRelayView: View {
         .safeAreaInset(edge: .bottom) {
             bottomBar
         }
-        .onAppear {
-            print("Initial Relays fetched by @Query: \(relays.map { $0.url })")
-        }
-        .onChange(of: relays) {
-            print("Updated Relays fetched by @Query: \(relays.map { $0.url })")
-        }
     }
     
     private var relayIcon: some View {
@@ -142,7 +136,6 @@ struct AddMetadataRelayView: View {
             modelContext.insert(relay)
             do {
                 try modelContext.save()
-                print("Relay saved successfully: \(relay.url)")
             } catch {
                 print("Failed to save relay: \(error)")
             }
@@ -153,7 +146,6 @@ struct AddMetadataRelayView: View {
                 modelContext.delete(relay)
             } else {
                 inputText = ""
-                print("This relay supports Nip 1.")
             }
         }
     }
@@ -163,12 +155,9 @@ struct AddMetadataRelayView: View {
         modelContext.delete(relay)
         do {
             try modelContext.save()
-            print("Saved successfully")
         } catch {
             print("Failed to remove relay: \(error)")
         }
-        //おそらく必要ない
-        //        await appState.removeDataFor(relayUrl: relay.url)
     }
     
     func nextEnabled() -> Bool {

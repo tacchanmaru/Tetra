@@ -1,4 +1,4 @@
-struct GroupAdminMetadata: Identifiable, Hashable {
+struct GroupAdmin: Identifiable, Hashable {
     enum Capability: String, CaseIterable, Codable {
         case PutUser = "put-user"
         case EditMetadata = "edit-metadata"
@@ -14,5 +14,5 @@ struct GroupAdminMetadata: Identifiable, Hashable {
     var groupId: String
     var capabilities: Set<Capability>
     var relayUrl: String
-    var publicKeyMetadata: PublicKeyMetadata?
+    var userMetadata: UserMetadata?
 }

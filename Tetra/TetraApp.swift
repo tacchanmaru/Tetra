@@ -10,8 +10,6 @@ struct TetraApp: App {
         let schema = Schema([
             OwnerAccount.self,
             Relay.self,
-//            GroupAdmin.self,
-//            GroupMember.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -34,9 +32,8 @@ struct TetraApp: App {
                 .environmentObject(appState)
                 .task {
                     appState.modelContainer = sharedModelContainer
-                    await appState.initialSetup()
-                    await appState.connectAllNip29Relays()
-                    await appState.connectAllMetadataRelays()
+                    await appState.setupYourOwnMetadata()
+                    await appState.subscribeGroupMetadata()
                 }
         }
     }

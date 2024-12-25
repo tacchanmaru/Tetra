@@ -19,7 +19,7 @@ struct ChatReply: View {
                     .padding(.vertical, 4)
 
                 VStack(alignment: .leading) {
-//                    Text(replyMessage.publicKeyMetadata?.bestPublicName ?? replyMessage.publicKey)
+//                    Text(replyMessage.userMetadata?.bestPublicName ?? replyMessage.publicKey)
                     Text(replyMessage.publicKey)
                         .font(.subheadline)
                         .bold()

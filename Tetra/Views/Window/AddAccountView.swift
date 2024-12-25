@@ -96,8 +96,7 @@ struct AddAccountView: View {
                             modelContext.insert(ownerAccount)
                             appState.selectedOwnerAccount = ownerAccount
                             Task {
-                                await appState.connectAllNip29Relays()
-                                await appState.connectAllMetadataRelays()
+                                await appState.subscribeGroupMetadata()
                             }
                             appState.registeredNsec = true
                         } else {

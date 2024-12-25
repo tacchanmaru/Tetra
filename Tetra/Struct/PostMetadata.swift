@@ -1,4 +1,4 @@
-struct Post: Identifiable, Encodable {
+struct PostMetadata: Identifiable, Encodable {
     var id: String
     var text: String
     var name: String?

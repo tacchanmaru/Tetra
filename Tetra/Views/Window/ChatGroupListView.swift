@@ -5,11 +5,6 @@ struct ChatGroupView: View {
     
     @EnvironmentObject var appState: AppState
     
-//    let relayUrl: String
-    
-//    @Query private var groups: [ChatGroup]
-//    @Query private var chatMessages: [ChatMessage]
-    
     func latestMessage(for groupId: String) -> ChatMessageMetadata? {
         return appState.allChatMessage
             .filter({ $0.groupId == groupId })

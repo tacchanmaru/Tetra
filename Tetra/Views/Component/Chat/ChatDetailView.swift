@@ -80,7 +80,7 @@ struct ChatDetailView: View {
     @State private var searchText = ""
     @State private var infoPopoverPresented = false
     @State private var showTranslation: Bool = false
-    @State private var replyMessage: ChatMessage?
+    @State private var replyMessage: ChatMessageMetadata?
     
     @State private var highlightedMessageId: String?
     @State private var isHighlitedMessageAnimating = false
@@ -153,7 +153,7 @@ struct ChatDetailView: View {
                                 let text = messageText.trimmingCharacters(in: .newlines)
                                 let reply = replyMessage
                                 Task {
-                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
+//                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
                                     
                                     if let last = chatMessages.last {
                                         self.scroll?.scrollTo(last.id, anchor: .bottom)
@@ -166,7 +166,7 @@ struct ChatDetailView: View {
                             } else {
                                 let text = messageText.trimmingCharacters(in: .newlines)
                                 Task {
-                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
+//                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
                                     
                                     if let last = chatMessages.last {
                                         self.scroll?.scrollTo(last.id, anchor: .bottom)

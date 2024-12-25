@@ -10,14 +10,16 @@ struct TetraTabs: View {
                     Label("Home", systemImage: "house")
                 }
             ChatGroupView()
+                .task {
+                    await appState.connectAllMetadataRelays()
+                }
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }
-            //MARK: なぜか複数取得となる状態なので消している
-//            TimeLineView()
-//                .tabItem {
-//                    Label("Timeline", systemImage: "clock")
-//                }
+            TimeLineView()
+                .tabItem {
+                    Label("Timeline", systemImage: "clock")
+                }
             
             ProfileView()
                 .tabItem {

@@ -149,7 +149,6 @@ struct AddChatRelayView: View {
                 print("NO NIP 29")
                 modelContext.delete(relay)
             } else {
-                print("This relay supports Nip 29")
                 inputText = ""
             }
         }

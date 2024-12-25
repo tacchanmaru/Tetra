@@ -49,11 +49,11 @@ struct ChatMessageRow: View {
 //            }
 
             Button("Copy Text") {
-                appState.copyToClipboard(message.content)
+                UIPasteboard.general.string = message.content
             }
 
             Button("Copy Event Id") {
-                appState.copyToClipboard(message.id)
+                UIPasteboard.general.string = message.id
             }
 
             Divider()

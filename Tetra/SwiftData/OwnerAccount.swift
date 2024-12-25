@@ -52,7 +52,6 @@ extension OwnerAccount {
         if k.hasPrefix("nsec") {
             if let keypair = try? KeyPair(bech32PrivateKey: k) {
                 OwnerAccount.saveKeyPairToKeychain(keyPair: keypair)
-                print("publicKey:", keypair.publicKey)
                 return OwnerAccount(publicKey: keypair.publicKey, selected: false, metadataRelayIds: [], messageRelayIds: [])
             }
         } else {
