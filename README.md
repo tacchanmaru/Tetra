@@ -3,6 +3,7 @@
 An innovative online communication tool using Persona.
 
 ## ディレクトリ構成
+
 Tetra/
 ├── README.md
 ├── Tetra/
@@ -21,12 +22,25 @@ Tetra/
 ├── Configuration
 └── LICENSE
 
+.
+├── fuga.py
+├── fuga_dir
+│   ├── fuga
+│   └── fugafuga
+├── fugafuga.py
+├── fugahoge.py
+├── hoge.py
+└── hoge_dir
+    ├── hoge
+    └── hogehoge
+
+
 ## 主なディレクトリの説明
 
 - **Views/**  
   UIコンポーネントや、画面の実装をしている。
 
-- **TetraApp/**  
+- **TetraApp.swift**  
   このアプリのエントリーポイント。
 
 - **Models/**  
