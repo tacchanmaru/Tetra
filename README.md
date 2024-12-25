@@ -3,7 +3,7 @@
 An innovative online communication tool using Persona.
 
 ## ディレクトリ構成
-
+<pre>
 Tetra/
 ├── README.md
 ├── Tetra/
@@ -21,19 +21,7 @@ Tetra/
 ├── Products
 ├── Configuration
 └── LICENSE
-
-.
-├── fuga.py
-├── fuga_dir
-│   ├── fuga
-│   └── fugafuga
-├── fugafuga.py
-├── fugahoge.py
-├── hoge.py
-└── hoge_dir
-    ├── hoge
-    └── hogehoge
-
+</pre>
 
 ## 主なディレクトリの説明
 
