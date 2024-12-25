@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		8819C4292D158C3D00DAAF6B /* CreateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C4282D158C3700DAAF6B /* CreateSessionView.swift */; };
 		8819C42C2D18E7FD00DAAF6B /* SubscriptionIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C42B2D18E7F800DAAF6B /* SubscriptionIDs.swift */; };
+		8819C4332D1BDAFB00DAAF6B /* setMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C4322D1BDAEF00DAAF6B /* setMetadata.swift */; };
+		8819C4352D1BDB2C00DAAF6B /* textNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C4342D1BDB2900DAAF6B /* textNote.swift */; };
+		8819C4372D1BDE5900DAAF6B /* groupMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C4362D1BDE4D00DAAF6B /* groupMetadata.swift */; };
+		8819C4392D1BE19F00DAAF6B /* groupAdmins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C4382D1BE19C00DAAF6B /* groupAdmins.swift */; };
+		8819C43B2D1BE25800DAAF6B /* groupChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C43A2D1BE25300DAAF6B /* groupChatMessage.swift */; };
 		885D16702D14766700E603D7 /* SessionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166E2D14766700E603D7 /* SessionDetailView.swift */; };
 		885D16712D14766700E603D7 /* WorldDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166F2D14766700E603D7 /* WorldDetailView.swift */; };
 		885D16722D14766700E603D7 /* DetailViewDepricated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166D2D14766700E603D7 /* DetailViewDepricated.swift */; };
@@ -67,6 +72,11 @@
 		7688F8DEB562CE9A08724A7B /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		8819C4282D158C3700DAAF6B /* CreateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionView.swift; sourceTree = "<group>"; };
 		8819C42B2D18E7F800DAAF6B /* SubscriptionIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionIDs.swift; sourceTree = "<group>"; };
+		8819C4322D1BDAEF00DAAF6B /* setMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setMetadata.swift; sourceTree = "<group>"; };
+		8819C4342D1BDB2900DAAF6B /* textNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textNote.swift; sourceTree = "<group>"; };
+		8819C4362D1BDE4D00DAAF6B /* groupMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupMetadata.swift; sourceTree = "<group>"; };
+		8819C4382D1BE19C00DAAF6B /* groupAdmins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupAdmins.swift; sourceTree = "<group>"; };
+		8819C43A2D1BE25300DAAF6B /* groupChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupChatMessage.swift; sourceTree = "<group>"; };
 		885D166B2D14766700E603D7 /* AddChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatRelayView.swift; sourceTree = "<group>"; };
 		885D166C2D14766700E603D7 /* ChatGroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupListView.swift; sourceTree = "<group>"; };
 		885D166D2D14766700E603D7 /* DetailViewDepricated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewDepricated.swift; sourceTree = "<group>"; };
@@ -149,6 +159,18 @@
 				8819C42B2D18E7F800DAAF6B /* SubscriptionIDs.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		8819C4312D1BDAC100DAAF6B /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				8819C4322D1BDAEF00DAAF6B /* setMetadata.swift */,
+				8819C4342D1BDB2900DAAF6B /* textNote.swift */,
+				8819C4362D1BDE4D00DAAF6B /* groupMetadata.swift */,
+				8819C4382D1BE19C00DAAF6B /* groupAdmins.swift */,
+				8819C43A2D1BE25300DAAF6B /* groupChatMessage.swift */,
+			);
+			path = Function;
 			sourceTree = "<group>";
 		};
 		885D168D2D14770300E603D7 /* Chat */ = {
@@ -276,8 +298,9 @@
 				913CFF4D2CDD8E9300422B27 /* Views */,
 				F5155FD32BD09B5D004F1CA1 /* TetraApp.swift */,
 				F5A044252BD5788500EDAAD5 /* Models */,
-				88AC1EC72D1584B0009805D4 /* Struct */,
+				8819C4312D1BDAC100DAAF6B /* Function */,
 				8819C42A2D18E7EA00DAAF6B /* Service */,
+				88AC1EC72D1584B0009805D4 /* Struct */,
 				88AC1ECA2D1584B0009805D4 /* SwiftData */,
 				F5A044262BD578BA00EDAAD5 /* GroupActivity */,
 				F54255CE2BD2DE07006B9A37 /* Resources */,
@@ -402,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				885D16842D1476AD00E603D7 /* PersonaCamera.swift in Sources */,
+				8819C4352D1BDB2C00DAAF6B /* textNote.swift in Sources */,
 				888FBBAB2D01235200F45041 /* PlayerModel.swift in Sources */,
 				88EFAAD22CF7F38600E8C909 /* AddMetadataRelayView.swift in Sources */,
 				F5155FD82BD09B5D004F1CA1 /* AppModel.swift in Sources */,
@@ -413,6 +437,8 @@
 				885D16932D14770300E603D7 /* ChatMessageRow.swift in Sources */,
 				885D16942D14770300E603D7 /* ChatListView.swift in Sources */,
 				8819C42C2D18E7FD00DAAF6B /* SubscriptionIDs.swift in Sources */,
+				8819C4392D1BE19F00DAAF6B /* groupAdmins.swift in Sources */,
+				8819C43B2D1BE25800DAAF6B /* groupChatMessage.swift in Sources */,
 				885D16952D14770300E603D7 /* GroupPicture.swift in Sources */,
 				885D16812D14768D00E603D7 /* StartModal.swift in Sources */,
 				885D16822D14768D00E603D7 /* PersonaCameraView.swift in Sources */,
@@ -426,6 +452,7 @@
 				C310AA572BD1F2970098D2B8 /* Publisher+withPrevious.swift in Sources */,
 				885D16702D14766700E603D7 /* SessionDetailView.swift in Sources */,
 				885D16712D14766700E603D7 /* WorldDetailView.swift in Sources */,
+				8819C4372D1BDE5900DAAF6B /* groupMetadata.swift in Sources */,
 				885D16722D14766700E603D7 /* DetailViewDepricated.swift in Sources */,
 				885D16732D14766700E603D7 /* AddChatRelayView.swift in Sources */,
 				885D16742D14766700E603D7 /* ChatGroupListView.swift in Sources */,
@@ -445,6 +472,7 @@
 				913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */,
 				913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */,
 				913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */,
+				8819C4332D1BDAFB00DAAF6B /* setMetadata.swift in Sources */,
 				88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */,
 				913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */,
 				913CFF542CDD8E9300422B27 /* HomeView.swift in Sources */,

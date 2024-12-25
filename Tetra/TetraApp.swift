@@ -33,8 +33,7 @@ struct TetraApp: App {
                 .task {
                     appState.modelContainer = sharedModelContainer
                     await appState.setupYourOwnMetadata()
-                    await appState.connectAllNip29Relays()
-                    print("初めに動くべき関数")
+                    await appState.subscribeGroupMetadata()
                 }
         }
     }

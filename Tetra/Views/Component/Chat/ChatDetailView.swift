@@ -153,7 +153,7 @@ struct ChatDetailView: View {
                                 let text = messageText.trimmingCharacters(in: .newlines)
                                 let reply = replyMessage
                                 Task {
-                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
+//                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
                                     
                                     if let last = chatMessages.last {
                                         self.scroll?.scrollTo(last.id, anchor: .bottom)
@@ -166,7 +166,7 @@ struct ChatDetailView: View {
                             } else {
                                 let text = messageText.trimmingCharacters(in: .newlines)
                                 Task {
-                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
+//                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
                                     
                                     if let last = chatMessages.last {
                                         self.scroll?.scrollTo(last.id, anchor: .bottom)
