@@ -26,6 +26,7 @@ class AppState: ObservableObject {
     @Published var allChatMessage: Array<ChatMessageMetadata> = []
     @Published var allUserMetadata: Array<UserMetadata> = []
     @Published var allGroupAdmin: Array<GroupAdmin> = []
+    @Published var allGroupMember: Array<GroupMember> = []
     
     @Published var chatMessageNumResults: Int = 50
     
@@ -126,25 +127,21 @@ class AppState: ObservableObject {
         }
     }
     
-    // TODO: メンバーの情報を購読できるようにしたい
+    // TODO: NIP-29対応のリレーでそれぞれのグループのMemberを購読する
     @MainActor
     func subscribeGroupMemberships() async {
-        //        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-        //        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
-        //
-        //            // Get latest message and use since filter so we don't keep getting the same shit
-        //            // let since = events.min(by: { $0.createdAt > $1.createdAt })
-        //            // TODO: use the since filter
-        //            let groupIds = events.compactMap({ $0.id }).sorted()
-        //            let sub = Subscription(filters: [
-        //                Filter(kinds: [
-        //                    Kind.groupAddUser,
-        //                    Kind.groupRemoveUser
-        //                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
-        //            ], id: IdSubGroupMembers)
-        //
-        //            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-        //        }
+        let descriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip29 })
+        
+        let groupIds = self.allChatGroup.compactMap({ $0.id }).sorted()
+        let groupMemberSubscription = Subscription(filters: [
+            Filter(kinds: [
+                Kind.groupMembers
+            ], since: nil, tags: [Tag(id: "d", otherInformation: groupIds)]),
+        ], id: IdSubGroupMembers)
+
+        if let relay = try? modelContainer?.mainContext.fetch(descriptor).first {
+            nostrClient.add(relayWithUrl: relay.url, subscriptions: [groupMemberSubscription])
+        }
     }
     
     // MARK: NIP-29対応のリレーでそれぞれのグループのAdminを購読する
@@ -215,6 +212,9 @@ class AppState: ObservableObject {
                                         
                 case Kind.groupAdmins:
                     handleGroupAdmins(appState: self, event: event, relayUrl: relayUrl)
+                
+                case Kind.groupMembers:
+                    handleGroupMembers(appState: self, event: event, relayUrl: relayUrl)
                     
                 case Kind.groupChatMessage:
                     handleGroupChatMessage(appState: self, event: event)
@@ -318,8 +318,8 @@ extension AppState: NostrClientDelegate {
                     case IdSubGroupList:
                         Task {
                             await subscribeChatMessages()
-                            await subscribeGroupMemberships()
                             await subscribeGroupAdmin()
+                            await subscribeGroupMemberships()
                         }
                     default:
                         ()
