@@ -48,6 +48,7 @@
 		88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */; };
 		88EFAAD92CF80F5C00E8C909 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 88EFAAD82CF80F5C00E8C909 /* KeychainAccess */; };
 		88F92F632CBE3D0D00F9A089 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F92F622CBE3D0D00F9A089 /* Assets.xcassets */; };
+		9065CC3C2D1C096D00C207F8 /* EditSessionLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9065CC3B2D1C096D00C207F8 /* EditSessionLink.swift */; };
 		913CFF4F2CDD8E9300422B27 /* RoomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF3F2CDD8E9300422B27 /* RoomList.swift */; };
 		913CFF512CDD8E9300422B27 /* AddSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF452CDD8E9300422B27 /* AddSpaceView.swift */; };
 		913CFF522CDD8E9300422B27 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913CFF4B2CDD8E9300422B27 /* WelcomeView.swift */; };
@@ -110,6 +111,7 @@
 		88EFAAD12CF7F37E00E8C909 /* AddMetadataRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMetadataRelayView.swift; sourceTree = "<group>"; };
 		88EFAAD32CF7F39C00E8C909 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
 		88F92F622CBE3D0D00F9A089 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9065CC3B2D1C096D00C207F8 /* EditSessionLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSessionLink.swift; sourceTree = "<group>"; };
 		913CFF3F2CDD8E9300422B27 /* RoomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomList.swift; sourceTree = "<group>"; };
 		913CFF402CDD8E9300422B27 /* TetraTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraTabs.swift; sourceTree = "<group>"; };
 		913CFF452CDD8E9300422B27 /* AddSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceView.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				885D166C2D14766700E603D7 /* ChatGroupListView.swift */,
 				913CFF462CDD8E9300422B27 /* ContentView.swift */,
 				8819C4282D158C3700DAAF6B /* CreateSessionView.swift */,
+				9065CC3B2D1C096D00C207F8 /* EditSessionLink.swift */,
 				885D166D2D14766700E603D7 /* DetailViewDepricated.swift */,
 				913CFF482CDD8E9300422B27 /* HomeView.swift */,
 				88AC1EB82D158469009805D4 /* ProfileView.swift */,
@@ -433,6 +436,7 @@
 				885D168F2D14770300E603D7 /* ChatDetailView.swift in Sources */,
 				885D16902D14770300E603D7 /* MessageBubble.swift in Sources */,
 				885D16912D14770300E603D7 /* GroupListRow.swift in Sources */,
+				9065CC3C2D1C096D00C207F8 /* EditSessionLink.swift in Sources */,
 				885D16922D14770300E603D7 /* ChatReply.swift in Sources */,
 				885D16932D14770300E603D7 /* ChatMessageRow.swift in Sources */,
 				885D16942D14770300E603D7 /* ChatListView.swift in Sources */,
