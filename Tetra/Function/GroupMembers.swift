@@ -9,6 +9,7 @@ func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
           let groupId = groupTag.otherInformation.first else {
         return
     }
+    print("groupId: \(groupId)")
     
     let publicKeys = tags.filter { $0.id == "p" }.compactMap { $0.otherInformation.first }
     for publicKey in publicKeys {
@@ -32,7 +33,7 @@ func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
             var updatedChatGroups = appState.allChatGroup
             for i in 0..<updatedChatGroups.count {
                 var group = updatedChatGroups[i]
-                group.isMember = appState.allGroupMember.first(where: { $0.publicKey == selectedOwnerAccount.publicKey }) != nil
+                group.isMember = appState.allGroupMember.first(where: { $0.publicKey == selectedOwnerAccount.publicKey && $0.groupId == group.id }) != nil
                 updatedChatGroups[i] = group
             }
             
