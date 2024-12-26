@@ -56,26 +56,29 @@ struct CreateSessionView: View {
                 }) {
                     HStack {
                         // アイコン
-                        Image(systemName: "plus.square")
-                            .font(.system(size: 40))
+                        ZStack {
+                            Rectangle()
+                                .fill(Material.thin) // より薄いスタイルを適用
+                                .frame(width: 40, height: 40)
+                            
+                            Image(systemName: "plus")
+                                .foregroundColor(.white)
+                        }
                         
                         // テキスト
                         Text("New Playlist")
                             .padding(.leading, 8)
                         
-                        Spacer()  // 右端までのスペースを確保
+                        Spacer() // 右端までのスペースを確保
                     }
-                    .background(Color.blue.opacity(0.1))  // ボタンの背景色
-                    .cornerRadius(0)  // 角を丸く
+                    .frame(maxWidth: .infinity)
                 }
-                .frame(maxWidth: .infinity)
-                .cornerRadius(0)
+                .buttonStyle(PlainButtonStyle()) // ボタンのデフォルトスタイルを抑制
                 .sheet(item: $sheetDetailForSessionLink, onDismiss: didDismiss) { detail in
                     VStack(alignment: .leading, spacing: 20) {
                         SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
                     }
                     .presentationDetents([
-                        .large,
                         .large,
                         .height(300),
                         .fraction(1.0),
@@ -88,42 +91,49 @@ struct CreateSessionView: View {
                     .font(.headline)
                     .padding(.leading, 30)
                         
-                List {
-                    ForEach(0..<6) { index in
+                
+                ForEach(0..<6) { index in
+                    Button(action: {
+                        // ボタンがタップされた時に sheetDetailForSessionLink を設定
+                        sheetDetailForSessionLink = InventoryItem(
+                            id: "0123456789",
+                            partNumber: "Z-1234A",
+                            quantity: 100,
+                            name: "Widget"
+                        )
+                    }) {
                         HStack {
-                            Image(systemName: "photo")
+                            // アイコン
+                            ZStack {
+                                Rectangle()
+                                    .fill(Material.thin) // より薄いスタイルを適用
+                                    .frame(width: 40, height: 40)
+                                
+                                Image(systemName: "person.3.fill")
+                                    .foregroundColor(.white)
+                            }
                             
                             // テキスト
-                            Text("hello")
+                            Text("New Playlist")
                                 .padding(.leading, 8)
                             
-                            Spacer()
-                            
-                            // 右端の編集ボタン
-                            Button("Edit") {
-                                sheetDetailForSessionLink = InventoryItem(
-                                    id: "0123456789",
-                                    partNumber: "Z-1234A",
-                                    quantity: 100,
-                                    name: "Widget")
-                            }
-                            .foregroundColor(.clear)
-                            .sheet(item: $sheetDetailForSessionLink,onDismiss: didDismiss) { detail in
-                                VStack(alignment: .leading, spacing: 20) {
-                                    SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
-                                }
-                                .presentationDetents([
-                                    .large,
-                                    .large,
-                                    .height(300),
-                                    .fraction(1.0),
-                                ])
-                            }
-                            
+                            Spacer() // 右端までのスペースを確保
                         }
-                        .padding(.vertical, 4)
+                        .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(PlainButtonStyle()) // ボタンのデフォルトスタイルを抑制
+                    .sheet(item: $sheetDetailForSessionLink, onDismiss: didDismiss) { detail in
+                        VStack(alignment: .leading, spacing: 20) {
+                            SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
+                        }
+                        .presentationDetents([
+                            .large,
+                            .height(300),
+                            .fraction(1.0),
+                        ])
                     }
                 }
+
                         
                 Spacer()
                 
