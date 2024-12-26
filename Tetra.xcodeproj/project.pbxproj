@@ -16,6 +16,7 @@
 		8819C43B2D1BE25800DAAF6B /* groupChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C43A2D1BE25300DAAF6B /* groupChatMessage.swift */; };
 		8819C43D2D1C294300DAAF6B /* GroupMembers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C43C2D1C293D00DAAF6B /* GroupMembers.swift */; };
 		8819C43F2D1C2A9400DAAF6B /* GroupMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C43E2D1C2A9100DAAF6B /* GroupMember.swift */; };
+		8819C4412D1CE4DC00DAAF6B /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8819C4402D1CE4CE00DAAF6B /* ToolbarView.swift */; };
 		885D16702D14766700E603D7 /* SessionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166E2D14766700E603D7 /* SessionDetailView.swift */; };
 		885D16712D14766700E603D7 /* WorldDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166F2D14766700E603D7 /* WorldDetailView.swift */; };
 		885D16722D14766700E603D7 /* DetailViewDepricated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166D2D14766700E603D7 /* DetailViewDepricated.swift */; };
@@ -81,6 +82,7 @@
 		8819C43A2D1BE25300DAAF6B /* groupChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = groupChatMessage.swift; sourceTree = "<group>"; };
 		8819C43C2D1C293D00DAAF6B /* GroupMembers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMembers.swift; sourceTree = "<group>"; };
 		8819C43E2D1C2A9100DAAF6B /* GroupMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMember.swift; sourceTree = "<group>"; };
+		8819C4402D1CE4CE00DAAF6B /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		885D166B2D14766700E603D7 /* AddChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatRelayView.swift; sourceTree = "<group>"; };
 		885D166C2D14766700E603D7 /* ChatGroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupListView.swift; sourceTree = "<group>"; };
 		885D166D2D14766700E603D7 /* DetailViewDepricated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewDepricated.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				885D168A2D14770300E603D7 /* GroupListRow.swift */,
 				885D168B2D14770300E603D7 /* GroupPicture.swift */,
 				885D168C2D14770300E603D7 /* MessageBubble.swift */,
+				8819C4402D1CE4CE00DAAF6B /* ToolbarView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				88EFAAD42CF7F39D00E8C909 /* AddAccountView.swift in Sources */,
 				913CFF532CDD8E9300422B27 /* TimeLineView.swift in Sources */,
 				913CFF542CDD8E9300422B27 /* HomeView.swift in Sources */,
+				8819C4412D1CE4DC00DAAF6B /* ToolbarView.swift in Sources */,
 				913CFF562CDD8E9300422B27 /* ContentView.swift in Sources */,
 				913CFF572CDD8E9300422B27 /* TetraTabs.swift in Sources */,
 				F5155FD42BD09B5D004F1CA1 /* TetraApp.swift in Sources */,

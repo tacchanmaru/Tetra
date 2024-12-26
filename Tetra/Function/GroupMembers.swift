@@ -2,14 +2,12 @@ import Foundation
 import Nostr
 
 func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
-    //TODO: Memberはそれぞれのグループに対して複数存在する。なので、Adminとは違ってfirstなどは使えないことを覚えておく。
     let tags = event.tags.map { $0 }
     
     guard let groupTag = tags.first(where: { $0.id == "d" }),
           let groupId = groupTag.otherInformation.first else {
         return
     }
-    print("groupId: \(groupId)")
     
     let publicKeys = tags.filter { $0.id == "p" }.compactMap { $0.otherInformation.first }
     for publicKey in publicKeys {
@@ -25,9 +23,8 @@ func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
         }
     }
     
-    
-    
-//    // TODO: もう少し綺麗に書きたい。している作業はallChatGroupsは初めisAdminが全てfalseであるが、それのうち、self.selectedOwnerAccountとself.allGroupAdminのpublicKeyが一致するものはtrueにしている。
+    // MARK: allChatGroupのisAMemberを更新する
+    // TODO: もしかしたら、チャット画面を開いた時に更新するの方がいいかもしれない
     if let selectedOwnerAccount = appState.selectedOwnerAccount {
         DispatchQueue.global(qos: .userInitiated).async {
             var updatedChatGroups = appState.allChatGroup

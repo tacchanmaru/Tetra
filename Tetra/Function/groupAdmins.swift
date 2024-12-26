@@ -28,13 +28,14 @@ func handleGroupAdmins(appState: AppState, event: Event, relayUrl: String) {
         appState.allGroupAdmin.append(admin)
     }
     
-    // TODO: もう少し綺麗に書きたい。している作業はallChatGroupsは初めisAdminが全てfalseであるが、それのうち、self.selectedOwnerAccountとself.allGroupAdminのpublicKeyが一致するものはtrueにしている。
+    // MARK: allChatGroupのisAdminを更新する
+    // TODO: もしかしたら、チャット画面を開いた時に更新するの方がいいかもしれない
     if let selectedOwnerAccount = appState.selectedOwnerAccount {
         DispatchQueue.global(qos: .userInitiated).async {
             var updatedChatGroups = appState.allChatGroup
             for i in 0..<updatedChatGroups.count {
                 var group = updatedChatGroups[i]
-                group.isAdmin = appState.allGroupAdmin.first(where: { $0.publicKey == selectedOwnerAccount.publicKey }) != nil
+                group.isAdmin = appState.allGroupAdmin.first(where: { $0.publicKey == selectedOwnerAccount.publicKey && $0.groupId == group.id }) != nil
                 updatedChatGroups[i] = group
             }
             

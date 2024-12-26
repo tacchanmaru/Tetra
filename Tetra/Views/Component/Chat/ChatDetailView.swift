@@ -2,65 +2,6 @@ import SwiftUI
 import SwiftData
 import Nostr
 
-struct ToolbarContentView: View {
-    @EnvironmentObject var appState: AppState
-
-    var body: some View {
-        HStack {
-            GroupPicture(pictureUrl: appState.selectedGroup?.picture)
-            VStack(alignment: .leading) {
-                Text(appState.selectedGroup?.name ?? "---")
-                    .font(.headline)
-                    .bold()
-                Text(appState.selectedGroup?.relayUrl ?? "--")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-            .opacity(appState.selectedGroup == nil ? 0.0 : 1.0)
-
-            Spacer()
-
-            Button(action: joinGroupAction) {
-                Text("Join")
-                    .foregroundStyle(.white)
-            }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .cornerRadius(6)
-
-//            if let selectedGroup = appState.selectedGroup {
-//                if appState.chatMessageNumResults < appState.allMessagesCount {
-//                    Button(action: loadMoreMessages) {
-//                        Text("Load More")
-//                    }
-//                }
-//
-//                ShareLink(item: selectedGroup.relayUrl + "'" + selectedGroup.id)
-//                    .fontWeight(.semibold)
-//            }
-        }
-    }
-
-    private func joinGroupAction() {
-        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
-        guard let selectedGroup = appState.selectedGroup else { return }
-//        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
-    }
-
-    private func loadMoreMessages() {
-        appState.chatMessageNumResults *= 2
-    }
-
-    private func isMemberOrAdmin() -> Bool {
-        if let selectedGroup = appState.selectedGroup {
-            return selectedGroup.isMember || selectedGroup.isAdmin
-        }
-        return false
-    }
-}
-
-
-
 struct ChatDetailView: View {
     
     @EnvironmentObject var appState: AppState
@@ -76,26 +17,9 @@ struct ChatDetailView: View {
     
     @State private var scroll: ScrollViewProxy?
     @State private var messageText = ""
-    @State private var textEditorHeight : CGFloat = 32
-    @State private var searchText = ""
-    @State private var infoPopoverPresented = false
-    @State private var showTranslation: Bool = false
-    @State private var replyMessage: ChatMessageMetadata?
-    
     @State private var highlightedMessageId: String?
     @State private var isHighlitedMessageAnimating = false
-    
     @FocusState private var inputFocused: Bool
-
-    private let maxHeight : CGFloat = 350
-    
-    private func scrollToLastMessageIfNeeded() {
-        DispatchQueue.main.async {
-            if let last = chatMessages.last {
-                scroll?.scrollTo(last.id, anchor: .bottom)
-            }
-        }
-    }
     
     var body: some View {
         
@@ -107,7 +31,6 @@ struct ChatDetailView: View {
                         isHighlighted: isHighlitedMessageAnimating,
                         highlightedMessageId: highlightedMessageId,
                         scroll: scroll
-//                        replyMessage: $replyMessage
                     )
                 }
                 .listStyle(.plain)
@@ -127,62 +50,35 @@ struct ChatDetailView: View {
                         }
                     }
                 }
-                
-//                if let replyMessage = replyMessage {
-//                    ChatReply(
-//                        replyMessage: replyMessage,
-//                        isHighlitedMessageAnimating: $isHighlitedMessageAnimating,
-//                        highlightedMessageId: $highlightedMessageId,
-//                        scroll: scroll
-//                    )
-//                }
-                
             }
         }
         .safeAreaInset(edge: .bottom) {
             if isMemberOrAdmin() {
                 
                 HStack(spacing: 8) {
-                    
                     TextField("Write a message...", text: $messageText, axis: .vertical)
                         .textFieldStyle(.plain)
                         .onSubmit(of: .text, {
-                            guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
-                            guard let selectedGroup = appState.selectedGroup else { return }
-                            if let replyMessage {
-                                let text = messageText.trimmingCharacters(in: .newlines)
-                                let reply = replyMessage
-                                Task {
-//                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
-                                    
-                                    if let last = chatMessages.last {
-                                        self.scroll?.scrollTo(last.id, anchor: .bottom)
-                                    }
-                                }
-                                
-                                self.replyMessage = nil
-                                messageText = ""
-                                
-                            } else {
-                                let text = messageText.trimmingCharacters(in: .newlines)
-                                Task {
-//                                    await appState.sendChatMessageReply(ownerAccount: selectedOwnerAccount, withText: text)
-                                    
-                                    if let last = chatMessages.last {
-                                        self.scroll?.scrollTo(last.id, anchor: .bottom)
-                                    }
-                                    
-                                }
-                                messageText = ""
-                            }
+                            sendMessage()
                         })
                         .padding(.leading, 12)
-                        .padding(.trailing, 16)
+                        .padding(.trailing, 8)
                         .padding(.vertical, 8)
                         .background(.background)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .focused($inputFocused)
+
+                    Button(action: {
+                        sendMessage()
+                    }) {
+                        Image(systemName: "paperplane.fill")
+                            .foregroundColor(.blue)
+                            .padding(12)
+                            .background(Color(.systemBackground))
+                            .clipShape(Circle())
+                    }
                 }
+                .buttonStyle(.plain)
                 .padding(.horizontal)
                 .padding(.vertical, 8)
                 .background(
@@ -199,19 +95,29 @@ struct ChatDetailView: View {
                 ToolbarContentView()
             }
         }
-        .onChange(of: appState.selectedGroup) { oldValue, newValue in
-            if oldValue != newValue {
-                self.replyMessage = nil
-
-            }
-        }
     }
     
+    // MARK: 自分が選択したグループのメンバーもしくは管理者であるときにtrueを返す関数
     func isMemberOrAdmin() -> Bool {
         if let selectedGroup = appState.selectedGroup {
             return selectedGroup.isMember || selectedGroup.isAdmin
         }
         return false
+    }
+    
+    // MARK: チャットを送る時の挙動をまとめた関数
+    private func sendMessage() {
+        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
+        guard let selectedGroup = appState.selectedGroup else { return }
+        let text = messageText.trimmingCharacters(in: .newlines)
+
+        Task {
+            await appState.sendChatMessage(ownerAccount: selectedOwnerAccount, group: selectedGroup, withText: text)
+            if let last = chatMessages.last {
+                self.scroll?.scrollTo(last.id, anchor: .bottom)
+            }
+        }
+        messageText = ""
     }
 }
 
