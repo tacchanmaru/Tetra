@@ -45,7 +45,7 @@ struct HomeView: View {
                     .foregroundColor(Color.gray.opacity(0.4))
                     .cornerRadius(12)
                     .frame(height: 40)
-
+                    
                     Spacer()
                     
                     Button("+ Start Session") {
@@ -63,31 +63,31 @@ struct HomeView: View {
                             .large,
                             .large,
                             .height(300),
-                            .fraction(0.9),
+                            .fraction(1.0),
                         ])
                     }
-
+                    
                 }
                 .padding()
-
+                
                 VStack(alignment: .leading) {
-
+                    
                     Spacer().frame(height: 30)
-
+                    
                     Text("Now active")
                         .font(.title2.bold())
                         .padding(.leading, 16)
-
+                    
                     RoomListView(rooms: nowActiveRooms)
-
+                    
                     Spacer().frame(height: 30)
-
+                    
                     Text("The Most Popular")
                         .font(.title2.bold())
                         .padding(.leading, 16)
-
+                    
                     RoomListView(rooms: mostPopularRooms)
-
+                    
                     Spacer()
                 }
             }
