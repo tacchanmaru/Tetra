@@ -4,36 +4,43 @@ import Nostr
 
 struct ToolbarContentView: View {
     @EnvironmentObject var appState: AppState
+    @State private var isSheetPresented = false
 
     var body: some View {
-        HStack {
-            GroupPicture(pictureUrl: appState.selectedGroup?.picture)
-            VStack(alignment: .leading) {
-                Text(appState.selectedGroup?.name ?? "---")
-                    .font(.headline)
-                    .bold()
-                Text(appState.selectedGroup?.relayUrl ?? "--")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-            .opacity(appState.selectedGroup == nil ? 0.0 : 1.0)
-
-            
-
-            if !isMemberOrAdmin() {
-                Spacer()
-                
-                Button(action: joinGroupAction) {
-                    Text("Join")
-                        .foregroundStyle(.white)
+        ZStack {
+            HStack {
+                GroupPicture(pictureUrl: appState.selectedGroup?.picture)
+                VStack(alignment: .leading) {
+                    Text(appState.selectedGroup?.name ?? "---")
+                        .font(.headline)
+                        .bold()
+                    Text(appState.selectedGroup?.relayUrl ?? "--")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .cornerRadius(6)
+                .opacity(appState.selectedGroup == nil ? 0.0 : 1.0)
+
+                if !isMemberOrAdmin() {
+                    Spacer()
+                    Button(action: joinGroupAction) {
+                        Text("Join")
+                            .foregroundStyle(.white)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .cornerRadius(6)
+                }
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            isSheetPresented = true
+        }
+        .sheet(isPresented: $isSheetPresented) {
+            AdminMemberView(isPresented: $isSheetPresented)
+        }
     }
-    
+
     // MARK: 自分が選択したグループのメンバーもしくは管理者であるときにtrueを返す関数
     func isMemberOrAdmin() -> Bool {
         if let selectedGroup = appState.selectedGroup {
@@ -45,6 +52,6 @@ struct ToolbarContentView: View {
     private func joinGroupAction() {
         guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
         guard let selectedGroup = appState.selectedGroup else { return }
-//        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
+        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
     }
 }

@@ -232,7 +232,7 @@ class AppState: ObservableObject {
         var joinEvent = Event(
             pubkey: ownerAccount.publicKey,
             createdAt: .init(),
-            kind: .groupJoinRequest,
+            kind: Kind.groupJoinRequest,
             tags: [Tag(id: "h", otherInformation: groupId)],
             content: ""
         )
@@ -256,7 +256,7 @@ class AppState: ObservableObject {
         var event = Event(
             pubkey: ownerAccount.publicKey,
             createdAt: .init(),
-            kind: .groupChatMessage,
+            kind: Kind.groupChatMessage,
             tags: [Tag(id: "h", otherInformation: groupId)],
             content: text
         )

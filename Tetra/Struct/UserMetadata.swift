@@ -1,6 +1,5 @@
 import Foundation
 
-//元PublicKeyMetadata
 struct UserMetadata: Encodable, Hashable {
     var publicKey: String
     var bech32PublicKey: String
