@@ -26,6 +26,7 @@ class AppState: ObservableObject {
     @Published var allChatMessage: Array<ChatMessageMetadata> = []
     @Published var allUserMetadata: Array<UserMetadata> = []
     @Published var allGroupAdmin: Array<GroupAdmin> = []
+    @Published var allGroupMember: Array<GroupMember> = []
     
     @Published var chatMessageNumResults: Int = 50
     
@@ -91,13 +92,22 @@ class AppState: ObservableObject {
     func connectAllMetadataRelays() async {
         let relaysDescriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip1 && !$0.supportsNip29 })
         guard let relay = try? modelContainer?.mainContext.fetch(relaysDescriptor).first else { return }
-        
-        var pubkeys = [String]()
+        var pubkeys = Set<String>()
+
         for admin in self.allGroupAdmin {
-            pubkeys.append(admin.publicKey)
+            pubkeys.insert(admin.publicKey)
+        }
+
+        for member in self.allGroupMember {
+            pubkeys.insert(member.publicKey)
         }
         
-        let metadataSubscription = Subscription(filters: [Filter(authors: pubkeys, kinds: [Kind.setMetadata])], id: IdSubPublicMetadata)
+        let pubkeysArray = Array(pubkeys)
+        
+        let metadataSubscription = Subscription(
+            filters: [Filter(authors: pubkeysArray, kinds: [Kind.setMetadata])],
+            id: IdSubPublicMetadata
+        )
         nostrClient.add(relayWithUrl: relay.url, subscriptions: [metadataSubscription])
     }
     
@@ -126,41 +136,21 @@ class AppState: ObservableObject {
         }
     }
     
-    // TODO: メンバーの情報を購読できるようにしたい
+    // MARK: NIP-29対応のリレーでそれぞれのグループのAdminとMembersを購読する
     @MainActor
-    func subscribeGroupMemberships() async {
-        //        let descriptor = FetchDescriptor<ChatGroup>(predicate: #Predicate { $0.relayUrl == relayUrl  })
-        //        if let events = try? modelContainer?.mainContext.fetch(descriptor) {
-        //
-        //            // Get latest message and use since filter so we don't keep getting the same shit
-        //            // let since = events.min(by: { $0.createdAt > $1.createdAt })
-        //            // TODO: use the since filter
-        //            let groupIds = events.compactMap({ $0.id }).sorted()
-        //            let sub = Subscription(filters: [
-        //                Filter(kinds: [
-        //                    Kind.groupAddUser,
-        //                    Kind.groupRemoveUser
-        //                ], since: nil, tags: [Tag(id: "h", otherInformation: groupIds)]),
-        //            ], id: IdSubGroupMembers)
-        //
-        //            nostrClient.add(relayWithUrl: relayUrl, subscriptions: [sub])
-        //        }
-    }
-    
-    // MARK: NIP-29対応のリレーでそれぞれのグループのAdminを購読する
-    @MainActor
-    func subscribeGroupAdmin() async {
+    func subscribeGroupAdminAndMembers() async {
         let descriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip29 })
         
         let groupIds = self.allChatGroup.compactMap({ $0.id }).sorted()
-        let groupAdminSubscription = Subscription(filters: [
+        let groupAdminAndMembersSubscription = Subscription(filters: [
             Filter(kinds: [
-                Kind.groupAdmins
+                Kind.groupAdmins,
+                Kind.groupMembers
             ], since: nil, tags: [Tag(id: "d", otherInformation: groupIds)]),
         ], id: IdSubGroupAdmins)
         
         if let relay = try? modelContainer?.mainContext.fetch(descriptor).first {
-            nostrClient.add(relayWithUrl: relay.url, subscriptions: [groupAdminSubscription])
+            nostrClient.add(relayWithUrl: relay.url, subscriptions: [groupAdminAndMembersSubscription])
         }
     }
     
@@ -215,6 +205,9 @@ class AppState: ObservableObject {
                                         
                 case Kind.groupAdmins:
                     handleGroupAdmins(appState: self, event: event, relayUrl: relayUrl)
+                
+                case Kind.groupMembers:
+                    handleGroupMembers(appState: self, event: event, relayUrl: relayUrl)
                     
                 case Kind.groupChatMessage:
                     handleGroupChatMessage(appState: self, event: event)
@@ -236,11 +229,13 @@ class AppState: ObservableObject {
         guard let key = ownerAccount.getKeyPair() else { return }
         let relayUrl = group.relayUrl
         let groupId = group.id
-        var joinEvent = Event(pubkey: ownerAccount.publicKey,
-                              createdAt: .init(),
-                              kind: .groupJoinRequest,
-                              tags: [Tag(id: "h", otherInformation: groupId)],
-                              content: "")
+        var joinEvent = Event(
+            pubkey: ownerAccount.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupJoinRequest,
+            tags: [Tag(id: "h", otherInformation: groupId)],
+            content: ""
+        )
         
         do {
             try joinEvent.sign(with: key)
@@ -251,18 +246,21 @@ class AppState: ObservableObject {
         nostrClient.send(event: joinEvent, onlyToRelayUrls: [relayUrl])
     }
     
-    //TODO: Memberを取れるようになったのちに実装。
+    // MARK: チャットのメッセージを送る関数
     @MainActor
     func sendChatMessage(ownerAccount: OwnerAccount, group: ChatGroupMetadata, withText text: String) async {
         guard let key = ownerAccount.getKeyPair() else { return }
         let relayUrl = group.relayUrl
         let groupId = group.id
+    
+        var event = Event(
+            pubkey: ownerAccount.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupChatMessage,
+            tags: [Tag(id: "h", otherInformation: groupId)],
+            content: text
+        )
         
-        var event = Event(pubkey: ownerAccount.publicKey,
-                          createdAt: .init(),
-                          kind: .groupChatMessage,
-                          tags: [Tag(id: "h", otherInformation: groupId)],
-                          content: text)
         do {
             try event.sign(with: key)
         } catch {
@@ -270,21 +268,12 @@ class AppState: ObservableObject {
         }
         
         if let clientMessage = try? ClientMessage.event(event).string() {
-            print(clientMessage)
+           print(clientMessage)
         }
         
-        //        guard let mainContext = modelContainer?.mainContext else { return }
-        let _ = ownerAccount.publicKey
-        //        let ownerPublicKeyMetadata = try? mainContext.fetch(FetchDescriptor(predicate: #Predicate<PublicKeyMetadata> { $0.publicKey == publicKey })).first
-        //        if let chatMessage = ChatMessage(event: event, relayUrl: relayUrl) {
-        //            chatMessage.publicKeyMetadata = ownerPublicKeyMetadata
-        //            withAnimation {
-        //                mainContext.insert(chatMessage)
-        //                try? mainContext.save()
-        //            }
-        //            nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
-        //        }
+        nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
     }
+    
 }
 
 extension AppState: NostrClientDelegate {
@@ -318,8 +307,7 @@ extension AppState: NostrClientDelegate {
                     case IdSubGroupList:
                         Task {
                             await subscribeChatMessages()
-                            await subscribeGroupMemberships()
-                            await subscribeGroupAdmin()
+                            await subscribeGroupAdminAndMembers()
                         }
                     default:
                         ()

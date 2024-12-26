@@ -7,8 +7,14 @@ func handleSetMetadata(appState: AppState, event: Event) {
         let (name, picture, about) = metadata
         
         if event.pubkey == appState.selectedOwnerAccount?.publicKey {
-            handleSelectedOwnerProfile(pubkey: event.pubkey, name: name, picture: picture, about: about,
-                                       appState: appState, nostrClient: appState.nostrClient)
+            handleSelectedOwnerProfile(
+                pubkey: event.pubkey,
+                name: name,
+                picture: picture,
+                about: about,
+                appState: appState,
+                nostrClient: appState.nostrClient
+            )
         }
         
         let userMetadata = createUserMetadata(from: event, name: name, about: about, picture: picture)
