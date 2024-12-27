@@ -59,7 +59,7 @@ struct SessionLinkView: View {
                     groupImage
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 200, height: 200)
+                        .frame(width: 180, height: 180)
                 } else {
                     
                     PhotosPicker(selection: $selectedImage, matching: .images) {
@@ -81,7 +81,7 @@ struct SessionLinkView: View {
                             }
                             
                         }
-                        .frame(width: 200, height: 200) // 枠全体のサイズを指定
+                        .frame(width: 180, height: 180) // 枠全体のサイズを指定
                     }
                     .onChange(of: selectedImage) { newItem in
                         Task {
@@ -129,6 +129,8 @@ struct SessionLinkView: View {
             
         }
         .padding()
+        
+        Spacer()
         
     }
 }
