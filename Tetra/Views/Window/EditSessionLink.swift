@@ -75,7 +75,7 @@ struct SessionLinkView: View {
                                 .scaledToFill()
                         }
                     }
-                    .frame(width: 40, height: 40)
+                    .frame(width: 180, height: 180)
                     .clipShape(Circle())
                 } else {
                     
@@ -138,7 +138,6 @@ struct SessionLinkView: View {
         }
         .padding()
         .onAppear {
-            print("group: \(appState.selectedGroup?.name)")
             if let groupMetadata = appState.selectedGroup {
                 groupImage = groupMetadata.picture ?? ""
                 groupName = groupMetadata.name ?? ""
