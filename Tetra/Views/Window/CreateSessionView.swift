@@ -2,7 +2,7 @@ import SwiftUI
 import PhotosUI
 
 struct CreateSessionView: View {
-    @Environment(AppModel.self) var appModel
+    @EnvironmentObject private var appState: AppState
     @State private var groupName: String = ""
     @State private var maxMembers: String = ""
     @State private var groupDescription: String = ""
@@ -17,7 +17,6 @@ struct CreateSessionView: View {
             
             VStack(alignment: .leading, spacing: 20) {
                 
-                // 上部にxmarkボタン
                 HStack {
                     Button(action: {
                         sheetDetail = nil
@@ -46,7 +45,6 @@ struct CreateSessionView: View {
                 .padding(.top, 10)
                 
                 Button(action: {
-                    // ボタンがタップされた時に sheetDetailForSessionLink を設定
                     sheetDetailForSessionLink = InventoryItem(
                         id: "0123456789",
                         partNumber: "Z-1234A",
@@ -55,52 +53,75 @@ struct CreateSessionView: View {
                     )
                 }) {
                     HStack {
-                        // アイコン
                         Image(systemName: "plus.square")
                             .font(.system(size: 40))
                         
-                        // テキスト
                         Text("New Playlist")
                             .padding(.leading, 8)
                         
-                        Spacer()  // 右端までのスペースを確保
+                        Spacer()
                     }
-                    .background(Color.blue.opacity(0.1))  // ボタンの背景色
-                    .cornerRadius(0)  // 角を丸く
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(0)
                 }
                 .frame(maxWidth: .infinity)
                 .cornerRadius(0)
-                .sheet(item: $sheetDetailForSessionLink, onDismiss: didDismiss) { detail in
-                    VStack(alignment: .leading, spacing: 20) {
-                        SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
-                    }
-                    .presentationDetents([
-                        .large,
-                        .large,
-                        .height(300),
-                        .fraction(1.0),
-                    ])
-                }
+//                .sheet(item: $sheetDetailForSessionLink) { detail in
+//                    VStack(alignment: .leading, spacing: 20) {
+//                        SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
+//                    }
+//                    .presentationDetents([
+//                        .large,
+//                        .large,
+//                        .height(300),
+//                        .fraction(1.0),
+//                    ])
+//                }
                 
                 
                 
-                Text("All Groups")
+                Text("All Groups of which you are a member")
                     .font(.headline)
                     .padding(.leading, 30)
                         
-                List {
-                    ForEach(0..<6) { index in
+                List(selection: $appState.selectedGroup) {
+                    ForEach(appState.allChatGroup.filter({ $0.isMember == true }), id: \.id) { group in
                         HStack {
-                            Image(systemName: "photo")
+                            if let pictureURL = group.picture,
+                               let url = URL(string: pictureURL) {
+                                AsyncImage(url: url) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                    case .failure:
+                                        Image(systemName: "person.crop.circle.fill")
+                                            .resizable()
+                                            .scaledToFill()
+                                    @unknown default:
+                                        Image(systemName: "person.crop.circle.fill")
+                                            .resizable()
+                                            .scaledToFill()
+                                    }
+                                }
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
                             
-                            // テキスト
-                            Text("hello")
+                            Text(group.name ?? "")
                                 .padding(.leading, 8)
                             
                             Spacer()
                             
-                            // 右端の編集ボタン
                             Button("Edit") {
+                                appState.selectedGroup = group
                                 sheetDetailForSessionLink = InventoryItem(
                                     id: "0123456789",
                                     partNumber: "Z-1234A",
@@ -108,7 +129,7 @@ struct CreateSessionView: View {
                                     name: "Widget")
                             }
                             .foregroundColor(.clear)
-                            .sheet(item: $sheetDetailForSessionLink,onDismiss: didDismiss) { detail in
+                            .sheet(item: $sheetDetailForSessionLink) { detail in
                                 VStack(alignment: .leading, spacing: 20) {
                                     SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
                                 }
@@ -119,20 +140,17 @@ struct CreateSessionView: View {
                                     .fraction(1.0),
                                 ])
                             }
-                            
                         }
                         .padding(.vertical, 4)
+                        .tag(group)
                     }
                 }
-                        
+
                 Spacer()
                 
             }
             .padding()
             
         }
-    }
-    func didDismiss() {
-        
     }
 }

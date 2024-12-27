@@ -55,7 +55,7 @@ struct HomeView: View {
                             quantity: 100,
                             name: "Widget")
                     }
-                    .sheet(item: $sheetDetail,onDismiss: didDismiss) { detail in
+                    .sheet(item: $sheetDetail) { detail in
                         VStack(alignment: .leading, spacing: 20) {
                             CreateSessionView(sheetDetail: $sheetDetail)
                         }
@@ -93,10 +93,6 @@ struct HomeView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-    }
-    
-    func didDismiss() {
-        
     }
 }
 
