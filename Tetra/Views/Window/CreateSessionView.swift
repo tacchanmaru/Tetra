@@ -53,99 +53,81 @@ struct CreateSessionView: View {
                     )
                 }) {
                     HStack {
-                        Image(systemName: "plus.square")
-                            .font(.system(size: 40))
+                        // アイコン
+                        ZStack {
+                            Rectangle()
+                                .fill(Material.thin) // より薄いスタイルを適用
+                                .frame(width: 40, height: 40)
+                            
+                            Image(systemName: "plus")
+                                .foregroundColor(.white)
+                        }
                         
                         Text("New Playlist")
                             .padding(.leading, 8)
-                        
-                        Spacer()
+                        Spacer() // 右端までのスペースを確保
                     }
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(0)
+                    .frame(maxWidth: .infinity)
                 }
-                .frame(maxWidth: .infinity)
-                .cornerRadius(0)
-//                .sheet(item: $sheetDetailForSessionLink) { detail in
-//                    VStack(alignment: .leading, spacing: 20) {
-//                        SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
-//                    }
-//                    .presentationDetents([
-//                        .large,
-//                        .large,
-//                        .height(300),
-//                        .fraction(1.0),
-//                    ])
-//                }
+                .buttonStyle(PlainButtonStyle()) // ボタンのデフォルトスタイルを抑制
+                .sheet(item: $sheetDetailForSessionLink, onDismiss: didDismiss) { detail in
+                    VStack(alignment: .leading, spacing: 20) {
+                        SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
+                    }
+                    .presentationDetents([
+                        .large,
+                        .height(300),
+                        .fraction(1.0),
+                    ])
+                }
                 
                 
                 
                 Text("All Groups of which you are a member")
                     .font(.headline)
                     .padding(.leading, 30)
-                        
-                List(selection: $appState.selectedGroup) {
-                    ForEach(appState.allChatGroup.filter({ $0.isMember == true }), id: \.id) { group in
+                
+                ForEach(0..<6) { index in
+                    Button(action: {
+                        // ボタンがタップされた時に sheetDetailForSessionLink を設定
+                        sheetDetailForSessionLink = InventoryItem(
+                            id: "0123456789",
+                            partNumber: "Z-1234A",
+                            quantity: 100,
+                            name: "Widget"
+                        )
+                    }) {
                         HStack {
-                            if let pictureURL = group.picture,
-                               let url = URL(string: pictureURL) {
-                                AsyncImage(url: url) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        ProgressView()
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                    case .failure:
-                                        Image(systemName: "person.crop.circle.fill")
-                                            .resizable()
-                                            .scaledToFill()
-                                    @unknown default:
-                                        Image(systemName: "person.crop.circle.fill")
-                                            .resizable()
-                                            .scaledToFill()
-                                    }
-                                }
-                                .frame(width: 40, height: 40)
-                                .clipShape(Circle())
-                            } else {
-                                Image(systemName: "person.crop.circle.fill")
-                                    .resizable()
+                            // アイコン
+                            ZStack {
+                                Rectangle()
+                                    .fill(Material.thin) // より薄いスタイルを適用
                                     .frame(width: 40, height: 40)
+                                
+                                Image(systemName: "person.3.fill")
+                                    .foregroundColor(.white)
                             }
                             
-                            Text(group.name ?? "")
+                            // テキスト
+                            Text("New Playlist")
                                 .padding(.leading, 8)
                             
-                            Spacer()
-                            
-                            Button("Edit") {
-                                appState.selectedGroup = group
-                                sheetDetailForSessionLink = InventoryItem(
-                                    id: "0123456789",
-                                    partNumber: "Z-1234A",
-                                    quantity: 100,
-                                    name: "Widget")
-                            }
-                            .foregroundColor(.clear)
-                            .sheet(item: $sheetDetailForSessionLink) { detail in
-                                VStack(alignment: .leading, spacing: 20) {
-                                    SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
-                                }
-                                .presentationDetents([
-                                    .large,
-                                    .large,
-                                    .height(300),
-                                    .fraction(1.0),
-                                ])
-                            }
+                            Spacer() // 右端までのスペースを確保
                         }
-                        .padding(.vertical, 4)
-                        .tag(group)
+                        .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(PlainButtonStyle()) // ボタンのデフォルトスタイルを抑制
+                    .sheet(item: $sheetDetailForSessionLink, onDismiss: didDismiss) { detail in
+                        VStack(alignment: .leading, spacing: 20) {
+                            SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
+                        }
+                        .presentationDetents([
+                            .large,
+                            .height(300),
+                            .fraction(1.0),
+                        ])
                     }
                 }
-
                 Spacer()
                 
             }

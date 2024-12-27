@@ -54,7 +54,7 @@ struct SessionLinkView: View {
             HStack {
                 
                 Spacer()
-                
+
                 if let pictureURL = groupImage,
                    let url = URL(string: pictureURL) {
                     AsyncImage(url: url) { phase in
@@ -98,7 +98,7 @@ struct SessionLinkView: View {
                             }
                             
                         }
-                        .frame(width: 200, height: 200)
+                        .frame(width: 180, height: 180)
                     }
                 }
                 Spacer()
@@ -145,5 +145,8 @@ struct SessionLinkView: View {
                 groupDescription = groupMetadata.about ?? ""
             }
         }
+
+        Spacer()
+        
     }
 }
