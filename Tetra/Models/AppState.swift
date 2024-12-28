@@ -272,6 +272,42 @@ class AppState: ObservableObject {
         nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
     }
     
+    /// グループのメタデータを編集してrタグ(FaceTimeリンク)を設定する
+    @MainActor
+    func editGroupMetadata(ownerAccount: OwnerAccount, group: ChatGroupMetadata, name: String, about: String, link: String) async {
+        guard let key = ownerAccount.getKeyPair() else {
+            print("KeyPair not found.")
+            return
+        }
+        
+        let relayUrl = group.relayUrl
+        let groupId = group.id
+        
+        var tags: [Tag] = [
+            Tag(id: "h", otherInformation: groupId),
+            Tag(id: "name", otherInformation: [name]),
+            Tag(id: "about", otherInformation: [about]),
+            Tag(id: "r", otherInformation: [link])
+        ]
+        
+        var event = Event(
+            pubkey: ownerAccount.publicKey,
+            createdAt: .init(),
+            kind: .groupEditMetadata, // 9002
+            tags: tags,
+            content: ""
+        )
+
+        
+        do {
+            try event.sign(with: key)
+            nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
+            print("groupEditMetadata event sent to \(relayUrl)")
+        } catch {
+            print("Failed to sign or send event: \(error)")
+        }
+    }
+    
     /// グループにユーザをAdminとして追加する
     func addUserAsAdminToGroup(userPubKey: String, groupId: String) {
         guard let owner = self.selectedOwnerAccount,

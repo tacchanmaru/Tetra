@@ -41,7 +41,19 @@ struct SessionLinkView: View {
                 Spacer()
                 
                 Button(action: {
-                    print("Group settings saved")
+                    Task {
+                        guard
+                            let group = appState.selectedGroup,
+                            let account = appState.selectedOwnerAccount
+                        else {
+                            return
+                        }
+                        
+                        // FaceTimeリンクをrタグに設定する
+                        await appState.editGroupMetadata(ownerAccount: account, group: group, name: groupName, about: groupDescription, link: groupLink)
+                        
+                        sheetDetail = nil
+                    }
                 }) {
                     Text("Create")
                 }
