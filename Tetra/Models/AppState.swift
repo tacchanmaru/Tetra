@@ -191,9 +191,7 @@ class AppState: ObservableObject {
     // MARK: これが動くことで購読しているデータを取得することができる。
     func process(event: Event, relayUrl: String) {
         Task.detached {
-            
             switch event.kind {
-                // MARK: それぞれの関数はFunctionフォルダに定義している。
                 case Kind.setMetadata:
                     handleSetMetadata(appState: self, event: event)
                 
@@ -309,6 +307,11 @@ extension AppState: NostrClientDelegate {
                             await subscribeChatMessages()
                             await subscribeGroupAdminAndMembers()
                         }
+                    case IdSubGroupAdmins:
+                        Task{
+                            await connectAllMetadataRelays()
+                        }
+                    
                     default:
                         ()
                     }

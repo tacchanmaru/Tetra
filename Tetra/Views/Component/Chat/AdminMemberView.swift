@@ -54,7 +54,7 @@ struct AdminMemberView: View {
                                     }
                                     
                                     VStack(alignment: .leading) {
-                                        Text(user.name ?? "No Name")
+                                        Text(user.name ?? "")
                                             .font(.body)
                                             .bold()
                                         Text(user.publicKey)
@@ -99,7 +99,7 @@ struct AdminMemberView: View {
                                     }
 
                                     VStack(alignment: .leading) {
-                                        Text(user.name ?? "No Name")
+                                        Text(user.name ?? "")
                                             .font(.body)
                                             .bold()
                                         Text(user.publicKey)
