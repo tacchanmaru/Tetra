@@ -10,9 +10,9 @@ struct TetraTabs: View {
                     Label("Home", systemImage: "house")
                 }
             ChatGroupView()
-                .task {
-                    await appState.connectAllMetadataRelays()
-                }
+//                .task {
+//                    await appState.connectAllMetadataRelays()
+//                }
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }

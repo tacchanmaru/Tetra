@@ -6,6 +6,7 @@ func handleSetMetadata(appState: AppState, event: Event) {
     if let metadata = decodeUserMetadata(from: event.content) {
         let (name, picture, about) = metadata
         
+        //TODO: 以下によって自分の投稿が2回fetchされているのを修正する必要がある
         if event.pubkey == appState.selectedOwnerAccount?.publicKey {
             handleSelectedOwnerProfile(
                 pubkey: event.pubkey,
