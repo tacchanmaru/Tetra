@@ -23,7 +23,7 @@ func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
         }
     }
     
-    // MARK: allChatGroupのisAMemberを更新する
+    // MARK: allChatGroupのisMemberを更新する
     // TODO: もしかしたら、チャット画面を開いた時に更新するの方がいいかもしれない
     if let selectedOwnerAccount = appState.selectedOwnerAccount {
         DispatchQueue.global(qos: .userInitiated).async {

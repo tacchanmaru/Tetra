@@ -3,27 +3,9 @@ import SwiftUI
 
 /// A view that presents the app's content library.
 struct HomeView: View {
-    @Environment(AppModel.self) var appModel
+    @EnvironmentObject private var appState: AppState
     @State private var searchText = ""
     @State private var sheetDetail: InventoryItem?
-    
-    let nowActiveRooms = [
-        ("VisionDevCamp: LT Room", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCamp Osakaのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp2: LT Room", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp3", 43, "Mt.Fuji", "MtFuji", "オフラインでは富士山麓で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp4", 32, "USA", "VisionPro", "オフラインではアメリカで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp5", 98, "Tokyo", "Tokyo", "オフラインでは東京で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp6", 7, "Italy", "Italy", "オフラインではイタリアで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-    ]
-    
-    let mostPopularRooms = [
-        ("VisionDevCamp1", 12, "Osaka", "Osaka", "オフラインでは大阪で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp2", 3, "Hokkaido", "Hokkaido", "オフラインでは北海道で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp3", 43, "Mt.Fuji", "MtFuji", "オフラインでは富士山麓で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp4", 32, "USA", "VisionPro", "オフラインではアメリカで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp5", 98, "Tokyo", "Tokyo", "オフラインでは東京で行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-        ("VisionDevCamp6", 7, "Italy", "Italy", "オフラインではイタリアで行われるVisionDevCampのオンライン参加用ルームです。お楽しみください。"),
-    ]
 
     var body: some View {
         ScrollView {
@@ -55,7 +37,7 @@ struct HomeView: View {
                             quantity: 100,
                             name: "Widget")
                     }
-                    .sheet(item: $sheetDetail,onDismiss: didDismiss) { detail in
+                    .sheet(item: $sheetDetail) { detail in
                         VStack(alignment: .leading, spacing: 20) {
                             CreateSessionView(sheetDetail: $sheetDetail)
                         }
@@ -68,35 +50,31 @@ struct HomeView: View {
                     }
                     
                 }
-                .padding()
                 
                 VStack(alignment: .leading) {
                     
                     Spacer().frame(height: 30)
                     
-                    Text("Now active")
+                    Text("Recent Groups")
                         .font(.title2.bold())
                         .padding(.leading, 16)
                     
-                    RoomListView(rooms: nowActiveRooms)
+                    GroupListView(groups: Array(appState.allChatGroup.suffix(10)))
                     
                     Spacer().frame(height: 30)
                     
-                    Text("The Most Popular")
+                    Text("Groups you belong to")
                         .font(.title2.bold())
                         .padding(.leading, 16)
                     
-                    RoomListView(rooms: mostPopularRooms)
+                    GroupListView(groups: appState.allChatGroup.filter({$0.isMember == true}))
                     
                     Spacer()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(16)
         }
-    }
-    
-    func didDismiss() {
-        
     }
 }
 

@@ -2,14 +2,8 @@ import SwiftUI
 
 struct SessionDetailView: View {
     @State var inputSharePlayLink = ""
-    
-    let room: (
-        title: String,
-        memberNum: Int,
-        location: String,
-        image: String,
-        description: String
-    )
+    @EnvironmentObject var appState: AppState
+    let group: ChatGroupMetadata
     
     
     var body: some View {
@@ -18,27 +12,25 @@ struct SessionDetailView: View {
                 .frame(width: 400, height: 400)
                 .background(Color.black)
                 .cornerRadius(10)
-                .padding()
+                .padding(.leading, 60)
             
             Spacer()
 
             VStack(alignment: .leading, spacing: 20) {
-                // Title and Description
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(room.title)
+                    Text(group.name ?? "")
                         .font(.title)
                         .bold()
                     Text("By Morinosuke")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text(room.description)
+                    Text(group.about ?? "")
                         .font(.body)
 
                 }
                 .padding(.horizontal)
 
                 
-                // Buttons
                 HStack(spacing: 20) {
                     let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=ZwAt7KeXEe+n9Y4xRDecvg&k=zyPbaG1l2PV4HUrjZFLUDoL0zQBUTwnPB2svFjYJToQ"
                     
@@ -55,11 +47,10 @@ struct SessionDetailView: View {
                     }
                     
                     Button(action: {
-                        // Favourite action
                     }) {
                         HStack {
                             Image(systemName: "heart")
-                            Text("Favourite")
+                            Text("Favorite")
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -69,33 +60,99 @@ struct SessionDetailView: View {
                 }
                 .padding(.horizontal)
 
-                // Admin Section
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Admin")
                         .font(.callout)
-                    HStack(spacing: 10) {
-                        MemberView(name: "Liam", color: .pink)
+                    ForEach(fetchAdminUserMetadata(), id: \.publicKey) { user in
+                        HStack(alignment: .center, spacing: 10) {
+                            if let pictureURL = user.picture,
+                               let url = URL(string: pictureURL) {
+                                AsyncImage(url: url) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                    case .failure:
+                                        Image(systemName: "person.crop.circle.fill")
+                                            .resizable()
+                                            .scaledToFill()
+                                    @unknown default:
+                                        Image(systemName: "person.crop.circle.fill")
+                                            .resizable()
+                                            .scaledToFill()
+                                    }
+                                }
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                Text(user.name ?? "")
+                                    .font(.body)
+                                    .bold()
+                                Text(user.publicKey)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        .padding(.vertical, 5)
                     }
                 }
                 .padding(.horizontal)
 
-                // Members Section
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Member")
                         .font(.callout)
-                    Text(String(room.memberNum))
-                    VStack(alignment: .leading, spacing: 10) {
-                        MemberView(name: "Ava", color: .yellow)
-                        MemberView(name: "Mom", color: .orange)
-                        MemberView(name: "Miley", color: .purple)
-                        MemberView(name: "Ryan", color: .red)
-                        MemberView(name: "Emily", color: .gray)
-                    }
-                    Text(room.location)
-                        .font(.headline)
-                }
-                .padding(.horizontal)
-                
+                    Text("\(countGroupMembers(groupId: group.id))")
+                    ScrollView{
+                        ForEach(fetchMemberUserMetadata(), id: \.publicKey) { user in
+                            HStack(alignment: .center, spacing: 10) {
+                                if let pictureURL = user.picture,
+                                   let url = URL(string: pictureURL) {
+                                    AsyncImage(url: url) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                        case .failure:
+                                            Image(systemName: "person.crop.circle.fill")
+                                                .resizable()
+                                                .scaledToFill()
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                                } else {
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                }
+
+                                VStack(alignment: .leading) {
+                                    Text(user.name ?? "")
+                                        .font(.body)
+                                        .bold()
+                                    Text(user.publicKey)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            .padding(.vertical, 5)
+                        }
+                    }}
+                    .padding(.horizontal)
                 
                 Spacer()
             }
@@ -104,19 +161,34 @@ struct SessionDetailView: View {
             .frame(maxWidth: 500)
         }
     }
-}
+                         
+    private func countGroupMembers(groupId: String) -> Int {
+     let memberCount = appState.allGroupMember
+         .filter { $0.groupId == groupId }
+         .count
+     return memberCount
+    }
+    
+    private func fetchAdminUserMetadata() -> [UserMetadata] {
+        let adminPublicKeys = appState.allGroupAdmin
+            .filter { $0.groupId == group.id }
+            .map { $0.publicKey }
 
-struct MemberView: View {
-    var name: String
-    var color: Color
-
-    var body: some View {
-        HStack(spacing: 10) {
-            Circle()
-                .fill(color)
-                .frame(width: 50, height: 50)
-            Text(name)
-                .font(.headline)
+        let adminMetadatas = appState.allUserMetadata.filter { user in
+            adminPublicKeys.contains(user.publicKey)
         }
+        return adminMetadatas
+    }
+    
+    private func fetchMemberUserMetadata() -> [UserMetadata] {
+        
+        let memberPublicKeys = appState.allGroupMember
+            .filter { $0.groupId == group.id }
+            .map { $0.publicKey }
+        
+        let memberMetadatas = appState.allUserMetadata.filter { user in
+            memberPublicKeys.contains(user.publicKey)
+        }
+        return memberMetadatas
     }
 }

@@ -23,12 +23,6 @@ struct ChatGroupView: View {
         }
     }
     
-//    init(relayUrl: String) {
-//        self.relayUrl = relayUrl
-////        _groups = Query(filter: ChatGroup.predicate(relayUrl: relayUrl))
-////        _chatMessages = Query(filter: ChatMessage.predicate(relayUrl: relayUrl))
-//    }
-    
     var body: some View {
         
         NavigationSplitView {

@@ -2,7 +2,7 @@ import SwiftUI
 import PhotosUI
 
 struct CreateSessionView: View {
-    @Environment(AppModel.self) var appModel
+    @EnvironmentObject private var appState: AppState
     @State private var groupName: String = ""
     @State private var maxMembers: String = ""
     @State private var groupDescription: String = ""
@@ -17,7 +17,6 @@ struct CreateSessionView: View {
             
             VStack(alignment: .leading, spacing: 20) {
                 
-                // 上部にxmarkボタン
                 HStack {
                     Button(action: {
                         sheetDetail = nil
@@ -46,7 +45,6 @@ struct CreateSessionView: View {
                 .padding(.top, 10)
                 
                 Button(action: {
-                    // ボタンがタップされた時に sheetDetailForSessionLink を設定
                     sheetDetailForSessionLink = InventoryItem(
                         id: "0123456789",
                         partNumber: "Z-1234A",
@@ -55,26 +53,23 @@ struct CreateSessionView: View {
                     )
                 }) {
                     HStack {
-                        // アイコン
                         ZStack {
                             Rectangle()
-                                .fill(Material.thin) // より薄いスタイルを適用
+                                .fill(Material.thin)
                                 .frame(width: 40, height: 40)
                             
                             Image(systemName: "plus")
                                 .foregroundColor(.white)
                         }
                         
-                        // テキスト
                         Text("New Playlist")
                             .padding(.leading, 8)
-                        
-                        Spacer() // 右端までのスペースを確保
+                        Spacer()
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(PlainButtonStyle()) // ボタンのデフォルトスタイルを抑制
-                .sheet(item: $sheetDetailForSessionLink, onDismiss: didDismiss) { detail in
+                .buttonStyle(PlainButtonStyle())
+                .sheet(item: $sheetDetailForSessionLink) { detail in
                     VStack(alignment: .leading, spacing: 20) {
                         SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
                     }
@@ -87,14 +82,13 @@ struct CreateSessionView: View {
                 
                 
                 
-                Text("All Groups")
+                Text("All Groups of which you are a member")
                     .font(.headline)
                     .padding(.leading, 30)
-                        
                 
-                ForEach(0..<6) { index in
+                ForEach(appState.allChatGroup.filter({$0.isMember == true}), id: \.id) { group in
                     Button(action: {
-                        // ボタンがタップされた時に sheetDetailForSessionLink を設定
+                        appState.selectedGroup = group
                         sheetDetailForSessionLink = InventoryItem(
                             id: "0123456789",
                             partNumber: "Z-1234A",
@@ -103,26 +97,44 @@ struct CreateSessionView: View {
                         )
                     }) {
                         HStack {
-                            // アイコン
-                            ZStack {
-                                Rectangle()
-                                    .fill(Material.thin) // より薄いスタイルを適用
+                            if let pictureURL = group.picture,
+                               let url = URL(string: pictureURL) {
+                                AsyncImage(url: url) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                    case .failure:
+                                        Image(systemName: "person.crop.circle.fill")
+                                            .resizable()
+                                            .scaledToFill()
+                                    @unknown default:
+                                        Image(systemName: "person.crop.circle.fill")
+                                            .resizable()
+                                            .scaledToFill()
+                                    }
+                                }
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .resizable()
                                     .frame(width: 40, height: 40)
-                                
-                                Image(systemName: "person.3.fill")
-                                    .foregroundColor(.white)
+                                    .clipShape(Circle())
                             }
                             
-                            // テキスト
-                            Text("New Playlist")
+                            Text(group.name ?? "")
                                 .padding(.leading, 8)
                             
-                            Spacer() // 右端までのスペースを確保
+                            Spacer()
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(PlainButtonStyle()) // ボタンのデフォルトスタイルを抑制
-                    .sheet(item: $sheetDetailForSessionLink, onDismiss: didDismiss) { detail in
+                    .buttonStyle(PlainButtonStyle())
+                    .sheet(item: $sheetDetailForSessionLink) { detail in
                         VStack(alignment: .leading, spacing: 20) {
                             SessionLinkView(sheetDetail: $sheetDetailForSessionLink)
                         }
@@ -133,16 +145,11 @@ struct CreateSessionView: View {
                         ])
                     }
                 }
-
-                        
                 Spacer()
                 
             }
             .padding()
             
         }
-    }
-    func didDismiss() {
-        
     }
 }
