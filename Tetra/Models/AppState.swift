@@ -274,6 +274,92 @@ class AppState: ObservableObject {
         nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
     }
     
+    /// グループにユーザをAdminとして追加する
+    func addUserAsAdminToGroup(userPubKey: String, groupId: String) {
+        guard let owner = self.selectedOwnerAccount,
+              let key = owner.getKeyPair(),
+              let relay = self.selectedNip29Relay
+        else {
+            return
+        }
+        
+        // kind:9000 => "put-user"
+        var event = Event(
+            pubkey: owner.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupAddUser,
+            tags: [
+                Tag(id: "h", otherInformation: [groupId]),
+                Tag(id: "p", otherInformation: [userPubKey, "admin"])
+            ],
+            content: "Add user as admin"
+        )
+        
+        do {
+            try event.sign(with: key)
+            nostrClient.send(event: event, onlyToRelayUrls: [relay.url])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// グループにユーザを一般メンバーとして追加する
+    func addUserAsMemberToGroup(userPubKey: String, groupId: String) {
+        guard let owner = self.selectedOwnerAccount,
+              let key = owner.getKeyPair(),
+              let relay = self.selectedNip29Relay
+        else {
+            return
+        }
+        
+        // kind:9000 => "put-user"
+        var event = Event(
+            pubkey: owner.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupAddUser,
+            tags: [
+                Tag(id: "h", otherInformation: [groupId]),
+                Tag(id: "p", otherInformation: [userPubKey, "member"])
+            ],
+            content: "Add user as member"
+        )
+        
+        do {
+            try event.sign(with: key)
+            nostrClient.send(event: event, onlyToRelayUrls: [relay.url])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// グループからユーザを削除する(離脱)
+    func removeUserFromGroup(userPubKey: String, groupId: String) {
+        guard let owner = self.selectedOwnerAccount,
+              let key = owner.getKeyPair(),
+              let relay = self.selectedNip29Relay
+        else {
+            return
+        }
+        
+        // kind:9001 => "remove-user"
+        var event = Event(
+            pubkey: owner.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupRemoveUser, // => 9001
+            tags: [
+                Tag(id: "h", otherInformation: [groupId]),
+                Tag(id: "p", otherInformation: [userPubKey])
+            ],
+            content: "Remove user"
+        )
+        
+        do {
+            try event.sign(with: key)
+            nostrClient.send(event: event, onlyToRelayUrls: [relay.url])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
 
 extension AppState: NostrClientDelegate {
