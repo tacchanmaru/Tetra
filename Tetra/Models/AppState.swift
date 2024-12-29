@@ -14,6 +14,12 @@ class AppState: ObservableObject {
     var checkVerifiedTimer: Timer?
     var checkBusyTimer: Timer?
     
+    /// 最後に送信したgroupEditMetadataイベントのID
+    @Published var lastEditGroupMetadataEventId: String?
+    
+    /// RelayがOKを返してきたらEditSessionLinkシートを閉じるためのフラグ
+    @Published var shouldCloseEditSessionLinkSheet: Bool = false
+    
     @Published var registeredNsec: Bool = true
     @Published var selectedOwnerAccount: OwnerAccount?
     @Published var selectedNip29Relay: Relay?
@@ -301,6 +307,9 @@ class AppState: ObservableObject {
         
         do {
             try event.sign(with: key)
+            
+            self.lastEditGroupMetadataEventId = event.id
+            
             nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
             print("groupEditMetadata event sent to \(relayUrl)")
         } catch {
@@ -420,7 +429,18 @@ extension AppState: NostrClientDelegate {
             case .notice(let notice):
                 print(notice)
             case .ok(let id, let acceptance, let m):
-                print(id, acceptance, m)
+                print("Relay OK: eventID=\(id), acceptance=\(acceptance), message=\(m)")
+                
+                // 送信済みのeditGroupMetadataイベントと一致し、Relay 側で「OK(accepted)」になっていたらシートを閉じるフラグを立てる
+                if let lastId = self.lastEditGroupMetadataEventId,
+                   lastId == id,
+                   acceptance == true
+                {
+                    DispatchQueue.main.async {
+                        self.shouldCloseEditSessionLinkSheet = true
+                    }
+                }
+
             case .eose(let id):
                 // MARK: EOSE(End of Stored Events Notice)はリレーから保存済み情報の終わり(ここから先はストリーミング)である旨を通知する仕組み。
                 switch id {
