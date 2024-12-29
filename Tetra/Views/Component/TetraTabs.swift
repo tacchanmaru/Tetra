@@ -10,9 +10,6 @@ struct TetraTabs: View {
                     Label("Home", systemImage: "house")
                 }
             ChatGroupView()
-//                .task {
-//                    await appState.connectAllMetadataRelays()
-//                }
                 .tabItem {
                     Label("【開発用】グループリスト", systemImage: "person.3")
                 }
@@ -24,9 +21,9 @@ struct TetraTabs: View {
                 .tabItem {
                     Label("welcome", systemImage: "house")
                 }
-            ProfileView()
+            SettingView()
                 .tabItem {
-                    Label("Profile", systemImage: "person.crop.circle")
+                    Label("Setting", systemImage: "gearshape")
                 }
         }
         .navigationBarBackButtonHidden()
