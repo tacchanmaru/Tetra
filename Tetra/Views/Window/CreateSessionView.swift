@@ -151,5 +151,11 @@ struct CreateSessionView: View {
             .padding()
             
         }
+        .onReceive(appState.$shouldCloseEditSessionLinkSheet) { shouldClose in
+            if shouldClose {
+                sheetDetail = nil
+                appState.shouldCloseEditSessionLinkSheet = false
+            }
+        }
     }
 }

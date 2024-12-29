@@ -14,6 +14,12 @@ class AppState: ObservableObject {
     var checkVerifiedTimer: Timer?
     var checkBusyTimer: Timer?
     
+    /// 最後に送信したgroupEditMetadataイベントのID
+    @Published var lastEditGroupMetadataEventId: String?
+    
+    /// RelayがOKを返してきたらEditSessionLinkシートを閉じるためのフラグ
+    @Published var shouldCloseEditSessionLinkSheet: Bool = false
+    
     @Published var registeredNsec: Bool = true
     @Published var selectedOwnerAccount: OwnerAccount?
     @Published var selectedNip29Relay: Relay?
@@ -272,6 +278,131 @@ class AppState: ObservableObject {
         nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
     }
     
+    /// グループのメタデータを編集してrタグ(FaceTimeリンク)を設定する
+    @MainActor
+    func editGroupMetadata(ownerAccount: OwnerAccount, group: ChatGroupMetadata, name: String, about: String, link: String) async {
+        guard let key = ownerAccount.getKeyPair() else {
+            print("KeyPair not found.")
+            return
+        }
+        
+        let relayUrl = group.relayUrl
+        let groupId = group.id
+        
+        var tags: [Tag] = [
+            Tag(id: "h", otherInformation: groupId),
+            Tag(id: "name", otherInformation: [name]),
+            Tag(id: "about", otherInformation: [about]),
+            Tag(id: "r", otherInformation: [link])
+        ]
+        
+        var event = Event(
+            pubkey: ownerAccount.publicKey,
+            createdAt: .init(),
+            kind: .groupEditMetadata, // 9002
+            tags: tags,
+            content: ""
+        )
+
+        
+        do {
+            try event.sign(with: key)
+            
+            self.lastEditGroupMetadataEventId = event.id
+            
+            nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
+            print("groupEditMetadata event sent to \(relayUrl)")
+        } catch {
+            print("Failed to sign or send event: \(error)")
+        }
+    }
+    
+    /// グループにユーザをAdminとして追加する
+    func addUserAsAdminToGroup(userPubKey: String, groupId: String) {
+        guard let owner = self.selectedOwnerAccount,
+              let key = owner.getKeyPair(),
+              let relay = self.selectedNip29Relay
+        else {
+            return
+        }
+        
+        // kind:9000 => "put-user"
+        var event = Event(
+            pubkey: owner.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupAddUser,
+            tags: [
+                Tag(id: "h", otherInformation: [groupId]),
+                Tag(id: "p", otherInformation: [userPubKey, "admin"])
+            ],
+            content: "Add user as admin"
+        )
+        
+        do {
+            try event.sign(with: key)
+            nostrClient.send(event: event, onlyToRelayUrls: [relay.url])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// グループにユーザを一般メンバーとして追加する
+    func addUserAsMemberToGroup(userPubKey: String, groupId: String) {
+        guard let owner = self.selectedOwnerAccount,
+              let key = owner.getKeyPair(),
+              let relay = self.selectedNip29Relay
+        else {
+            return
+        }
+        
+        // kind:9000 => "put-user"
+        var event = Event(
+            pubkey: owner.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupAddUser,
+            tags: [
+                Tag(id: "h", otherInformation: [groupId]),
+                Tag(id: "p", otherInformation: [userPubKey, "member"])
+            ],
+            content: "Add user as member"
+        )
+        
+        do {
+            try event.sign(with: key)
+            nostrClient.send(event: event, onlyToRelayUrls: [relay.url])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// グループからユーザを削除する(離脱)
+    func removeUserFromGroup(userPubKey: String, groupId: String) {
+        guard let owner = self.selectedOwnerAccount,
+              let key = owner.getKeyPair(),
+              let relay = self.selectedNip29Relay
+        else {
+            return
+        }
+        
+        // kind:9001 => "remove-user"
+        var event = Event(
+            pubkey: owner.publicKey,
+            createdAt: .init(),
+            kind: Kind.groupRemoveUser, // => 9001
+            tags: [
+                Tag(id: "h", otherInformation: [groupId]),
+                Tag(id: "p", otherInformation: [userPubKey])
+            ],
+            content: "Remove user"
+        )
+        
+        do {
+            try event.sign(with: key)
+            nostrClient.send(event: event, onlyToRelayUrls: [relay.url])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
 
 extension AppState: NostrClientDelegate {
@@ -298,7 +429,18 @@ extension AppState: NostrClientDelegate {
             case .notice(let notice):
                 print(notice)
             case .ok(let id, let acceptance, let m):
-                print(id, acceptance, m)
+                print("Relay OK: eventID=\(id), acceptance=\(acceptance), message=\(m)")
+                
+                // 送信済みのeditGroupMetadataイベントと一致し、Relay 側で「OK(accepted)」になっていたらシートを閉じるフラグを立てる
+                if let lastId = self.lastEditGroupMetadataEventId,
+                   lastId == id,
+                   acceptance == true
+                {
+                    DispatchQueue.main.async {
+                        self.shouldCloseEditSessionLinkSheet = true
+                    }
+                }
+
             case .eose(let id):
                 // MARK: EOSE(End of Stored Events Notice)はリレーから保存済み情報の終わり(ここから先はストリーミング)である旨を通知する仕組み。
                 switch id {

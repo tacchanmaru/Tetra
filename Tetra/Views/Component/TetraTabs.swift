@@ -20,7 +20,10 @@ struct TetraTabs: View {
                 .tabItem {
                     Label("Timeline", systemImage: "clock")
                 }
-            
+            WelcomeView()
+                .tabItem {
+                    Label("welcome", systemImage: "house")
+                }
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")

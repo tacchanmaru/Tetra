@@ -5,6 +5,7 @@ struct SessionDetailView: View {
     @EnvironmentObject var appState: AppState
     let group: ChatGroupMetadata
     
+    @State private var sharePlayStatus: String = ""
     
     var body: some View {
         HStack {
@@ -32,12 +33,62 @@ struct SessionDetailView: View {
 
                 
                 HStack(spacing: 20) {
+//                    Button(action: {
+//                        if let link = group.link,
+//                           let url = URL(string: link) {
+//
+//                            UIApplication.shared.open(url)
+//                        }
+//                        
+//                    }) {
                     let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=ZwAt7KeXEe+n9Y4xRDecvg&k=zyPbaG1l2PV4HUrjZFLUDoL0zQBUTwnPB2svFjYJToQ"
                     
                     Button(action: {
-                        if let url = URL(string: newFaceTimeLink) {
-                            UIApplication.shared.open(url)
+                        Task {
+                            // 1) まずSharePlayの準備をする
+                            let activity = TetraActivity()
+                            
+                            do {
+                                // prepareForActivation()でSharePlay開始の事前チェック
+                                let activationResult = try await activity.prepareForActivation()
+                                
+                                switch activationResult {
+                                case .activationPreferred:
+                                    // FaceTime通話が確立している場合
+                                    let didActivate = try await activity.activate()
+                                    if didActivate {
+                                        // Activate成功 => NIP-29グループにも参加
+                                        sharePlayStatus = "セッションに参加中です"
+                                        
+                                        if let userPubKey = appState.selectedOwnerAccount?.publicKey {
+                                            appState.addUserAsMemberToGroup(
+                                                userPubKey: userPubKey,
+                                                groupId: group.id
+                                            )
+                                        }
+                                    } else {
+                                        // FaceTimeはあるが、まだ人数不足等でセッション未成立の場合
+                                        sharePlayStatus = "他の参加者が参加するのを待機中です"
+                                    }
+
+                                case .activationDisabled:
+                                    // ユーザがSharePlayをオフにしているなど
+                                    sharePlayStatus = "SharePlayは利用できません"
+                                
+                                @unknown default:
+                                    sharePlayStatus = "予期しないエラーが発生しました"
+                                }
+                            } catch {
+                                // prepareForActivation() または activate() が投げるエラー処理
+                                sharePlayStatus = "セッションの開始に失敗しました: \(error.localizedDescription)"
+                            }
+
+                            // 2) FaceTimeリンクを踏んで通話を開始(または参加)
+                            if let url = URL(string: newFaceTimeLink) {
+                                await UIApplication.shared.open(url)
+                            }
                         }
+
                     }) {
                         Text("Join Chat")
                             .frame(maxWidth: .infinity)
@@ -59,6 +110,11 @@ struct SessionDetailView: View {
                     }
                 }
                 .padding(.horizontal)
+                
+                Text(sharePlayStatus) // SharePlayのステータス表示用
+                    .foregroundColor(.blue)
+                    .font(.caption)
+                    .padding(.horizontal)
 
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Admin")

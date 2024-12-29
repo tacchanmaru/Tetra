@@ -41,7 +41,18 @@ struct SessionLinkView: View {
                 Spacer()
                 
                 Button(action: {
-                    print("Group settings saved")
+                    Task {
+                        guard
+                            let group = appState.selectedGroup,
+                            let account = appState.selectedOwnerAccount
+                        else {
+                            return
+                        }
+                        
+                        // FaceTimeリンクをrタグに設定する
+                        await appState.editGroupMetadata(ownerAccount: account, group: group, name: groupName, about: groupDescription, link: groupLink)
+                        
+                    }
                 }) {
                     Text("Create")
                 }
@@ -142,6 +153,13 @@ struct SessionLinkView: View {
                 groupImage = groupMetadata.picture ?? ""
                 groupName = groupMetadata.name ?? ""
                 groupDescription = groupMetadata.about ?? ""
+            }
+        }
+        // Relay からOKが返ってきたら、シートを閉じる
+        .onReceive(appState.$shouldCloseEditSessionLinkSheet) { shouldClose in
+            if shouldClose {
+                sheetDetail = nil
+                appState.shouldCloseEditSessionLinkSheet = false
             }
         }
 
