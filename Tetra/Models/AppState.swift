@@ -22,6 +22,7 @@ class AppState: ObservableObject {
     
     @Published var registeredNsec: Bool = true
     @Published var selectedOwnerAccount: OwnerAccount?
+    @Published var selectedNip1Relay: Relay?
     @Published var selectedNip29Relay: Relay?
     @Published var selectedGroup: ChatGroupMetadata? {
         didSet {
@@ -63,7 +64,7 @@ class AppState: ObservableObject {
     }
     
     
-    // MARK: SwiftDataに保存されている自分のデータを取得し、そこからプロフィール/タイムラインのデータを取得する。
+    // MARK: MetadataRelayにSwiftDataに保存されている自分のデータを取得し、そこからプロフィール/タイムラインのデータを取得する。
     @MainActor
     func setupYourOwnMetadata() async {
         var selectedAccountDescriptor = FetchDescriptor<OwnerAccount>(predicate: #Predicate { $0.selected })
@@ -87,13 +88,14 @@ class AppState: ObservableObject {
                 let publicKey = account.publicKey
                 let metadataSubscription = Subscription(filters: [.init(authors: [publicKey], kinds: [Kind.setMetadata])])
                 nostrClient.add(relayWithUrl: selectedMetadataRelay.url, subscriptions: [metadataSubscription] )
+                self.selectedNip1Relay = selectedMetadataRelay
             }
         } catch {
             print("Error fetching selected account: \(error)")
         }
     }
     
-    // MARK: GroupのAdminの名前などのMetadataを購読する（本当はMemberにしたい）
+    // MARK: MetadataRelayにGroupのAdminの名前などの"Metadata"を購読する（本当はMemberにしたい）
     @MainActor
     func connectAllMetadataRelays() async {
         let relaysDescriptor = FetchDescriptor<Relay>(predicate: #Predicate { $0.supportsNip1 && !$0.supportsNip29 })
@@ -153,7 +155,7 @@ class AppState: ObservableObject {
                 Kind.groupAdmins,
                 Kind.groupMembers
             ], since: nil, tags: [Tag(id: "d", otherInformation: groupIds)]),
-        ], id: IdSubGroupAdmins)
+        ], id: IdSubGroupAdminAndMembers)
         
         if let relay = try? modelContainer?.mainContext.fetch(descriptor).first {
             nostrClient.add(relayWithUrl: relay.url, subscriptions: [groupAdminAndMembersSubscription])
@@ -442,14 +444,16 @@ extension AppState: NostrClientDelegate {
                 }
 
             case .eose(let id):
+            print("じゃあidを調べる: \(id)")
                 // MARK: EOSE(End of Stored Events Notice)はリレーから保存済み情報の終わり(ここから先はストリーミング)である旨を通知する仕組み。
                 switch id {
                     case IdSubGroupList:
+                    print("ここにきているのか")
                         Task {
                             await subscribeChatMessages()
                             await subscribeGroupAdminAndMembers()
                         }
-                    case IdSubGroupAdmins:
+                    case IdSubGroupAdminAndMembers:
                         Task{
                             await connectAllMetadataRelays()
                         }

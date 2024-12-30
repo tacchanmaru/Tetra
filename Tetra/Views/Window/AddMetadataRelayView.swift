@@ -139,12 +139,14 @@ struct AddMetadataRelayView: View {
             } catch {
                 print("Failed to save relay: \(error)")
             }
-            _ = await relay.updateRelayInfo()
+            
+            await relay.updateRelayInfo()
             
             if !relay.supportsNip1 {
                 print("This relay does not support Nip 1.")
                 modelContext.delete(relay)
             } else {
+                print("This relay supports Nip 1.")
                 inputText = ""
             }
         }

@@ -112,34 +112,56 @@ struct Nip29RelayView: View {
     
     
     func addRelay(relayUrl: String) async {
-        
-        if relays.contains(where: { $0.url == relayUrl }) {
+        guard !relays.contains(where: { $0.url == relayUrl }) else {
+            print("This relay is already in your list.")
             inputText = ""
             return
         }
         
         if let relay = Relay.createNew(withUrl: relayUrl) {
+            await relay.updateRelayInfo()
+            
+            if relay.supportsNip29 {
+                print("This relay supports Nip 29.")
+                inputText = ""
+            } else {
+                print("This relay does not support Nip 29.")
+                return
+            }
+            
             modelContext.insert(relay)
             do {
                 try modelContext.save()
             } catch {
-                print(error)
+                print("Failed to save relay: \(error)")
+                return
             }
-            _ = await relay.updateRelayInfo()
             
-            if !relay.supportsNip29 {
-                print("NO NIP 29")
-                modelContext.delete(relay)
-            } else {
-                inputText = ""
-            }
+            await appState.setupYourOwnMetadata()
+            await appState.subscribeGroupMetadata()
         }
     }
+
     
     func removeRelay(relay: Relay) async {
-        appState.remove(relaysWithUrl: [relay.url])
+        if let nip1relay = appState.selectedNip1Relay?.url {
+            appState.remove(relaysWithUrl: [relay.url, nip1relay])
+        }
+        appState.selectedGroup = nil
+        appState.selectedOwnerAccount = nil
+        appState.allGroupMember.removeAll()
+        appState.allGroupAdmin.removeAll()
+        appState.allChatGroup.removeAll()
+        appState.allChatMessage.removeAll()
+        appState.allUserMetadata.removeAll()
+        appState.ownerPostContents.removeAll()
+        appState.profileMetadata = nil
         modelContext.delete(relay)
-        await appState.removeDataFor(relayUrl: relay.url)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to remove relay: \(error)")
+        }
     }
     
     func nextEnabled() -> Bool {
