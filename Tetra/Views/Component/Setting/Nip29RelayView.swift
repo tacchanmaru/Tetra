@@ -122,7 +122,6 @@ struct Nip29RelayView: View {
             await relay.updateRelayInfo()
             
             if relay.supportsNip29 {
-                print("This relay supports Nip 29.")
                 inputText = ""
             } else {
                 print("This relay does not support Nip 29.")

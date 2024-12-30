@@ -444,11 +444,9 @@ extension AppState: NostrClientDelegate {
                 }
 
             case .eose(let id):
-            print("じゃあidを調べる: \(id)")
                 // MARK: EOSE(End of Stored Events Notice)はリレーから保存済み情報の終わり(ここから先はストリーミング)である旨を通知する仕組み。
                 switch id {
                     case IdSubGroupList:
-                    print("ここにきているのか")
                         Task {
                             await subscribeChatMessages()
                             await subscribeGroupAdminAndMembers()
