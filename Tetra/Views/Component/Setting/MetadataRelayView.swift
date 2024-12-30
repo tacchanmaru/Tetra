@@ -119,7 +119,6 @@ struct MetadataRelayView: View {
             await relay.updateRelayInfo()
             
             if relay.supportsNip1 {
-                print("This relay supports Nip 1.")
                 inputText = ""
             } else {
                 print("This relay does not support Nip 1.")
