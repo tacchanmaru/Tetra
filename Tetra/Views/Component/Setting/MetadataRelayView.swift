@@ -1,16 +1,15 @@
 import SwiftUI
 import SwiftData
 
-struct AddMetadataRelayView: View {
+struct MetadataRelayView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.modelContext) private var modelContext
     
     @State private var inputText = ""
-    @Binding var navigationPath: NavigationPath
     
     @Query private var relays: [Relay]
     var metadataRelays: [Relay] {
-        //紛らわしいため。Nip29のために利用するリレーとNip1のために利用するリレーは異なるはず。
+        //TODO: 【ARERT】Metadata用のリレーとGroup用のリレーが一致する可能性はある。その際にエラーとなりかねないので注意
         relays.filter { !$0.supportsNip29 }
     }
     
@@ -31,9 +30,6 @@ struct AddMetadataRelayView: View {
         .padding(.top, 32)
         .padding(.bottom, 6)
         .padding(.horizontal)
-        .safeAreaInset(edge: .bottom) {
-            bottomBar
-        }
     }
     
     private var relayIcon: some View {
@@ -111,49 +107,51 @@ struct AddMetadataRelayView: View {
         }
     }
     
-    private var bottomBar: some View {
-        HStack {
-            Spacer()
-            Button("Back") {
-                navigationPath.removeLast()
-            }
-            NavigationLink("Next", value: 2)
-                .disabled(!nextEnabled())
-        }
-        .controlSize(.large)
-        .padding(.horizontal)
-        .padding(.bottom)
-    }
-    
     
     func addRelay(relayUrl: String) async {
         guard !relays.contains(where: { $0.url == relayUrl }) else {
+            print("This relay is already in your list.")
             inputText = ""
             return
         }
         
         if let relay = Relay.createNew(withUrl: relayUrl) {
+            await relay.updateRelayInfo()
+            
+            if relay.supportsNip1 {
+                print("This relay supports Nip 1.")
+                inputText = ""
+            } else {
+                print("This relay does not support Nip 1.")
+                return
+            }
+            
             modelContext.insert(relay)
             do {
                 try modelContext.save()
             } catch {
                 print("Failed to save relay: \(error)")
+                return
             }
             
-            await relay.updateRelayInfo()
-            
-            if !relay.supportsNip1 {
-                print("This relay does not support Nip 1.")
-                modelContext.delete(relay)
-            } else {
-                print("This relay supports Nip 1.")
-                inputText = ""
-            }
+            await appState.setupYourOwnMetadata()
+            await appState.subscribeGroupMetadata()
         }
     }
     
     func removeRelay(relay: Relay) async {
-        appState.remove(relaysWithUrl: [relay.url])
+        if let nip29relay = appState.selectedNip29Relay?.url {
+            appState.remove(relaysWithUrl: [relay.url, nip29relay])
+        }
+        appState.selectedGroup = nil
+        appState.selectedOwnerAccount = nil
+        appState.allGroupMember.removeAll()
+        appState.allGroupAdmin.removeAll()
+        appState.allChatGroup.removeAll()
+        appState.allChatMessage.removeAll()
+        appState.allUserMetadata.removeAll()
+        appState.ownerPostContents.removeAll()
+        appState.profileMetadata = nil
         modelContext.delete(relay)
         do {
             try modelContext.save()

@@ -79,28 +79,26 @@ struct ProfileView: View {
                 }
                 Spacer()
                 //TODO: プロフィールを編集できるようにする
-//                HStack{
-//                    Spacer()
-//                    
-//                    Button(action: {
-//                        print("Account settings saved")
-//                    }) {
-//                        Text("Save Changes")
-//                            .font(.headline)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(12)
-//                            .padding()
-//                            .frame(width: 300)
-//                    }
-//                    .background(Color.blue)
-//                    .cornerRadius(12)
-//                    .buttonStyle(.plain)
-//                    
-//                    Spacer()
-//                }
+                HStack{
+                    Spacer()
+                    
+                    Button(action: {
+                        print("Account settings saved")
+                    }) {
+                        Text("Save Changes")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .padding()
+                            .frame(width: 300)
+                    }
+                    .cornerRadius(12)
+                    
+                    Spacer()
+                }
                 
             }
-            .padding()
+            .padding(32)
         }
     }
 }

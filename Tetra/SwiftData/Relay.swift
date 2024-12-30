@@ -69,6 +69,7 @@ extension Relay {
         if url.hasPrefix("wss://") || url.hasPrefix("ws://") {
             return Relay(url: url)
         }
+        print("This relay URL is not supported: \(url)")
         return nil
     }
     
