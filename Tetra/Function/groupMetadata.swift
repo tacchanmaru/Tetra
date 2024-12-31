@@ -10,7 +10,6 @@ func handleGroupMetadata(appState: AppState, event: Event) {
     let about = tags.first(where: { $0.id == "about" })?.otherInformation.first
     let picture = tags.first(where: { $0.id == "picture" })?.otherInformation.first
     let link = tags.first(where: { $0.id == "r" })?.otherInformation.first
-    print("【Debug】rタグ link:", link)
     
     let metadata = ChatGroupMetadata(
         id: groupId,
@@ -28,5 +27,4 @@ func handleGroupMetadata(appState: AppState, event: Event) {
     DispatchQueue.main.async {
         appState.allChatGroup.append(metadata)
     }
-
 }

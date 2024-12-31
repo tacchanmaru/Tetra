@@ -78,11 +78,11 @@ struct ProfileView: View {
                     }
                 }
                 Spacer()
-                //TODO: プロフィールを編集できるようにする
                 HStack{
                     Spacer()
                     
                     Button(action: {
+                        appState.editUserMetadata()
                         print("Account settings saved")
                     }) {
                         Text("Save Changes")

@@ -280,6 +280,18 @@ class AppState: ObservableObject {
         nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
     }
     
+    // TODO: ProfileViewでユーザーのデータを変更するときに利用する関数（未完成）
+    @MainActor
+    func editUserMetadata()  {
+        guard let key = self.selectedOwnerAccount?.getKeyPair() else {
+            print("KeyPair not found.")
+            return
+        }
+        
+        let nip1relayUrl = self.selectedNip1Relay?.url
+        
+    }
+    
     /// グループのメタデータを編集してrタグ(FaceTimeリンク)を設定する
     @MainActor
     func editGroupMetadata(ownerAccount: OwnerAccount, group: ChatGroupMetadata, name: String, about: String, link: String) async {

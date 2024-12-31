@@ -19,9 +19,38 @@ struct SessionDetailView: View {
 
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(group.name ?? "")
-                        .font(.title)
-                        .bold()
+                    HStack{
+                        if let pictureURL = group.picture,
+                           let url = URL(string: pictureURL) {
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                case .failure:
+                                    Image("noImage")
+                                        .resizable()
+                                        .scaledToFill()
+                                @unknown default:
+                                    Image("noImage")
+                                        .resizable()
+                                        .scaledToFill()
+                                }
+                            }
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                        } else {
+                            Image("noImage")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                        }
+                        Text(group.name ?? "")
+                            .font(.title)
+                            .bold()
+                    }
                     Text("By Morinosuke")
                         .font(.subheadline)
                         .foregroundColor(.gray)
@@ -33,14 +62,6 @@ struct SessionDetailView: View {
 
                 
                 HStack(spacing: 20) {
-//                    Button(action: {
-//                        if let link = group.link,
-//                           let url = URL(string: link) {
-//
-//                            UIApplication.shared.open(url)
-//                        }
-//                        
-//                    }) {
                     let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=ZwAt7KeXEe+n9Y4xRDecvg&k=zyPbaG1l2PV4HUrjZFLUDoL0zQBUTwnPB2svFjYJToQ"
                     
                     Button(action: {
@@ -93,8 +114,6 @@ struct SessionDetailView: View {
                         Text("Join Chat")
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(10)
                     }
                     
                     Button(action: {
@@ -105,8 +124,6 @@ struct SessionDetailView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
                     }
                 }
                 .padding(.horizontal)
