@@ -230,7 +230,7 @@ class AppState: ObservableObject {
         }
     }
     
-    // TODO: まだ参加していないグループに参加するための関数。まだ未実装。
+    // MARK: まだ参加していないグループに参加するための関数。
     func joinGroup(ownerAccount: OwnerAccount, group: ChatGroupMetadata) {
         guard let key = ownerAccount.getKeyPair() else { return }
         let relayUrl = group.relayUrl
@@ -252,6 +252,30 @@ class AppState: ObservableObject {
         nostrClient.send(event: joinEvent, onlyToRelayUrls: [relayUrl])
     }
     
+    // TODO: グループを退室するための関数。
+    func leaveGroup(ownerAccount: OwnerAccount, group: ChatGroupMetadata) {
+        guard let key = ownerAccount.getKeyPair() else { return }
+        let relayUrl = group.relayUrl
+        let groupId = group.id
+        var leaveEvent = Event(
+            pubkey: ownerAccount.publicKey,
+            createdAt: .init(),
+            kind: Kind.custom(9022), //9022が定義されてなかった
+            tags: [
+                Tag(id: "h", otherInformation: groupId),
+            ],
+            content: ""
+        )
+        
+        do {
+            try leaveEvent.sign(with: key)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        nostrClient.send(event: leaveEvent, onlyToRelayUrls: [relayUrl])
+    }
+    
     // MARK: チャットのメッセージを送る関数
     @MainActor
     func sendChatMessage(ownerAccount: OwnerAccount, group: ChatGroupMetadata, withText text: String) async {
@@ -271,10 +295,6 @@ class AppState: ObservableObject {
             try event.sign(with: key)
         } catch {
             print(error.localizedDescription)
-        }
-        
-        if let clientMessage = try? ClientMessage.event(event).string() {
-           print(clientMessage)
         }
         
         nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
@@ -303,7 +323,7 @@ class AppState: ObservableObject {
         let relayUrl = group.relayUrl
         let groupId = group.id
         
-        var tags: [Tag] = [
+        let tags: [Tag] = [
             Tag(id: "h", otherInformation: groupId),
             Tag(id: "name", otherInformation: [name]),
             Tag(id: "about", otherInformation: [about]),
@@ -313,7 +333,7 @@ class AppState: ObservableObject {
         var event = Event(
             pubkey: ownerAccount.publicKey,
             createdAt: .init(),
-            kind: .groupEditMetadata, // 9002
+            kind: Kind.groupEditMetadata, // 9002
             tags: tags,
             content: ""
         )
