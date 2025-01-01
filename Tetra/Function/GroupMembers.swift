@@ -20,22 +20,22 @@ func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
         
         DispatchQueue.main.async {
             appState.allGroupMember.append(member)
-        }
-    }
-    
-    // MARK: allChatGroupのisMemberを更新する
-    // TODO: もしかしたら、チャット画面を開いた時に更新するの方がいいかもしれない
-    if let selectedOwnerAccount = appState.selectedOwnerAccount {
-        DispatchQueue.global(qos: .userInitiated).async {
-            var updatedChatGroups = appState.allChatGroup
-            for i in 0..<updatedChatGroups.count {
-                var group = updatedChatGroups[i]
-                group.isMember = appState.allGroupMember.first(where: { $0.publicKey == selectedOwnerAccount.publicKey && $0.groupId == group.id }) != nil
-                updatedChatGroups[i] = group
-            }
             
-            DispatchQueue.main.async {
-                appState.allChatGroup = updatedChatGroups
+            // MARK: allChatGroupのisMemberを更新する
+            // TODO: もしかしたら、チャット画面を開いた時に更新するの方がいいかもしれない
+            if let selectedOwnerAccount = appState.selectedOwnerAccount {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    var updatedChatGroups = appState.allChatGroup
+                    for i in 0..<updatedChatGroups.count {
+                        var group = updatedChatGroups[i]
+                        group.isMember = appState.allGroupMember.first(where: { $0.publicKey == selectedOwnerAccount.publicKey && $0.groupId == group.id }) != nil
+                        updatedChatGroups[i] = group
+                    }
+                    
+                    DispatchQueue.main.async {
+                        appState.allChatGroup = updatedChatGroups
+                    }
+                }
             }
         }
     }
