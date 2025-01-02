@@ -167,7 +167,7 @@ struct SessionDetailView: View {
                             }
                             
                             VStack(alignment: .leading) {
-                                Text(user.name ?? "")
+                                Text(user.displayName ?? "")
                                     .font(.body)
                                     .bold()
                                 Text(user.publicKey)
@@ -214,7 +214,7 @@ struct SessionDetailView: View {
                                 }
 
                                 VStack(alignment: .leading) {
-                                    Text(user.name ?? "")
+                                    Text(user.displayName ?? "")
                                         .font(.body)
                                         .bold()
                                     Text(user.publicKey)

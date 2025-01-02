@@ -335,6 +335,7 @@ class AppState: ObservableObject {
               let jsonString = String(data: jsonData, encoding: .utf8) else {
             return
         }
+        
         var event = Event(
             pubkey: self.selectedOwnerAccount?.publicKey ?? "",
             createdAt: .init(),
@@ -377,7 +378,7 @@ class AppState: ObservableObject {
         var event = Event(
             pubkey: ownerAccount.publicKey,
             createdAt: .init(),
-            kind: Kind.groupEditMetadata, // 9002
+            kind: Kind.groupEditMetadata,
             tags: tags,
             content: ""
         )

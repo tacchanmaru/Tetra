@@ -5,9 +5,14 @@ import Foundation
 func handleSetMetadata(appState: AppState, event: Event) {
     if let metadata = decodeUserMetadata(from: event.content) {
         let (name, about, picture, nip05, displayName, website, banner, bot, lud16) = metadata
+        
+        let userMetadata = createUserMetadata(from: event, name: name, about: about, picture: picture, nip05: nip05, displayName: displayName, website: website, banner: banner, bot: bot, lud16: lud16)
 
         //TODO: 以下によって自分の投稿が2回fetchされているのを修正する必要がある
         if event.pubkey == appState.selectedOwnerAccount?.publicKey && appState.ownerPostContents.count == 0 {
+            DispatchQueue.main.async {
+                appState.allUserMetadata.append(userMetadata)
+            }
             handleSelectedOwnerProfile(
                 pubkey: event.pubkey,
                 name: name,
@@ -24,7 +29,6 @@ func handleSetMetadata(appState: AppState, event: Event) {
             )
         }
 
-        let userMetadata = createUserMetadata(from: event, name: name, about: about, picture: picture, nip05: nip05, displayName: displayName, website: website, banner: banner, bot: bot, lud16: lud16)
         updateChatMessages(for: event, with: userMetadata, appState: appState)
     }
 }
@@ -82,7 +86,9 @@ private func createUserMetadata(from event: Event, name: String?, about: String?
 
 private func updateChatMessages(for event: Event, with userMetadata: UserMetadata, appState: AppState) {
     DispatchQueue.main.async {
-        appState.allUserMetadata.append(userMetadata)
+        if userMetadata.publicKey != appState.selectedOwnerAccount?.publicKey {
+            appState.allUserMetadata.append(userMetadata)
+        }
         appState.allChatMessage = appState.allChatMessage.map { message in
             var updatedMessage = message
             if updatedMessage.publicKey == event.pubkey {

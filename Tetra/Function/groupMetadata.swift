@@ -10,7 +10,7 @@ func handleGroupMetadata(appState: AppState, event: Event) {
     ]
     
     let tags = event.tags.map({ $0 })
-    let createdAt = event.createdAt
+//    let createdAt = event.createdAt
     guard let groupId = tags.first(where: { $0.id == "d" })?.otherInformation.first, targetGroupIds.contains(groupId) else {
         return
     }
