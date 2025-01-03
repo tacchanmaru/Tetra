@@ -82,7 +82,7 @@ struct CreateSessionView: View {
                 
                 
                 
-                Text("All Groups of which you are a member")
+                Text("All Groups of which you are the administrator")
                     .font(.headline)
                     .padding(.leading, 30)
                 
