@@ -40,8 +40,7 @@ struct ToolbarContentView: View {
             AdminMemberView(isPresented: $isSheetPresented)
         }
     }
-
-    // MARK: 自分が選択したグループのメンバーもしくは管理者であるときにtrueを返す関数
+    
     func isMemberOrAdmin() -> Bool {
         if let selectedGroup = appState.selectedGroup {
             return selectedGroup.isMember || selectedGroup.isAdmin

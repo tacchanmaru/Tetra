@@ -59,7 +59,7 @@ struct HomeView: View {
                         .font(.title2.bold())
                         .padding(.leading, 16)
                     
-                    GroupListView(groups: Array(appState.allChatGroup.suffix(10)))
+                    GroupListView(groups: Array(appState.allChatGroup.suffix(20)))
                     
                     Spacer().frame(height: 30)
                     
