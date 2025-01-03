@@ -26,20 +26,21 @@ func handleGroupAdmins(appState: AppState, event: Event, relayUrl: String) {
     
     DispatchQueue.main.async {
         appState.allGroupAdmin.append(admin)
-        
-        // MARK: allChatGroupのisAdminを更新する
-        // TODO: もしかしたら、チャット画面を開いた時に更新するの方がいいかもしれない
-        if let selectedOwnerAccount = appState.selectedOwnerAccount {
-            DispatchQueue.global(qos: .userInitiated).async {
-                var updatedChatGroups = appState.allChatGroup
-                for i in 0..<updatedChatGroups.count {
-                    var group = updatedChatGroups[i]
-                    group.isAdmin = appState.allGroupAdmin.first(where: { $0.publicKey == selectedOwnerAccount.publicKey && $0.groupId == group.id }) != nil
-                    updatedChatGroups[i] = group
-                }
-                
-                DispatchQueue.main.async {
-                    appState.allChatGroup = updatedChatGroups
+    
+        if publicKey == appState.selectedOwnerAccount?.publicKey {
+            // allChatGroupのisAdminを更新
+            if let index = appState.allChatGroup.firstIndex(where: { $0.id == groupId }) {
+                appState.allChatGroup[index].isAdmin = true
+            } else {
+                let adminGroupSubscription = Subscription(
+                    filters: [Filter(
+                        kinds: [Kind.groupMetadata],
+                        tags: [Tag(id: "d", otherInformation: groupId)]
+                    ),],
+                    id: AddAdminGroup
+                )
+                if let relayUrl = appState.selectedNip29Relay?.url {
+                    appState.nostrClient.add(relayWithUrl: relayUrl, subscriptions: [adminGroupSubscription])
                 }
             }
         }

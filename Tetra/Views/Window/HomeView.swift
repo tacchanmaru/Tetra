@@ -59,7 +59,7 @@ struct HomeView: View {
                         .font(.title2.bold())
                         .padding(.leading, 16)
                     
-                    GroupListView(groups: Array(appState.allChatGroup.suffix(10)))
+                    GroupListView(groups: Array(appState.allChatGroup.suffix(20)))
                     
                     Spacer().frame(height: 30)
                     
@@ -67,7 +67,7 @@ struct HomeView: View {
                         .font(.title2.bold())
                         .padding(.leading, 16)
                     
-                    GroupListView(groups: appState.allChatGroup.filter({$0.isMember == true || $0.isAdmin }))
+                    GroupListView(groups: appState.allChatGroup.filter({$0.isMember || $0.isAdmin }))
                     
                     Spacer()
                 }
