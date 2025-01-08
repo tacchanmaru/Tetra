@@ -19,7 +19,9 @@ func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
         )
         
         DispatchQueue.main.async {
-            appState.allGroupMember.append(member)
+            if !appState.allGroupMember.contains(where: { $0.groupId == groupId && $0.publicKey == publicKey }) {
+                appState.allGroupMember.append(member)
+            }
             
             if publicKey == appState.selectedOwnerAccount?.publicKey {
                 // allChatGroupのisMemberを更新

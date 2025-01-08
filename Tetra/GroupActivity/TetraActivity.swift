@@ -1,10 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The Tetra group activity definition.
-*/
-
 import CoreTransferable
 import GroupActivities
 
@@ -12,6 +5,7 @@ struct TetraActivity: GroupActivity, Transferable {
     var metadata: GroupActivityMetadata = {
         var metadata = GroupActivityMetadata()
         metadata.title = "Tetra"
+        metadata.type = .generic
         return metadata
     }()
 }

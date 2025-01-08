@@ -246,7 +246,7 @@ class AppState: ObservableObject {
         do {
             try joinEvent.sign(with: key)
         } catch {
-            print(error.localizedDescription)
+            print("join group error: \(error.localizedDescription)")
         }
         
         nostrClient.send(event: joinEvent, onlyToRelayUrls: [relayUrl])
@@ -380,7 +380,7 @@ class AppState: ObservableObject {
             createdAt: .init(),
             kind: Kind.groupEditMetadata,
             tags: tags,
-            content: ""
+            content: "change metadata"
         )
 
         
@@ -390,7 +390,7 @@ class AppState: ObservableObject {
             self.lastEditGroupMetadataEventId = event.id
             
             nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
-            print("groupEditMetadata event sent to \(relayUrl)")
+            print("groupEditMetadata : \(event)")
         } catch {
             print("Failed to sign or send event: \(error)")
         }

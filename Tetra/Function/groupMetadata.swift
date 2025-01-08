@@ -13,6 +13,9 @@ func handleGroupMetadata(appState: AppState, event: Event) {
     let picture = tags.first(where: { $0.id == "picture" })?.otherInformation.first
     let link = tags.first(where: { $0.id == "r" })?.otherInformation.first
     
+//    print("name: \(name ?? "")")
+//    print("link: \(link ?? "なし")")
+    
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     dateFormatter.timeZone = TimeZone.current

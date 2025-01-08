@@ -14,7 +14,7 @@ struct AddChatRelayView: View {
         return relays.filter({ $0.supportsNip29 })
     }
     
-    @State var suggestedRelays: [String] = ["wss://groups.0xchat.com", "wss://relay.groups.nip29.com"]
+    @State var suggestedRelays: [String] = ["wss://groups.0xchat.com", "wss://relay.groups.nip29.com", "ws://217.142.246.199:2929"]
     var filteredSuggestedRelays: [String] {
         return suggestedRelays.filter { s in !chatRelays.contains { r in r.url == s }}
     }

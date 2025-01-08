@@ -20,15 +20,15 @@ struct TetraApp: App {
         }
     }()
     
-    @State var appModel = AppModel()
+//    @State var appModel = AppModel()
     @StateObject var appState = AppState()
+    let groupActivityManager = GroupActivityManager()
     
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(groupActivityManager: groupActivityManager )
                 .modelContainer(sharedModelContainer)
-                .environment(appModel)
                 .environmentObject(appState)
                 .task {
                     appState.modelContainer = sharedModelContainer

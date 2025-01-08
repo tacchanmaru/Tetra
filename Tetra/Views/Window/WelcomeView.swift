@@ -25,7 +25,7 @@ import SwiftUI
 /// └───────────────────────────────────────┘
 /// ```
 struct WelcomeView: View {
-    @Environment(AppModel.self) var appModel
+//    @Environment(AppModel.self) var appModel
     
     var body: some View {
         VStack {

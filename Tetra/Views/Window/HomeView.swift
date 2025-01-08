@@ -4,6 +4,7 @@ import SwiftUI
 /// A view that presents the app's content library.
 struct HomeView: View {
     @EnvironmentObject private var appState: AppState
+    @State var groupActivityManager: GroupActivityManager
     @State private var searchText = ""
     @State private var sheetDetail: InventoryItem?
 
@@ -59,7 +60,7 @@ struct HomeView: View {
                         .font(.title2.bold())
                         .padding(.leading, 16)
                     
-                    GroupListView(groups: Array(appState.allChatGroup.suffix(20)))
+                    GroupListView(groups: Array(appState.allChatGroup.suffix(20)), groupActivityManager: groupActivityManager)
                     
                     Spacer().frame(height: 30)
                     
@@ -67,7 +68,7 @@ struct HomeView: View {
                         .font(.title2.bold())
                         .padding(.leading, 16)
                     
-                    GroupListView(groups: appState.allChatGroup.filter({$0.isMember || $0.isAdmin }))
+                    GroupListView(groups: appState.allChatGroup.filter({$0.isMember || $0.isAdmin }), groupActivityManager: groupActivityManager)
                     
                     Spacer()
                 }

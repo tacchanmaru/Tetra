@@ -2,10 +2,12 @@ import SwiftUI
 
 struct GroupCard: View {
     @EnvironmentObject var appState: AppState
+    @State var groupActivityManager: GroupActivityManager
+    
     let group: ChatGroupMetadata
     
     var body: some View {
-        NavigationLink(destination: SessionDetailView(group: group)) {
+        NavigationLink(destination: SessionDetailView(group: group, groupActivityManager: groupActivityManager)) {
             VStack(alignment: .leading) {
                 Group{
                     if let imageUrl = group.picture, !imageUrl.isEmpty, let url = URL(string: imageUrl) {
@@ -85,13 +87,14 @@ struct GroupCard: View {
 
 struct GroupListView: View{
     let groups: Array<ChatGroupMetadata>
+    @State var groupActivityManager: GroupActivityManager
     
     var body: some View {
         VStack(alignment: .leading){
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 16){
                     ForEach(groups, id: \.id){ group in
-                        GroupCard(group: group)
+                        GroupCard(groupActivityManager: groupActivityManager, group: group)
                     }
                 }
                 .padding(.horizontal, 16)
