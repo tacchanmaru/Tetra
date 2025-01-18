@@ -23,7 +23,7 @@ struct ContentView: View {
         .task {
             // MARK: Shareplayのセッションが起動されているか否かをチェックする
             for await session in TetraActivity.sessions() {
-                await groupActivityManager.configureGroupSession(session: session)
+                await groupActivityManager.configureGroupSession(session: session, appState: appState)
             }
         }
     }

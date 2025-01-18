@@ -11,20 +11,19 @@ class GroupActivityManager {
     var subscriptions = Set<AnyCancellable>()
     var tasks = Set<Task<Void, Never>>()
     var isSharePlaying = false
+    
 
     // MARK: SharePlayセッションを開始する
-    func startSession() async -> Bool {
+    func startSession() async {
         do {
-            let didActivate = try await TetraActivity().activate()
-            return didActivate 
+            let _ = try await TetraActivity().activate()
         } catch {
             print("Failed to activate TetraActivity: \(error)")
-            return false
         }
     }
 
     // MARK: セッションの設定を行う
-    func configureGroupSession(session: GroupSession<TetraActivity>) async {
+    func configureGroupSession(session: GroupSession<TetraActivity>, appState: AppState) async {
         self.session = session
 
         subscriptions.removeAll()
@@ -38,6 +37,12 @@ class GroupActivityManager {
         
         await setCoordinatorConfiguration(session: session)
         session.join()
+        // セッションが有効になったときの処理
+        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
+
+        guard let selectedGroup = appState.selectedGroup else { return }
+
+        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
         isSharePlaying = true
     }
 

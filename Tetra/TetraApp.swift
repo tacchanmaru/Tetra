@@ -2,10 +2,10 @@ import SwiftUI
 import SwiftData
 import Nostr
 import NostrClient
+import GroupActivities
 
 @main
 struct TetraApp: App {
-    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             OwnerAccount.self,
@@ -20,14 +20,13 @@ struct TetraApp: App {
         }
     }()
     
-//    @State var appModel = AppModel()
     @StateObject var appState = AppState()
     let groupActivityManager = GroupActivityManager()
-    
-    
+    @StateObject var groupStateObserver = GroupStateObserver()
+
     var body: some Scene {
         WindowGroup {
-            ContentView(groupActivityManager: groupActivityManager )
+            ContentView(groupActivityManager: groupActivityManager)
                 .modelContainer(sharedModelContainer)
                 .environmentObject(appState)
                 .task {

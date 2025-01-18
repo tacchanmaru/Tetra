@@ -98,38 +98,26 @@ struct SessionDetailView: View {
                     // MARK: Shareplayセッションを確立していない場合
                     } else if !group.isMember && !groupActivityManager.isSharePlaying  {
                         Button(action: {
+                            Task{
+                                let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=JKAhBtPlEe+u1uo0vdeMBQ&k=AIfpuOtj6rL4SgRFV0MOLlaymS-ysPTAriOfDpsmFks"
+                                if let url = URL(string: newFaceTimeLink) {
+                                    await UIApplication.shared.open(url)
+                                }
+                            }
+                        }){
+                            Text("Facetime")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                        }
+                        .disabled(groupStateObserver.isEligibleForGroupSession)
+                        .tint(.green)
+                        Button(action: {
                             Task {
-                                let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=ZwAt7KeXEe+n9Y4xRDecvg&k=zyPbaG1l2PV4HUrjZFLUDoL0zQBUTwnPB2svFjYJToQ"
-                                // 1) まずFaceTimeリンクを開いて通話を開始
-                                // 現状テストできないのでコメントアウト中
-//                                if let url = URL(string: newFaceTimeLink) {
-//                                    // 完了ハンドラーを使用して、処理が終わった後に続きの処理を実行
-//                                    await withCheckedContinuation { continuation in
-//                                        UIApplication.shared.open(url) { success in
-//                                            // FaceTimeが開かれた後の処理
-//                                            if success {
-//                                                continuation.resume()
-//                                            } else {
-//                                                sharePlayStatus = "FaceTimeを開けませんでした"
-//                                                continuation.resume()
-//                                            }
-//                                        }
-//                                    }
-//                                }
-                                
-                                // 2) FaceTime通話を開始した後、SharePlayの準備を進める
                                 let activationResult = await TetraActivity().prepareForActivation()
                                 switch activationResult {
                                     case .activationPreferred:
-                                        let didActivate = await groupActivityManager.startSession()
-                                        if didActivate {
-                                            guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
-
-                                            appState.joinGroup(ownerAccount: selectedOwnerAccount, group: group)
-                                            sharePlayStatus = "セッションに参加中です"
-                                        } else {
-                                            sharePlayStatus = "他の参加者が参加するのを待機中です"
-                                        }
+                                        await groupActivityManager.startSession()
+                                        sharePlayStatus = "セッションに参加中です"
 
                                     case .activationDisabled:
 
@@ -142,22 +130,12 @@ struct SessionDetailView: View {
                                 }
                             }
                         }) {
-                            Text("Join Chat")
+                            Text("Shareplay")
                                 .frame(maxWidth: .infinity)
                                 .padding()
                         }
                         .disabled(!groupStateObserver.isEligibleForGroupSession)
                         .tint(.green)
-                    }
-                    
-                    Button(action: {
-                    }) {
-                        HStack {
-                            Image(systemName: "heart")
-                            Text("Favorite")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
                     }
                 }
                 .padding(.horizontal)
