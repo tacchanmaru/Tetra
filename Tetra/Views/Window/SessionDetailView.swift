@@ -1,9 +1,12 @@
 import SwiftUI
+import GroupActivities
 
 struct SessionDetailView: View {
     @State var inputSharePlayLink = ""
     @EnvironmentObject var appState: AppState
     let group: ChatGroupMetadata
+    @State var groupActivityManager: GroupActivityManager
+    @StateObject private var groupStateObserver = GroupStateObserver()
     
     @State private var sharePlayStatus: String = ""
     
@@ -62,73 +65,82 @@ struct SessionDetailView: View {
 
                 
                 HStack(spacing: 20) {
-                    let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=ZwAt7KeXEe+n9Y4xRDecvg&k=zyPbaG1l2PV4HUrjZFLUDoL0zQBUTwnPB2svFjYJToQ"
-                    
-                    Button(action: {
-                        Task {
-                            // 1) まずSharePlayの準備をする
-                            let activity = TetraActivity()
-                            
-                            do {
-                                // prepareForActivation()でSharePlay開始の事前チェック
-                                let activationResult = try await activity.prepareForActivation()
-                                
-                                switch activationResult {
-                                case .activationPreferred:
-                                    // FaceTime通話が確立している場合
-                                    let didActivate = try await activity.activate()
-                                    if didActivate {
-                                        // Activate成功 => NIP-29グループにも参加
-                                        sharePlayStatus = "セッションに参加中です"
-                                        
-                                        if let userPubKey = appState.selectedOwnerAccount?.publicKey {
-                                            appState.addUserAsMemberToGroup(
-                                                userPubKey: userPubKey,
-                                                groupId: group.id
-                                            )
-                                        }
-                                    } else {
-                                        // FaceTimeはあるが、まだ人数不足等でセッション未成立の場合
-                                        sharePlayStatus = "他の参加者が参加するのを待機中です"
+                    // MARK: すでにShareplayセッションが確立されている状態
+                    if group.isMember && groupActivityManager.isSharePlaying {
+                        Button(action: {
+                            Task {
+                                // SharePlayセッションを終了する
+                                let didActivate = await groupActivityManager.endSession()
+                                if didActivate {
+                                    guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
+
+                                    //Nostrのグループから抜ける
+                                    appState.leaveGroup(ownerAccount: selectedOwnerAccount, group: group)
+                                    // グループメンバーから自分を削除する
+                                    appState.allGroupMember.removeAll { member in
+                                        member.publicKey == selectedOwnerAccount.publicKey && member.groupId == group.id
                                     }
-
-                                case .activationDisabled:
-                                    // ユーザがSharePlayをオフにしているなど
-                                    sharePlayStatus = "SharePlayは利用できません"
-                                
-                                @unknown default:
-                                    sharePlayStatus = "予期しないエラーが発生しました"
+                                    for index in appState.allChatGroup.indices {
+                                        if appState.allChatGroup[index].id == group.id {
+                                            appState.allChatGroup[index].isMember = false
+                                        }
+                                    }
+                                    sharePlayStatus = "セッションから離脱しました。"
+                                } else {
+                                    sharePlayStatus = "セッションの離脱に失敗しました。"
                                 }
-                            } catch {
-                                // prepareForActivation() または activate() が投げるエラー処理
-                                sharePlayStatus = "セッションの開始に失敗しました: \(error.localizedDescription)"
                             }
-
-                            // 2) FaceTimeリンクを踏んで通話を開始(または参加)
-                            if let url = URL(string: newFaceTimeLink) {
-                                await UIApplication.shared.open(url)
+                        }) {
+                            Text("Leave Chat")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                        }.tint(.red)
+                    // MARK: Shareplayセッションを確立していない場合
+                    } else if !group.isMember && !groupActivityManager.isSharePlaying  {
+                        Button(action: {
+                            Task{
+                                let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=JKAhBtPlEe+u1uo0vdeMBQ&k=AIfpuOtj6rL4SgRFV0MOLlaymS-ysPTAriOfDpsmFks"
+                                if let url = URL(string: newFaceTimeLink) {
+                                    await UIApplication.shared.open(url)
+                                }
                             }
+                        }){
+                            Text("Facetime")
+                                .frame(maxWidth: .infinity)
+                                .padding()
                         }
+                        .disabled(groupStateObserver.isEligibleForGroupSession)
+                        .tint(.green)
+                        Button(action: {
+                            Task {
+                                let activationResult = await TetraActivity().prepareForActivation()
+                                switch activationResult {
+                                    case .activationPreferred:
+                                        await groupActivityManager.startSession()
+                                        sharePlayStatus = "セッションに参加中です"
 
-                    }) {
-                        Text("Join Chat")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                    }
-                    
-                    Button(action: {
-                    }) {
-                        HStack {
-                            Image(systemName: "heart")
-                            Text("Favorite")
+                                    case .activationDisabled:
+
+                                        sharePlayStatus = "SharePlayは利用できません"
+                                    
+                                    case .cancelled:
+                                        sharePlayStatus = "セッションの開始をキャンセルしました"
+                                    @unknown default:
+                                        sharePlayStatus = "予期しないエラーが発生しました"
+                                }
+                            }
+                        }) {
+                            Text("Shareplay")
+                                .frame(maxWidth: .infinity)
+                                .padding()
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding()
+                        .disabled(!groupStateObserver.isEligibleForGroupSession)
+                        .tint(.green)
                     }
                 }
                 .padding(.horizontal)
                 
-                Text(sharePlayStatus) // SharePlayのステータス表示用
+                Text(sharePlayStatus)
                     .foregroundColor(.blue)
                     .font(.caption)
                     .padding(.horizontal)
@@ -167,7 +179,7 @@ struct SessionDetailView: View {
                             }
                             
                             VStack(alignment: .leading) {
-                                Text(user.name ?? "")
+                                Text(user.displayName ?? "")
                                     .font(.body)
                                     .bold()
                                 Text(user.publicKey)
@@ -214,7 +226,7 @@ struct SessionDetailView: View {
                                 }
 
                                 VStack(alignment: .leading) {
-                                    Text(user.name ?? "")
+                                    Text(user.displayName ?? "")
                                         .font(.body)
                                         .bold()
                                     Text(user.publicKey)

@@ -2,10 +2,11 @@ import SwiftUI
 
 struct TetraTabs: View {
     @EnvironmentObject var appState: AppState
+    @State var groupActivitymanager: GroupActivityManager
     
     var body: some View {
         TabView {
-            NavigationStack { HomeView() }
+            NavigationStack { HomeView(groupActivityManager: groupActivitymanager) }
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }

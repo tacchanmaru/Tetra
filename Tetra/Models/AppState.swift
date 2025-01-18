@@ -230,7 +230,7 @@ class AppState: ObservableObject {
         }
     }
     
-    // TODO: まだ参加していないグループに参加するための関数。まだ未実装。
+    // MARK: まだ参加していないグループに参加するための関数。
     func joinGroup(ownerAccount: OwnerAccount, group: ChatGroupMetadata) {
         guard let key = ownerAccount.getKeyPair() else { return }
         let relayUrl = group.relayUrl
@@ -246,10 +246,34 @@ class AppState: ObservableObject {
         do {
             try joinEvent.sign(with: key)
         } catch {
-            print(error.localizedDescription)
+            print("join group error: \(error.localizedDescription)")
         }
         
         nostrClient.send(event: joinEvent, onlyToRelayUrls: [relayUrl])
+    }
+    
+    // TODO: グループを退室するための関数。
+    func leaveGroup(ownerAccount: OwnerAccount, group: ChatGroupMetadata) {
+        guard let key = ownerAccount.getKeyPair() else { return }
+        let relayUrl = group.relayUrl
+        let groupId = group.id
+        var leaveEvent = Event(
+            pubkey: ownerAccount.publicKey,
+            createdAt: .init(),
+            kind: Kind.custom(9022), //9022が定義されてなかった
+            tags: [
+                Tag(id: "h", otherInformation: groupId),
+            ],
+            content: ""
+        )
+        
+        do {
+            try leaveEvent.sign(with: key)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        nostrClient.send(event: leaveEvent, onlyToRelayUrls: [relayUrl])
     }
     
     // MARK: チャットのメッセージを送る関数
@@ -273,22 +297,63 @@ class AppState: ObservableObject {
             print(error.localizedDescription)
         }
         
-        if let clientMessage = try? ClientMessage.event(event).string() {
-           print(clientMessage)
-        }
-        
         nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
     }
     
-    // TODO: ProfileViewでユーザーのデータを変更するときに利用する関数（未完成）
+    // MARK: ProfileViewでユーザーのデータを変更するときに利用する関数
     @MainActor
-    func editUserMetadata()  {
+    func editUserMetadata(
+        name: String?,
+        about: String?,
+        picture: String?,
+        nip05: String?,
+        displayName: String?,
+        website: String?,
+        banner: String?,
+        bot: Bool?,
+        lud16: String?
+    )  {
         guard let key = self.selectedOwnerAccount?.getKeyPair() else {
             print("KeyPair not found.")
             return
         }
+        let nip1relayUrl = self.selectedNip1Relay?.url ?? ""
         
-        let nip1relayUrl = self.selectedNip1Relay?.url
+        let metadata: [String: String?] = [
+            "name": name,
+            "about": about,
+            "picture": picture,
+            "nip05": nip05,
+            "display_name": displayName,
+            "website": website,
+            "banner": banner,
+            "bot": bot?.description ?? "false",
+            "lud16": lud16
+        ]
+
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: metadata),
+              let jsonString = String(data: jsonData, encoding: .utf8) else {
+            return
+        }
+        
+        var event = Event(
+            pubkey: self.selectedOwnerAccount?.publicKey ?? "",
+            createdAt: .init(),
+            kind: Kind.setMetadata,
+            tags: [],
+            content: jsonString
+        )
+        
+        do {
+            try event.sign(with: key)
+            
+            self.lastEditGroupMetadataEventId = event.id
+            
+            nostrClient.send(event: event, onlyToRelayUrls: [nip1relayUrl])
+            print("groupEditMetadata event sent to \(nip1relayUrl)")
+        } catch {
+            print("Failed to sign or send event: \(error)")
+        }
         
     }
     
@@ -303,7 +368,7 @@ class AppState: ObservableObject {
         let relayUrl = group.relayUrl
         let groupId = group.id
         
-        var tags: [Tag] = [
+        let tags: [Tag] = [
             Tag(id: "h", otherInformation: groupId),
             Tag(id: "name", otherInformation: [name]),
             Tag(id: "about", otherInformation: [about]),
@@ -313,9 +378,9 @@ class AppState: ObservableObject {
         var event = Event(
             pubkey: ownerAccount.publicKey,
             createdAt: .init(),
-            kind: .groupEditMetadata, // 9002
+            kind: Kind.groupEditMetadata,
             tags: tags,
-            content: ""
+            content: "change metadata"
         )
 
         
@@ -325,7 +390,7 @@ class AppState: ObservableObject {
             self.lastEditGroupMetadataEventId = event.id
             
             nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
-            print("groupEditMetadata event sent to \(relayUrl)")
+            print("groupEditMetadata : \(event)")
         } catch {
             print("Failed to sign or send event: \(error)")
         }

@@ -127,8 +127,7 @@ struct SessionLinkView: View {
                 
                 Text("Session Description")
                     .font(.headline)
-                TextField("ex. This is a room for VisionDevCamp", text: $maxMembers)
-                    .keyboardType(.numberPad)
+                TextField("ex. This is a room for VisionDevCamp", text: $groupDescription)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.gray.opacity(0.2))

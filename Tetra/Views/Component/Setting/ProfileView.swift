@@ -2,8 +2,10 @@ import SwiftUI
 import SwiftData
 
 struct ProfileView: View {
-    @State private var accountName: String = ""
+    @State private var displayName: String = ""
     @State private var about: String = ""
+    @State private var showSuccessAlert: Bool = false
+
     @EnvironmentObject private var appState : AppState
     
     var body: some View {
@@ -13,7 +15,7 @@ struct ProfileView: View {
                     .font(.largeTitle.bold())
                     .padding(.bottom, 20)
                 
-                Group{
+                Group {
                     if let picture = appState.profileMetadata?.picture,
                        let url = URL(string: picture) {
                         AsyncImage(url: url) { phase in
@@ -44,6 +46,7 @@ struct ProfileView: View {
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(10)
                     }
+                    
                     Text("Public Key")
                         .font(.headline)
                     if let publicKey = appState.profileMetadata?.pubkey {
@@ -57,7 +60,7 @@ struct ProfileView: View {
                     
                     Text("Name")
                         .font(.headline)
-                    TextField("Enter account name", text: $accountName)
+                    TextField("Enter account name", text: $displayName)
                         .padding()
                         .frame(width:300)
                         .background(Color.gray.opacity(0.2))
@@ -73,16 +76,29 @@ struct ProfileView: View {
                     
                 }.onAppear {
                     if let metadata = appState.profileMetadata {
-                        accountName = metadata.name ?? ""
+                        displayName = metadata.displayName ?? ""
                         about = metadata.about ?? ""
                     }
                 }
+                
                 Spacer()
-                HStack{
+                HStack {
                     Spacer()
                     
                     Button(action: {
-                        appState.editUserMetadata()
+                        appState.editUserMetadata(
+                            name: appState.profileMetadata?.name,
+                            about: about,
+                            picture: appState.profileMetadata?.picture,
+                            nip05: appState.profileMetadata?.nip05,
+                            displayName: displayName,
+                            website: appState.profileMetadata?.website,
+                            banner: appState.profileMetadata?.banner,
+                            bot: appState.profileMetadata?.bot,
+                            lud16: appState.profileMetadata?.lud16
+                        )
+                        
+                        showSuccessAlert = true
                         print("Account settings saved")
                     }) {
                         Text("Save Changes")
@@ -96,9 +112,14 @@ struct ProfileView: View {
                     
                     Spacer()
                 }
-                
             }
             .padding(32)
+        }
+        // 成功アラートを表示
+        .alert("Success", isPresented: $showSuccessAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("メタデータの保存に成功しました。")
         }
     }
 }

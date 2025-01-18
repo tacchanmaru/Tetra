@@ -8,27 +8,29 @@ struct ToolbarContentView: View {
 
     var body: some View {
         ZStack {
-            HStack {
-                GroupPicture(pictureUrl: appState.selectedGroup?.picture)
-                VStack(alignment: .leading) {
-                    Text(appState.selectedGroup?.name ?? "---")
-                        .font(.headline)
-                        .bold()
-                    Text(appState.selectedGroup?.relayUrl ?? "--")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-                .opacity(appState.selectedGroup == nil ? 0.0 : 1.0)
-
-                if !isMemberOrAdmin() {
-                    Spacer()
-                    Button(action: joinGroupAction) {
-                        Text("Join")
-                            .foregroundStyle(.white)
+            if appState.selectedGroup != nil {
+                HStack {
+                    GroupPicture(pictureUrl: appState.selectedGroup?.picture)
+                    VStack(alignment: .leading) {
+                        Text(appState.selectedGroup?.name ?? "---")
+                            .font(.headline)
+                            .bold()
+                        Text(appState.selectedGroup?.relayUrl ?? "--")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
                     }
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .cornerRadius(6)
+                    .opacity(appState.selectedGroup == nil ? 0.0 : 1.0)
+                    
+                    if !isMemberOrAdmin() {
+                        Spacer()
+                        Button(action: joinGroupAction) {
+                            Text("Join")
+                                .foregroundStyle(.white)
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .cornerRadius(6)
+                    }
                 }
             }
         }
@@ -40,8 +42,7 @@ struct ToolbarContentView: View {
             AdminMemberView(isPresented: $isSheetPresented)
         }
     }
-
-    // MARK: 自分が選択したグループのメンバーもしくは管理者であるときにtrueを返す関数
+    
     func isMemberOrAdmin() -> Bool {
         if let selectedGroup = appState.selectedGroup {
             return selectedGroup.isMember || selectedGroup.isAdmin

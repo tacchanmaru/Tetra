@@ -26,6 +26,7 @@
 		885992DC2D21845E0082A5C1 /* MetadataRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885992DB2D2184520082A5C1 /* MetadataRelayView.swift */; };
 		885992DE2D2184810082A5C1 /* Nip29RelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885992DD2D21847D0082A5C1 /* Nip29RelayView.swift */; };
 		885992E02D2184D40082A5C1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885992DF2D2184D00082A5C1 /* ProfileView.swift */; };
+		885992E22D297A140082A5C1 /* GroupActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885992E12D297A0D0082A5C1 /* GroupActivityManager.swift */; };
 		885D16702D14766700E603D7 /* SessionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166E2D14766700E603D7 /* SessionDetailView.swift */; };
 		885D16712D14766700E603D7 /* WorldDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166F2D14766700E603D7 /* WorldDetailView.swift */; };
 		885D16732D14766700E603D7 /* AddChatRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885D166B2D14766700E603D7 /* AddChatRelayView.swift */; };
@@ -99,6 +100,7 @@
 		885992DB2D2184520082A5C1 /* MetadataRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataRelayView.swift; sourceTree = "<group>"; };
 		885992DD2D21847D0082A5C1 /* Nip29RelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nip29RelayView.swift; sourceTree = "<group>"; };
 		885992DF2D2184D00082A5C1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		885992E12D297A0D0082A5C1 /* GroupActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupActivityManager.swift; sourceTree = "<group>"; };
 		885D166B2D14766700E603D7 /* AddChatRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatRelayView.swift; sourceTree = "<group>"; };
 		885D166C2D14766700E603D7 /* ChatGroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupListView.swift; sourceTree = "<group>"; };
 		885D166E2D14766700E603D7 /* SessionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailView.swift; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 		F5A044262BD578BA00EDAAD5 /* GroupActivity */ = {
 			isa = PBXGroup;
 			children = (
+				885992E12D297A0D0082A5C1 /* GroupActivityManager.swift */,
 				F5CF2A062BD1CD8A00C66F78 /* SessionController.swift */,
 				F5AF16232BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift */,
 				F5CF2A082BD1CF9600C66F78 /* TetraActivity.swift */,
@@ -488,6 +491,7 @@
 				F5AF16242BD6FC7E008D168F /* SessionController+RemoteParticipantSynchronization.swift in Sources */,
 				885992D12D217C9C0082A5C1 /* SettingView.swift in Sources */,
 				889316032CFEECF500A85EC3 /* RoundedCorners.swift in Sources */,
+				885992E22D297A140082A5C1 /* GroupActivityManager.swift in Sources */,
 				88AC1EC02D15848B009805D4 /* AppState.swift in Sources */,
 				8819C43D2D1C294300DAAF6B /* GroupMembers.swift in Sources */,
 				8819C4292D158C3D00DAAF6B /* CreateSessionView.swift in Sources */,
