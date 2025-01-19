@@ -86,7 +86,7 @@ struct SessionDetailView: View {
                     } else if !group.isMember && !groupActivityManager.isSharePlaying  {
                         Button(action: {
                             Task{
-                                let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=iycZ/spOEe+edy4RANKefA&k=rznT6IZJyatxYUd6StnX-v84B9TXeUUHJbnQuikHQ5o"
+                                let newFaceTimeLink = "https://facetime.apple.com/join#v=1&p=t9aoR9YKEe+d4VrAeXsElw&k=moGs7GGvqaK0GbDNOuyS87l4NQJolINBqXuvV_Ft_Kw"
                                 if let url = URL(string: newFaceTimeLink) {
                                     await UIApplication.shared.open(url)
                                 }
