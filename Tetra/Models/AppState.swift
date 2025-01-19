@@ -232,10 +232,7 @@ class AppState: ObservableObject {
     
     // MARK: まだ参加していないグループに参加するための関数。
     func joinGroup(ownerAccount: OwnerAccount, group: ChatGroupMetadata) {
-        print("joinします")
-        guard let key = ownerAccount.getKeyPair() else {
-            print("キーないよ")
-            return }
+        guard let key = ownerAccount.getKeyPair() else { return }
         let relayUrl = group.relayUrl
         let groupId = group.id
         var joinEvent = Event(
@@ -245,8 +242,6 @@ class AppState: ObservableObject {
             tags: [Tag(id: "h", otherInformation: groupId)],
             content: ""
         )
-        
-        print("joinEvent: \(joinEvent)")
         
         do {
             try joinEvent.sign(with: key)
