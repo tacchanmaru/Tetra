@@ -38,7 +38,9 @@ struct TetraApp: App {
                     print("発火しました")
                     if newValue {
                         print("groupStateObserver.isEligibleForGroupSessionがtrueになりました")
-                        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
+                        guard let selectedOwnerAccount = appState.selectedOwnerAccount else {
+                            print("オーナー内よ")
+                            return }
                         guard let selectedGroup = appState.selectedGroup else {
                             print("グループないよ")
                             return }
