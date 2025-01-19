@@ -35,7 +35,9 @@ struct TetraApp: App {
                     await appState.subscribeGroupMetadata()
                 }
                 .onChange(of: groupStateObserver.isEligibleForGroupSession) { oldValue, newValue in
+                    print("発火しました")
                     if newValue {
+                        print("groupStateObserver.isEligibleForGroupSessionがtrueになりました")
                         guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
                         guard let selectedGroup = appState.selectedGroup else {
                             print("グループないよ")
