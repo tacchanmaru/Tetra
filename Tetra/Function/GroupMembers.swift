@@ -2,7 +2,6 @@ import Foundation
 import Nostr
 
 func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
-    print("event: \(event)")
     let tags = event.tags.map { $0 }
     
     guard let groupTag = tags.first(where: { $0.id == "d" }),
@@ -11,6 +10,7 @@ func handleGroupMembers(appState: AppState, event: Event, relayUrl: String) {
     }
     
     let publicKeys = tags.filter { $0.id == "p" }.compactMap { $0.otherInformation.first }
+    print("event.publicKeys: \(publicKeys)")
     
     DispatchQueue.main.async {
     
