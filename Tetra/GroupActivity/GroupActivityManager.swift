@@ -37,12 +37,6 @@ class GroupActivityManager {
         
         await setCoordinatorConfiguration(session: session)
         session.join()
-        // セッションが有効になったときの処理
-        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
-
-        guard let selectedGroup = appState.selectedGroup else { return }
-
-        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
         isSharePlaying = true
     }
 

@@ -34,6 +34,29 @@ struct TetraApp: App {
                     await appState.setupYourOwnMetadata()
                     await appState.subscribeGroupMetadata()
                 }
+                .onChange(of: groupStateObserver.isEligibleForGroupSession) { oldValue, newValue in
+                    if newValue {
+                        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
+                        guard let selectedGroup = appState.selectedGroup else { return }
+
+                        appState.joinGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
+                    } else {
+                        guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
+                        guard let selectedGroup = appState.selectedGroup else { return }
+
+                        //Nostrのグループから抜ける
+                        appState.leaveGroup(ownerAccount: selectedOwnerAccount, group: selectedGroup)
+                        // グループメンバーから自分を削除する
+                        appState.allGroupMember.removeAll { member in
+                            member.publicKey == selectedOwnerAccount.publicKey && member.groupId == selectedGroup.id
+                        }
+                        for index in appState.allChatGroup.indices {
+                            if appState.allChatGroup[index].id == selectedGroup.id {
+                                appState.allChatGroup[index].isMember = false
+                            }
+                        }
+                    }
+                }
         }
     }
 }
