@@ -72,19 +72,6 @@ struct SessionDetailView: View {
                                 // SharePlayセッションを終了する
                                 let didActivate = await groupActivityManager.endSession()
                                 if didActivate {
-                                    guard let selectedOwnerAccount = appState.selectedOwnerAccount else { return }
-
-                                    //Nostrのグループから抜ける
-                                    appState.leaveGroup(ownerAccount: selectedOwnerAccount, group: group)
-                                    // グループメンバーから自分を削除する
-                                    appState.allGroupMember.removeAll { member in
-                                        member.publicKey == selectedOwnerAccount.publicKey && member.groupId == group.id
-                                    }
-                                    for index in appState.allChatGroup.indices {
-                                        if appState.allChatGroup[index].id == group.id {
-                                            appState.allChatGroup[index].isMember = false
-                                        }
-                                    }
                                     sharePlayStatus = "セッションから離脱しました。"
                                 } else {
                                     sharePlayStatus = "セッションの離脱に失敗しました。"
