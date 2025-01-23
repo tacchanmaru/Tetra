@@ -2,6 +2,7 @@ import Foundation
 import Nostr
 
 func handleGroupAdmins(appState: AppState, event: Event, relayUrl: String) {
+    
     let tags = event.tags.map { $0 }
     
     guard let groupTag = tags.first(where: { $0.id == "d" }),
@@ -25,7 +26,9 @@ func handleGroupAdmins(appState: AppState, event: Event, relayUrl: String) {
     )
     
     DispatchQueue.main.async {
-        appState.allGroupAdmin.append(admin)
+        if !appState.allGroupAdmin.contains(where: { $0.groupId == admin.groupId }) {
+            appState.allGroupAdmin.append(admin)
+        }
     
         if publicKey == appState.selectedOwnerAccount?.publicKey {
             // allChatGroupのisAdminを更新

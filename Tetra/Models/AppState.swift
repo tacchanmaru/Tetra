@@ -357,9 +357,70 @@ class AppState: ObservableObject {
         
     }
     
-    /// グループのメタデータを編集してrタグ(FaceTimeリンク)を設定する
+    // MARK: FaceTimeリンクを編集するときに利用する関数
     @MainActor
-    func editGroupMetadata(ownerAccount: OwnerAccount, group: ChatGroupMetadata, name: String, about: String, link: String) async {
+    func editFacetimeLink(
+        link: String
+    )  async{
+        guard let key = self.selectedOwnerAccount?.getKeyPair() else {
+            print("KeyPair not found.")
+            return
+        }
+
+        //これだと編集した人にしか反映されない
+//        if let index = self.allUserMetadata.firstIndex(where: { $0.publicKey == self.selectedOwnerAccount?.publicKey }) {
+//            self.allUserMetadata[index].facetime = link
+//        } else {
+//            print("No matching user metadata found.")
+//        }
+        
+        let nip1relayUrl = self.selectedNip1Relay?.url ?? ""
+        
+        let ownerAccount = self.allUserMetadata.filter { $0.publicKey == self.selectedOwnerAccount?.publicKey }.first
+        
+        let metadata: [String: String?] = [
+            "name": ownerAccount?.name,
+            "about": ownerAccount?.about,
+            "picture": ownerAccount?.picture,
+            "nip05": ownerAccount?.nip05,
+            "display_name": ownerAccount?.displayName,
+            "website": ownerAccount?.website,
+            "banner": ownerAccount?.banner,
+            "bot": ownerAccount?.bot?.description ?? "false",
+            "lud16": ownerAccount?.lud16
+        ]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: metadata),
+              let jsonString = String(data: jsonData, encoding: .utf8) else {
+            return
+        }
+        
+        let tags: [Tag] = [
+            Tag(id: "facetime", otherInformation: link),
+        ]
+        
+        var event = Event(
+            pubkey: self.selectedOwnerAccount?.publicKey ?? "",
+            createdAt: .init(),
+            kind: Kind.setMetadata,
+            tags: tags,
+            content: jsonString
+        )
+        
+        do {
+            try event.sign(with: key)
+            
+            self.lastEditGroupMetadataEventId = event.id
+            
+            nostrClient.send(event: event, onlyToRelayUrls: [nip1relayUrl])
+            print("groupEditMetadata event sent to \(nip1relayUrl)")
+        } catch {
+            print("Failed to sign or send event: \(error)")
+        }
+    }
+    
+    // MARK: グループのメタデータを編集する
+    @MainActor
+    func editGroupMetadata(ownerAccount: OwnerAccount, group: ChatGroupMetadata, name: String, about: String) async {
         guard let key = ownerAccount.getKeyPair() else {
             print("KeyPair not found.")
             return
@@ -372,7 +433,6 @@ class AppState: ObservableObject {
             Tag(id: "h", otherInformation: groupId),
             Tag(id: "name", otherInformation: [name]),
             Tag(id: "about", otherInformation: [about]),
-            Tag(id: "r", otherInformation: [link])
         ]
         
         var event = Event(
@@ -390,13 +450,12 @@ class AppState: ObservableObject {
             self.lastEditGroupMetadataEventId = event.id
             
             nostrClient.send(event: event, onlyToRelayUrls: [relayUrl])
-            print("groupEditMetadata : \(event)")
         } catch {
             print("Failed to sign or send event: \(error)")
         }
     }
     
-    /// グループにユーザをAdminとして追加する
+    // MARK: グループにユーザをAdminとして追加する
     func addUserAsAdminToGroup(userPubKey: String, groupId: String) {
         guard let owner = self.selectedOwnerAccount,
               let key = owner.getKeyPair(),
@@ -425,7 +484,7 @@ class AppState: ObservableObject {
         }
     }
     
-    /// グループにユーザを一般メンバーとして追加する
+    // MARK: グループにユーザを一般メンバーとして追加する
     func addUserAsMemberToGroup(userPubKey: String, groupId: String) {
         guard let owner = self.selectedOwnerAccount,
               let key = owner.getKeyPair(),
@@ -454,7 +513,7 @@ class AppState: ObservableObject {
         }
     }
     
-    /// グループからユーザを削除する(離脱)
+    // MARK: グループからユーザを削除する(離脱)
     func removeUserFromGroup(userPubKey: String, groupId: String) {
         guard let owner = self.selectedOwnerAccount,
               let key = owner.getKeyPair(),

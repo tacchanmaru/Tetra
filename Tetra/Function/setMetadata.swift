@@ -3,16 +3,16 @@ import NostrClient
 import Foundation
 
 func handleSetMetadata(appState: AppState, event: Event) {
+    print("じゃあここまで来てるんかい")
+    print("event.tag: \(event.tags)")
     if let metadata = decodeUserMetadata(from: event.content) {
         let (name, about, picture, nip05, displayName, website, banner, bot, lud16) = metadata
         
         let userMetadata = createUserMetadata(from: event, name: name, about: about, picture: picture, nip05: nip05, displayName: displayName, website: website, banner: banner, bot: bot, lud16: lud16)
+        
+        print("userMetadata.facetime: \(userMetadata.facetime ?? "")")
 
-        //TODO: 以下によって自分の投稿が2回fetchされているのを修正する必要がある
         if event.pubkey == appState.selectedOwnerAccount?.publicKey && appState.ownerPostContents.count == 0 {
-            DispatchQueue.main.async {
-                appState.allUserMetadata.append(userMetadata)
-            }
             handleSelectedOwnerProfile(
                 pubkey: event.pubkey,
                 name: name,
@@ -63,6 +63,9 @@ private func decodeUserMetadata(from content: String) -> (
 }
 
 private func createUserMetadata(from event: Event, name: String?, about: String?, picture: String?, nip05: String?, displayName: String?, website: String?, banner: String?, bot: Bool?, lud16: String?) -> UserMetadata {
+    let tags = event.tags.map({ $0 })
+    let link = tags.first(where: { $0.id == "facetime" })?.otherInformation.first
+    
     return UserMetadata(
         publicKey: event.pubkey,
         bech32PublicKey: {
@@ -80,15 +83,20 @@ private func createUserMetadata(from event: Event, name: String?, about: String?
         banner: banner,
         bot: bot,
         lud16: lud16,
-        createdAt: event.createdAt.date
+        createdAt: event.createdAt.date,
+        facetime: link
     )
 }
 
 private func updateChatMessages(for event: Event, with userMetadata: UserMetadata, appState: AppState) {
     DispatchQueue.main.async {
-        if userMetadata.publicKey != appState.selectedOwnerAccount?.publicKey {
+        // すでに同じものがある場合編集する、ない場合は追加する
+        if let index = appState.allUserMetadata.firstIndex(where: { $0.publicKey == userMetadata.publicKey }) {
+            appState.allUserMetadata[index] = userMetadata
+        } else {
             appState.allUserMetadata.append(userMetadata)
         }
+
         appState.allChatMessage = appState.allChatMessage.map { message in
             var updatedMessage = message
             if updatedMessage.publicKey == event.pubkey {

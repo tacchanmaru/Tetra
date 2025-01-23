@@ -69,7 +69,6 @@ class GroupActivityManager {
             config.spatialTemplatePreference = .sideBySide
             config.supportsGroupImmersiveSpace = true
             coordinator.configuration = config
-
         }
     }
 

@@ -48,9 +48,10 @@ struct SessionLinkView: View {
                         else {
                             return
                         }
-                        
-                        // FaceTimeリンクをrタグに設定する
-                        await appState.editGroupMetadata(ownerAccount: account, group: group, name: groupName, about: groupDescription, link: groupLink)
+                        // グループメタデータを変更する
+                        await appState.editGroupMetadata(ownerAccount: account, group: group, name: groupName, about: groupDescription)
+                        // facetimeリンクを設定する
+                        await appState.editFacetimeLink(link: groupLink)
                         
                     }
                 }) {
@@ -152,6 +153,7 @@ struct SessionLinkView: View {
                 groupImage = groupMetadata.picture ?? ""
                 groupName = groupMetadata.name ?? ""
                 groupDescription = groupMetadata.about ?? ""
+                groupLink = fetchAdminUserMetadata().first?.facetime ?? ""
             }
         }
         // Relay からOKが返ってきたら、シートを閉じる
@@ -164,5 +166,15 @@ struct SessionLinkView: View {
 
         Spacer()
         
+    }
+    private func fetchAdminUserMetadata() -> [UserMetadata] {
+        let adminPublicKeys = appState.allGroupAdmin
+            .filter { $0.groupId == appState.selectedGroup?.id }
+            .map { $0.publicKey }
+
+        let adminMetadatas = appState.allUserMetadata.filter { user in
+            adminPublicKeys.contains(user.publicKey)
+        }
+        return adminMetadatas
     }
 }
